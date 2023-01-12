@@ -32,14 +32,14 @@ export const OtterWrapper = styled.div`
 		margin-left: -4rem;
 		min-width: 135px;
 		display: none;
-		@media (max-width: 50rem) {
+		@media (max-width: 850px) {
 			display: block;
 		}
-		@media (min-width: 1000px) {
+		@media (min-width: 1050px) {
 			display: block;
 		}
 	}
-	@media (max-width: 50rem) {
+	@media (max-width: 850px) {
 		justify-content: center;
 	}
 `;
@@ -87,7 +87,7 @@ export const InnerWrapper = styled.div`
 	display: flex;
 	align-items: stretch;
 	width: 100%;
-	@media (max-width: 50rem) {
+	@media (max-width: 850px) {
 		flex-direction: column;
 	}
 `;
@@ -105,17 +105,20 @@ export const InfoBoxWrapper = styled.div`
 	}
 `;
 export const InfoBox = styled.div`
+    display: flex;
+    align-items: center;
 	border: 1px solid #fff;
 	background-color: black;
 	border-radius: 5px;
 	padding: 2rem;
 `;
 export const HeroInfo = styled.p`
-	font-size: 1.4rem;
+	font-size: 1.3rem;
+    font-family: 'Source Code Pro', monospace;
 	color: #eee;
 	white-space: pre-wrap;
 	@media (min-width: 1000px) {
-		font-size: 1.7rem;
+		font-size: 1.4rem;
 	}
 `;
 

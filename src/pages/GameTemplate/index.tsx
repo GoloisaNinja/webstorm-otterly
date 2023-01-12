@@ -1,34 +1,43 @@
-import React, { useState, useEffect, useRef, ReactElement } from 'react';
+import React, {useState, useEffect, ReactElement, useContext, useCallback} from 'react';
+import { ThemeContext} from "styled-components";
 import { useParams } from 'react-router-dom';
 import GameLibrary from '../../gameLibrary';
 import { INode, IOptions } from '../../interfaces/Node';
+import GameNodeText from '../../components/GameNodeText';
+import GameNodeInput from "../../components/GameNodeInput";
+import GameMenuBar from "../../components/GameMenuBar";
 import { PageWrapper } from '../../components/PageWrapper';
 import {
-	GameGridWrapper,
-	MoodWrapper,
-	InventoryWrapper,
+	ScrollMarker,
 	NodeTextWrapper,
-	PointsWrapper,
 	Title,
 	NodeOptions,
-	InputWrapper,
-	TerminalSpan,
-	StyledInput,
 	ErrorTerminal,
 } from './styles';
 
 const GameTemplate: React.FC = () => {
 	const defaultErrorMessage: string = '<null>';
+	const theme = useContext(ThemeContext);
 	const params = useParams();
 	const gameId = parseInt(params.id!);
 	const [game, setGame] = useState(GameLibrary.getGameById(gameId));
 	const [currentNode, setCurrentNode] = useState<INode>();
 	const [userInput, setUserInput] = useState('');
-	const [mood, setMood] = useState('');
+	const [mood, setMood] = useState('unknown');
+	const [nodeText, setNodeText] = useState("");
 	const [points, setPoints] = useState(0);
 	const [errorMessage, setErrorMessage] = useState(defaultErrorMessage);
-	const nodeText: React.RefObject<HTMLParagraphElement> = useRef(null);
-	const moodText: React.RefObject<HTMLParagraphElement> = useRef(null);
+
+	function setGameText(text: string): void {
+		setNodeText(text);
+	}
+	const setGamePoints = useCallback((pointsToAdd: number, id: number) => {
+		if (id === 1) {
+			setPoints(0);
+			return;
+		}
+		setPoints((curr) => curr + pointsToAdd);
+	},[])
 
 	useEffect(() => {
 		function startGame(): void {
@@ -40,40 +49,65 @@ const GameTemplate: React.FC = () => {
 	}, [game]);
 
 	useEffect(() => {
-		if (nodeText.current !== null && currentNode !== undefined) {
-			nodeText.current.innerHTML = currentNode.Text;
+		if (currentNode !== undefined) {
+			setGameText(currentNode.Text);
+			setGamePoints(currentNode.EarnedPoints, currentNode.ID)
 		}
-	}, [currentNode]);
+	}, [currentNode, setGamePoints]);
+
+	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
+		setUserInput(e.target.value);
+	}
+
+	function updateMood(status: string | null, nodeIndex: number): void {
+		const newMood = status === null || nodeIndex === 1 ? "unknown" : status;
+		setMood(newMood);
+	}
+
+	function getNextNode(): INode | undefined {
+		let nextNode: number | undefined;
+		let node: INode;
+		let mood: string | undefined | null;
+		const optionIndex: number | undefined = currentNode?.NodeOptions.findIndex((option) => option.Command === userInput.toLowerCase().trim());
+		if (optionIndex !== -1 && optionIndex !== undefined) {
+			nextNode = currentNode?.NodeOptions[optionIndex].NextNode;
+			mood = currentNode?.NodeOptions[optionIndex].Mood;
+		}
+		if (nextNode !== undefined) {
+			// first make a call to update mood based on some of the above info
+			if (mood !== undefined) {
+				updateMood(mood, nextNode);
+			}
+			// then we can get the node and return it
+			node = game.getNodeById(nextNode);
+			return node;
+		}
+		return undefined;
+	}
+
+	function resetErrorMsgToDefault(): void {
+		if (errorMessage !== "") {
+			setErrorMessage(defaultErrorMessage);
+		}
+	}
+
+	function scrollToNodeTextStart(): void {
+		const yPos = document.getElementById("scrollMarker")!.getBoundingClientRect().top;
+		const yPosOffset = yPos + window.scrollY - 95;
+		setTimeout(() => {
+			window.scroll({left: 0, top: yPosOffset, behavior: "smooth"});
+		}, 325)
+
+	}
 
 	function handleUserInput(): void {
 		try {
-			const optionIndex = currentNode?.NodeOptions.findIndex(
-				(option) => option.Command === userInput.toLowerCase().trim()
-			);
-			if (optionIndex !== -1 && optionIndex !== undefined) {
-				const nextNode = currentNode?.NodeOptions[optionIndex].NextNode;
-				const mood = currentNode?.NodeOptions[optionIndex].Mood;
-				if (nextNode !== undefined) {
-					const node: INode = game.getNodeById(nextNode);
-					if (
-						moodText.current !== null &&
-						mood !== null &&
-						mood !== undefined
-					) {
-						moodText.current.innerHTML = mood;
-						setMood(mood);
-					}
-					if (errorMessage !== '') {
-						setErrorMessage(defaultErrorMessage);
-					}
-					const newScore = points + node.EarnedPoints;
-					setPoints(newScore);
-					if (nextNode === 1) {
-						setPoints(0);
-					}
-					setCurrentNode(node);
-					setUserInput('');
-				}
+			const node: INode | undefined = getNextNode();
+			if (node !== undefined) {
+				setCurrentNode(node);
+				setUserInput("");
+				resetErrorMsgToDefault();
+				scrollToNodeTextStart();
 			} else {
 				setErrorMessage('Sorry but that is an invalid command...');
 			}
@@ -92,7 +126,7 @@ const GameTemplate: React.FC = () => {
 			moodCheck = true;
 		}
 		if (moodCheck) {
-			return <NodeOptions key={option.ID}>{option.Text}</NodeOptions>;
+			return <NodeOptions color={theme.console_green} key={option.ID}>{option.Text}</NodeOptions>;
 		}
 		return null;
 	}
@@ -100,38 +134,18 @@ const GameTemplate: React.FC = () => {
 	return currentNode !== undefined && currentNode.ID !== -99 ? (
 		<PageWrapper padding={'1rem'}>
 			<Title>{game.Title}</Title>
-			<GameGridWrapper>
-				<PointsWrapper>
-					<h2>Points:</h2>
-					<p>{points}</p>
-				</PointsWrapper>
-				<MoodWrapper>
-					<h2>Current Mood:</h2>
-					<p ref={moodText}></p>
-				</MoodWrapper>
-				<InventoryWrapper>
-					<h2>Inventory:</h2>
-				</InventoryWrapper>
+			<ScrollMarker id="scrollMarker"></ScrollMarker>
 				<NodeTextWrapper>
-					<p ref={nodeText}></p>
+					<GameMenuBar points={points}/>
+					<GameNodeText nodeText={nodeText} status={mood}/>
 					<div id='optionWrapper'>
 						{currentNode.NodeOptions.map((option) => {
 							return verifyMoodAndInventory(option);
 						})}
 					</div>
-					<InputWrapper>
-						<TerminalSpan>{`enter command: `}</TerminalSpan>
-						<StyledInput
-							autoFocus
-							value={userInput}
-							onChange={(e) => setUserInput(e.target.value)}
-							onKeyDown={(e) =>
-								e.key === 'Enter' && handleUserInput()
-							}></StyledInput>
-					</InputWrapper>
-					<ErrorTerminal>Error@Console ~ % {errorMessage}</ErrorTerminal>
+					<GameNodeInput handleInputChange={handleInputChange} handleUserInput={handleUserInput} userInput={userInput} />
+					<ErrorTerminal color={theme.console_error}>Error@Console ~ % {errorMessage}</ErrorTerminal>
 				</NodeTextWrapper>
-			</GameGridWrapper>
 		</PageWrapper>
 	) : (
 		<h2>there was a problem loading...</h2>

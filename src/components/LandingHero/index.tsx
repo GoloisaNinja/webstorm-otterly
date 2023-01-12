@@ -18,8 +18,11 @@ import {
 import TypeWriter from '../../helpers/TypeWriter';
 
 const OtterImg = styled.img`
-	width: 20rem;
+	width: 25rem;
 	margin-right: 1.2rem;
+	@media (max-width: 400px) {
+		width: 20rem;
+	}
 `;
 
 const LandingHero: React.FC = () => {
@@ -43,12 +46,8 @@ Witty and otterly ridiculous`;
 		setHeroText('otterly ridiculous')
 	}
 	useEffect(() => {
-		console.log('useeffect has run on mount')
 		if (document !== undefined && heroText !== "") {
-			console.log('document is not undefined and herotext is not empty')
-			console.log(heroText);
 			const el = document.getElementById('heroText')!;
-			console.log(el.innerHTML)
 			TypeWriter(heroText, el);
 		}
 		handleHeroText();
