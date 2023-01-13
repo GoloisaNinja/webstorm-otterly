@@ -2,11 +2,12 @@ import React, {useState, useEffect, ReactElement, useContext, useCallback} from 
 import { ThemeContext} from "styled-components";
 import { useParams } from 'react-router-dom';
 import GameLibrary from '../../gameLibrary';
-import { INode, IOptions } from '../../interfaces/Node';
+import {IGame, INode, IOptions} from '../../interfaces/Node';
 import GameLoadScreen from "../../components/GameLoadScreen";
 import GameNodeText from '../../components/GameNodeText';
 import GameNodeInput from "../../components/GameNodeInput";
 import GameMenuBar from "../../components/GameMenuBar";
+import Spinner from "../../components/Spinner";
 import { PageWrapper } from '../../components/PageWrapper';
 import { TypewriterStylePTag} from "../../components/TypewriterStyledPTag";
 import {
@@ -23,7 +24,7 @@ const GameTemplate: React.FC = () => {
 	const params = useParams();
 	const gameId = parseInt(params.id!);
 	const [gameLoading, setGameLoading] = useState(true);
-	const [game, setGame] = useState(GameLibrary.getGameById(gameId));
+	const [game, setGame] = useState<IGame>(GameLibrary.getGameById(-99));
 	const [currentNode, setCurrentNode] = useState<INode>();
 	const [userInput, setUserInput] = useState('');
 	const [mood, setMood] = useState('unknown');
@@ -32,9 +33,11 @@ const GameTemplate: React.FC = () => {
 	const [errorMessage, setErrorMessage] = useState(defaultErrorMessage);
 
 	function resetGame(): void {
-		const startingNode: INode = game.getNodeById(1);
-		setCurrentNode(startingNode);
-		updateMood(1, 0);
+		if (game.ID !== -99) {
+			const startingNode: INode = game.getNodeById(1);
+			setCurrentNode(startingNode);
+			updateMood(1, 0);
+		}
 	}
 	function handleGameLoading(): void {
 		setGameLoading(false);
@@ -54,13 +57,17 @@ const GameTemplate: React.FC = () => {
 	},[])
 
 	useEffect(() => {
+		const game = GameLibrary.getGameById(gameId);
+		if (game.ID !== -99) {
+			setGame(game);
+		}
 		function startGame(): void {
 			if (game !== undefined) {
 				setCurrentNode(game.getNodeById(1));
 			}
 		}
 		startGame();
-	}, [game]);
+	}, [gameId]);
 
 	useEffect(() => {
 		if (currentNode !== undefined) {
@@ -98,7 +105,7 @@ const GameTemplate: React.FC = () => {
 			nextNode = currentNode?.NodeOptions[optionIndex].NextNode;
 
 		}
-		if (nextNode !== undefined) {
+		if (nextNode !== undefined && game !== undefined) {
 			// then we can get the node and return it
 			node = game.getNodeById(nextNode);
 			return {
@@ -163,8 +170,13 @@ const GameTemplate: React.FC = () => {
 		}
 		return null;
 	}
-	return currentNode === undefined || currentNode.ID === -99 ?
-		(<h2>game not found...</h2>) : gameLoading ?
+	return currentNode === undefined ?
+		(<PageWrapper padding={"1rem"}>
+			<Spinner show={true} color={theme.console_green}/>
+		</PageWrapper>) : currentNode.ID === -99 || game.ID === -99 ?
+			(<PageWrapper padding={"1rem"}>
+				<h2 style={{color: "white"}}>Game was not found...</h2>
+			</PageWrapper>) : gameLoading ?
 			(<PageWrapper padding={'1rem'}>
 				<Title>{game.Title}</Title>
 				<NodeTextWrapper>
@@ -187,27 +199,7 @@ const GameTemplate: React.FC = () => {
 						<ErrorTerminal color={theme.console_error}>Error@Console ~ % {errorMessage}</ErrorTerminal>
 					</NodeTextWrapper>
 				</GameScreenWrapper>
-
 			</PageWrapper>);
-	// return currentNode !== undefined && currentNode.ID !== -99 ? (
-	// 	<PageWrapper padding={'1rem'}>
-	// 		<Title>{game.Title}</Title>
-	// 		<ScrollMarker id="scrollMarker"></ScrollMarker>
-	// 			<NodeTextWrapper>
-	// 				<GameMenuBar points={points}/>
-	// 				<GameNodeText nodeText={nodeText} status={mood}/>
-	// 				<div id='optionWrapper'>
-	// 					{currentNode.NodeOptions.map((option) => {
-	// 						return verifyMoodAndInventory(option);
-	// 					})}
-	// 				</div>
-	// 				<GameNodeInput handleInputChange={handleInputChange} handleUserInput={handleUserInput} userInput={userInput} />
-	// 				<ErrorTerminal color={theme.console_error}>Error@Console ~ % {errorMessage}</ErrorTerminal>
-	// 			</NodeTextWrapper>
-	// 	</PageWrapper>
-	// ) : (
-	// 	<h2>there was a problem loading...</h2>
-	// );
 };
 
 export default GameTemplate;
