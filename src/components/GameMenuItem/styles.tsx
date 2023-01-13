@@ -8,7 +8,7 @@ export const GameMenuItemWrapper = styled.div`
 export const DropContentWrapper = styled.div`
   display: none;
   position: absolute;
-  background-color: #ababab;
+  background-color: #dbdbdb;
   min-width: 150px;
   padding: 1.25rem;
   z-index: 1;
@@ -34,5 +34,11 @@ export const ItemWrapper = styled.div`
     text-align: left;
     font-family: 'VT323', monospace;
     font-size: 1.6rem;
+    color: black;
+    padding: .5rem;
+    &:hover {
+      background-color: black;
+      color: white;
+    }
   }
 `;

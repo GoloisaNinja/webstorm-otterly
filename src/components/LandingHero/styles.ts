@@ -109,12 +109,21 @@ export const InfoBoxWrapper = styled.div`
 `;
 export const InfoBox = styled.div`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 	border: 1px solid #fff;
 	background-color: black;
 	border-radius: 5px;
 	padding: 2rem;
     min-height: 250px;
+  @media (max-width: 350px) {
+    min-height: 250px;
+  }
+  @media (min-width: 351px) {
+    min-height: 200px;
+  }
+  @media (min-width: 425px) {
+    min-height: 185px;
+  }
 `;
 export const HeroInfo = styled.p`
 	font-size: 1.3rem;

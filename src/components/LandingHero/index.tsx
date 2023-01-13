@@ -36,11 +36,11 @@ never get old
 4: The way queue is spelled is dumb`;
 
 	const iBox2Txt: string = `> So what is Otterly all about?
-Fun text adventure games 
-featuring otters
-Completely non-informative and absurd
-Not at all real...or is it?
-Witty and otterly ridiculous`;
+1: Retro-style text adventure games
+2: Completely irreverent
+3: Otter-injected historical
+content
+4: Otterly ridiculous fun`;
 
 	function handleHeroText():void {
 		setHeroText('otterly ridiculous')
