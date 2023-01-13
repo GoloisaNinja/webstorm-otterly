@@ -1,5 +1,12 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
+const commonMenuItem = css`
+  text-align: left;
+  font-family: 'VT323', monospace;
+  font-size: 1.6rem;
+  color: black;
+  padding: .5rem;
+`;
 export const GameMenuItemWrapper = styled.div`
   position: relative;
   display: inline-block;
@@ -30,12 +37,11 @@ export const ItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: left;
+  > p {
+    ${commonMenuItem};
+  }
   > button {
-    text-align: left;
-    font-family: 'VT323', monospace;
-    font-size: 1.6rem;
-    color: black;
-    padding: .5rem;
+    ${commonMenuItem};
     &:hover {
       background-color: black;
       color: white;

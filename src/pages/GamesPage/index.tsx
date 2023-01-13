@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PageWrapper } from '../../components/PageWrapper';
+import GamesGrid from "../../components/GamesGrid";
+import { GamesPageHeroText, GamesPageHeroSubText, HeroWrapper, OverridePageWrapper } from "./styles";
+import { PurpleSpan } from "../../components/PurpleSpan";
 
 const GamesPage: React.FC = () => {
 	return (
-		<PageWrapper padding={''}>
-			<h1 style={{ color: 'white' }}>Games Page</h1>
-			<Link to='/games/1'>one way or the otter</Link>
-		</PageWrapper>
+		<OverridePageWrapper padding={'1rem'}>
+			<HeroWrapper>
+				<GamesPageHeroText><PurpleSpan>Otterly</PurpleSpan> Games Web Archive</GamesPageHeroText>
+				<GamesPageHeroSubText>Browse our collection of retro text adventure games. Sit back. Chill. It's about to get otterly amazing in up in here.</GamesPageHeroSubText>
+			</HeroWrapper>
+			<GamesGrid />
+		</OverridePageWrapper>
 	);
 };
 export default GamesPage;

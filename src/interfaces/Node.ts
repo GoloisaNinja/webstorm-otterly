@@ -19,6 +19,8 @@ export interface INode {
 export interface IGame {
 	ID: number;
 	Title: string;
+	Image: string;
+	Description: string;
 	Nodes: INode[];
 	getNodeById(n: number): INode;
 }

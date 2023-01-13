@@ -3,6 +3,8 @@ import { IGame } from '../interfaces/Node';
 const oneWayOrTheOtter: IGame = {
 	ID: 1,
 	Title: 'One Way or the Otter',
+	Image: "/images/owoto.webp",
+	Description: "You wake up from cryo-sleep to find alarms blaring and the ship you're on in shambles! Are you the captain or a prisoner? Why does the ship sound like it's coming apart? You'll need to work quickly to solve the mysteries and live to cuddle more space rocks, in this otterly futuristic sci-fi adventure!",
 	Nodes: [
 		{
 			ID: 1,
@@ -82,6 +84,8 @@ const oneWayOrTheOtter: IGame = {
 		return {
 			ID: -99,
 			Text: '',
+			Image: "",
+			Description: "",
 			NodeOptions: [],
 			EarnedPoints: -99,
 		};

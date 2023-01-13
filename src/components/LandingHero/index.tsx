@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import {useNavigate} from "react-router-dom";
 import styled, { ThemeContext } from 'styled-components';
 import OtterSrc from '../../assets/waving.webp';
 import { Button } from '../Button';
@@ -26,6 +27,7 @@ const OtterImg = styled.img`
 `;
 
 const LandingHero: React.FC = () => {
+	const navigate = useNavigate();
 	const [heroText, setHeroText] = useState("");
 	const theme = useContext(ThemeContext);
 	const iBox1Txt: string = `> We know several things...
@@ -43,7 +45,7 @@ content
 4: Otterly ridiculous fun`;
 
 	function handleHeroText():void {
-		setHeroText('otterly ridiculous')
+		setHeroText('Otterly Ridiculous')
 	}
 	useEffect(() => {
 		if (document !== undefined && heroText !== "") {
@@ -74,7 +76,7 @@ content
 					</InfoBoxWrapper>
 				</InnerWrapper>
 				<ButtonWrapper>
-					<Button color={theme.button_purple}>browse games</Button>
+					<Button onClick={() => navigate("/games")} color={theme.button_purple}>browse games</Button>
 					<Button color='#fff'>about us</Button>
 				</ButtonWrapper>
 			</HeroContentWrapper>

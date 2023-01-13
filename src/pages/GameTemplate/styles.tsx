@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const basicGameWrapperStyle = styled.div`
 	background: #000000;
-	//border: 1px solid white;
 	border-radius: 0;
 	display: flex;
 	flex-direction: column;
@@ -15,6 +14,7 @@ export const ScrollMarker = styled.div`
   height: 1px;
 `;
 export const GameScreenWrapper = styled(basicGameWrapperStyle)`
+  margin-top: 3rem;
   padding: 0;
   border-radius: 0;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;

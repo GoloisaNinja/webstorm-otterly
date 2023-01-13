@@ -10,6 +10,8 @@ const GameLibrary: IGameLibrary = {
 		return {
 			ID: -99,
 			Title: '',
+			Image: "",
+			Description: "",
 			Nodes: [],
 			getNodeById(n: number) {
 				return {

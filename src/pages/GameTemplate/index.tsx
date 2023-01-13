@@ -3,6 +3,7 @@ import { ThemeContext} from "styled-components";
 import { useParams } from 'react-router-dom';
 import GameLibrary from '../../gameLibrary';
 import {IGame, INode, IOptions} from '../../interfaces/Node';
+import GameNotFound from "../../components/GameNotFound";
 import GameLoadScreen from "../../components/GameLoadScreen";
 import GameNodeText from '../../components/GameNodeText';
 import GameNodeInput from "../../components/GameNodeInput";
@@ -170,25 +171,33 @@ const GameTemplate: React.FC = () => {
 		}
 		return null;
 	}
+	function checkMenuDropDowns(): void {
+		const dropdowns = document.querySelectorAll(".content-dropdown")!
+		for (let i = 0; i < dropdowns.length; i++) {
+			if (dropdowns[i].classList.contains("show")) {
+				dropdowns[i].classList.toggle("show");
+			}
+		}
+	}
 	return currentNode === undefined ?
 		(<PageWrapper padding={"1rem"}>
 			<Spinner show={true} color={theme.console_green}/>
 		</PageWrapper>) : currentNode.ID === -99 || game.ID === -99 ?
 			(<PageWrapper padding={"1rem"}>
-				<h2 style={{color: "white"}}>Game was not found...</h2>
+				<GameNotFound />
 			</PageWrapper>) : gameLoading ?
 			(<PageWrapper padding={'1rem'}>
-				<Title>{game.Title}</Title>
+				{/*<Title>{game.Title}</Title>*/}
 				<NodeTextWrapper>
 					<GameLoadScreen gameLoading={gameLoading} gameTitle={game.Title} handleGameLoading={handleGameLoading} />
 				</NodeTextWrapper>
 			</PageWrapper>) :
 			(<PageWrapper padding={'1rem'}>
-				<Title>{game.Title}</Title>
+				{/*<Title>{game.Title}</Title>*/}
 				<ScrollMarker id="scrollMarker"></ScrollMarker>
 				<GameScreenWrapper>
-					<GameMenuBar points={points} resetGame={resetGame}/>
-					<NodeTextWrapper>
+					<GameMenuBar id="menu-bar" title={game.Title} points={points} resetGame={resetGame}/>
+					<NodeTextWrapper onClick={() => checkMenuDropDowns()}>
 						<GameNodeText nodeText={nodeText} status={mood}/>
 						<div id='optionWrapper'>
 							{currentNode.NodeOptions.map((option) => {

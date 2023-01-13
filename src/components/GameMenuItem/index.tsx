@@ -22,7 +22,7 @@ const GameMenuItem: React.FC<MenuItemProps> = (props) => {
             itemElementsToBeCreated = "button";
             itemId = "btnItem";
         }
-        const itemsParentElement = document.getElementById("items")!;
+        const itemsParentElement = document.getElementById(`${props.menuText}-items`)!;
         for (let item of props.items) {
             let newItem = document.createElement(itemElementsToBeCreated);
             newItem.setAttribute("id", `${itemId}`);
@@ -39,14 +39,14 @@ const GameMenuItem: React.FC<MenuItemProps> = (props) => {
     },[])
 
     function toggleMenuShow(): void {
-        const el = document.getElementById("drop-content")!;
+        const el = document.getElementById(`${props.menuText}-drop-content`)!;
         el.classList.toggle('show');
     }
     return (
-        <GameMenuItemWrapper id="dropdown">
+        <GameMenuItemWrapper id={`${props.menuText}-dropdown`}>
             <MenuButton onClick={() => toggleMenuShow()}>{props.menuText}</MenuButton>
-            <DropContentWrapper id="drop-content">
-                <ItemWrapper id="items"></ItemWrapper>
+            <DropContentWrapper className={"content-dropdown"} id={`${props.menuText}-drop-content`}>
+                <ItemWrapper id={`${props.menuText}-items`}></ItemWrapper>
             </DropContentWrapper>
         </GameMenuItemWrapper>
     );
