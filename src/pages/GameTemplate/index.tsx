@@ -3,16 +3,18 @@ import { ThemeContext} from "styled-components";
 import { useParams } from 'react-router-dom';
 import GameLibrary from '../../gameLibrary';
 import { INode, IOptions } from '../../interfaces/Node';
+import GameLoadScreen from "../../components/GameLoadScreen";
 import GameNodeText from '../../components/GameNodeText';
 import GameNodeInput from "../../components/GameNodeInput";
 import GameMenuBar from "../../components/GameMenuBar";
 import { PageWrapper } from '../../components/PageWrapper';
+import { TypewriterStylePTag} from "../../components/TypewriterStyledPTag";
 import {
 	ScrollMarker,
 	NodeTextWrapper,
 	Title,
-	NodeOptions,
 	ErrorTerminal,
+	GameScreenWrapper,
 } from './styles';
 
 const GameTemplate: React.FC = () => {
@@ -20,6 +22,7 @@ const GameTemplate: React.FC = () => {
 	const theme = useContext(ThemeContext);
 	const params = useParams();
 	const gameId = parseInt(params.id!);
+	const [gameLoading, setGameLoading] = useState(true);
 	const [game, setGame] = useState(GameLibrary.getGameById(gameId));
 	const [currentNode, setCurrentNode] = useState<INode>();
 	const [userInput, setUserInput] = useState('');
@@ -28,6 +31,17 @@ const GameTemplate: React.FC = () => {
 	const [points, setPoints] = useState(0);
 	const [errorMessage, setErrorMessage] = useState(defaultErrorMessage);
 
+	function resetGame(): void {
+		const startingNode: INode = game.getNodeById(1);
+		setCurrentNode(startingNode);
+		updateMood(1, 0);
+	}
+	function handleGameLoading(): void {
+		setGameLoading(false);
+		setTimeout(() => {
+			window.scrollTo({top: 0, left: 0, behavior: "smooth"});
+		}, 500)
+	}
 	function setGameText(text: string): void {
 		setNodeText(text);
 	}
@@ -59,31 +73,47 @@ const GameTemplate: React.FC = () => {
 		setUserInput(e.target.value);
 	}
 
-	function updateMood(status: string | null, nodeIndex: number): void {
-		const newMood = status === null || nodeIndex === 1 ? "unknown" : status;
-		setMood(newMood);
+	function updateMood(nodeIndex: number, optionIndex: number): void {
+		let mood: string | undefined | null;
+		mood = currentNode?.NodeOptions[optionIndex].Mood;
+		if (mood !== undefined) {
+			const newMood = mood === null || nodeIndex === 1 ? "unknown" : mood;
+			setMood(newMood);
+		}
 	}
 
-	function getNextNode(): INode | undefined {
+	// Interface for getNodeReturn
+	type NodeReturnObject = {
+		node: INode | undefined,
+		optionIndex: number | undefined,
+		nextNode: number | undefined,
+	}
+
+	function getNextNode(): NodeReturnObject {
 		let nextNode: number | undefined;
 		let node: INode;
-		let mood: string | undefined | null;
+
 		const optionIndex: number | undefined = currentNode?.NodeOptions.findIndex((option) => option.Command === userInput.toLowerCase().trim());
 		if (optionIndex !== -1 && optionIndex !== undefined) {
 			nextNode = currentNode?.NodeOptions[optionIndex].NextNode;
-			mood = currentNode?.NodeOptions[optionIndex].Mood;
+
 		}
 		if (nextNode !== undefined) {
-			// first make a call to update mood based on some of the above info
-			if (mood !== undefined) {
-				updateMood(mood, nextNode);
-			}
 			// then we can get the node and return it
 			node = game.getNodeById(nextNode);
-			return node;
+			return {
+				node,
+				optionIndex,
+				nextNode,
+			};
 		}
-		return undefined;
+		return {
+			node: undefined,
+			optionIndex: undefined,
+			nextNode: undefined,
+		};
 	}
+
 
 	function resetErrorMsgToDefault(): void {
 		if (errorMessage !== "") {
@@ -102,7 +132,10 @@ const GameTemplate: React.FC = () => {
 
 	function handleUserInput(): void {
 		try {
-			const node: INode | undefined = getNextNode();
+			const { node, optionIndex, nextNode }: NodeReturnObject = getNextNode();
+			if (optionIndex !== undefined && nextNode !== undefined) {
+				updateMood(nextNode, optionIndex);
+			}
 			if (node !== undefined) {
 				setCurrentNode(node);
 				setUserInput("");
@@ -126,30 +159,55 @@ const GameTemplate: React.FC = () => {
 			moodCheck = true;
 		}
 		if (moodCheck) {
-			return <NodeOptions color={theme.console_green} key={option.ID}>{option.Text}</NodeOptions>;
+			return <TypewriterStylePTag color={theme.console_green} key={option.ID}>{option.Text}</TypewriterStylePTag>;
 		}
 		return null;
 	}
-
-	return currentNode !== undefined && currentNode.ID !== -99 ? (
-		<PageWrapper padding={'1rem'}>
-			<Title>{game.Title}</Title>
-			<ScrollMarker id="scrollMarker"></ScrollMarker>
+	return currentNode === undefined || currentNode.ID === -99 ?
+		(<h2>game not found...</h2>) : gameLoading ?
+			(<PageWrapper padding={'1rem'}>
+				<Title>{game.Title}</Title>
 				<NodeTextWrapper>
-					<GameMenuBar points={points}/>
-					<GameNodeText nodeText={nodeText} status={mood}/>
-					<div id='optionWrapper'>
-						{currentNode.NodeOptions.map((option) => {
-							return verifyMoodAndInventory(option);
-						})}
-					</div>
-					<GameNodeInput handleInputChange={handleInputChange} handleUserInput={handleUserInput} userInput={userInput} />
-					<ErrorTerminal color={theme.console_error}>Error@Console ~ % {errorMessage}</ErrorTerminal>
+					<GameLoadScreen gameLoading={gameLoading} gameTitle={game.Title} handleGameLoading={handleGameLoading} />
 				</NodeTextWrapper>
-		</PageWrapper>
-	) : (
-		<h2>there was a problem loading...</h2>
-	);
+			</PageWrapper>) :
+			(<PageWrapper padding={'1rem'}>
+				<Title>{game.Title}</Title>
+				<ScrollMarker id="scrollMarker"></ScrollMarker>
+				<GameScreenWrapper>
+					<GameMenuBar points={points} resetGame={resetGame}/>
+					<NodeTextWrapper>
+						<GameNodeText nodeText={nodeText} status={mood}/>
+						<div id='optionWrapper'>
+							{currentNode.NodeOptions.map((option) => {
+								return verifyMoodAndInventory(option);
+							})}
+						</div>
+						<GameNodeInput handleInputChange={handleInputChange} handleUserInput={handleUserInput} userInput={userInput} />
+						<ErrorTerminal color={theme.console_error}>Error@Console ~ % {errorMessage}</ErrorTerminal>
+					</NodeTextWrapper>
+				</GameScreenWrapper>
+
+			</PageWrapper>);
+	// return currentNode !== undefined && currentNode.ID !== -99 ? (
+	// 	<PageWrapper padding={'1rem'}>
+	// 		<Title>{game.Title}</Title>
+	// 		<ScrollMarker id="scrollMarker"></ScrollMarker>
+	// 			<NodeTextWrapper>
+	// 				<GameMenuBar points={points}/>
+	// 				<GameNodeText nodeText={nodeText} status={mood}/>
+	// 				<div id='optionWrapper'>
+	// 					{currentNode.NodeOptions.map((option) => {
+	// 						return verifyMoodAndInventory(option);
+	// 					})}
+	// 				</div>
+	// 				<GameNodeInput handleInputChange={handleInputChange} handleUserInput={handleUserInput} userInput={userInput} />
+	// 				<ErrorTerminal color={theme.console_error}>Error@Console ~ % {errorMessage}</ErrorTerminal>
+	// 			</NodeTextWrapper>
+	// 	</PageWrapper>
+	// ) : (
+	// 	<h2>there was a problem loading...</h2>
+	// );
 };
 
 export default GameTemplate;

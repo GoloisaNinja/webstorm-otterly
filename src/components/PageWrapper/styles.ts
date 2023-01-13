@@ -7,6 +7,7 @@ interface Props {
 
 export const PageWrapper = styled(BasicDivWrapper)<Props>`
 	margin-top: 7.5rem;
+	min-height: 100vh;
 	@media (max-width: 450px) {
 		padding: ${(props) => (props.padding ? props.padding : '3rem')};
 	}

@@ -1,4 +1,5 @@
 import styled, {keyframes} from 'styled-components';
+import {TypewriterStylePTag} from "../TypewriterStyledPTag";
 
 const typing = keyframes`
   from {width: 0}
@@ -18,13 +19,9 @@ export const Text = styled.p`
   margin-bottom: 4rem;
   font-family: 'VT323', monospace;
 `;
-export const Status = styled.p`
-  color: ${props => props.color};
-  white-space: nowrap;
-  overflow: hidden;
+export const Status = styled(TypewriterStylePTag)`
   font-size: 1.85rem;
   margin-bottom: .3rem;
-  font-family: 'VT323', monospace;
   animation: ${typing} 5s steps(95, end);
   &::after {
     content: " _";
