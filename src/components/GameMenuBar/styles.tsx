@@ -6,7 +6,7 @@ export const MenuWrapper = styled.div`
   align-items: center;
   padding-top: .50rem;
   padding-bottom: .50rem;
-  background-color: #808080;
+  background-color: #ababab;
   > svg {
     // color: ${props => props.color};
     color: black;

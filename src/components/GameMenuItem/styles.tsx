@@ -8,7 +8,7 @@ export const GameMenuItemWrapper = styled.div`
 export const DropContentWrapper = styled.div`
   display: none;
   position: absolute;
-  background-color: #808080;
+  background-color: #ababab;
   min-width: 150px;
   padding: 1.25rem;
   z-index: 1;

@@ -103,6 +103,9 @@ export const InfoBoxWrapper = styled.div`
 	@media (min-width: 1000px) {
 		margin-left: 4rem;
 	}
+  animation: ${fadeIn} 3s;
+  animation-delay: .4s;
+  animation-fill-mode: backwards;
 `;
 export const InfoBox = styled.div`
     display: flex;
@@ -111,6 +114,7 @@ export const InfoBox = styled.div`
 	background-color: black;
 	border-radius: 5px;
 	padding: 2rem;
+    min-height: 250px;
 `;
 export const HeroInfo = styled.p`
 	font-size: 1.3rem;
