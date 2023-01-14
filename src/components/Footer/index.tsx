@@ -27,10 +27,10 @@ const Footer: React.FC = () => {
 					<LogoText>ridiculous history</LogoText>
 				</InnerWrapper>
 				<LinksWrapper>
-					<FooterLink href='/'>home</FooterLink>
-					<FooterLink href='/games'>games</FooterLink>
-					<FooterLink href='/about'>about</FooterLink>
-					<FooterLink href='/contact'>contact</FooterLink>
+					<FooterLink to='/'>home</FooterLink>
+					<FooterLink to='/games'>games</FooterLink>
+					<FooterLink to='/'>about</FooterLink>
+					<FooterLink to='/'>contact</FooterLink>
 					<Copyright>
 						copyright <PurpleSpan>{currentYear}</PurpleSpan>
 					</Copyright>

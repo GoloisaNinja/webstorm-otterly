@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BasicDivWrapper } from '../BasicDivWrapper';
+import { Link } from 'react-router-dom';
 
 export const FooterWrapper = styled(BasicDivWrapper)`
 	background-color: black;
@@ -30,7 +31,7 @@ export const LinksWrapper = styled.div`
 		margin-bottom: 1.4rem;
 	}
 `;
-export const FooterLink = styled.a`
+export const FooterLink = styled(Link)`
 	text-decoration: none;
 	color: #fff;
 	font-size: 1.4rem;

@@ -20,8 +20,8 @@ const NavBar: React.FC = () => {
 			/>
 			<NavLinksWrapper>
 				<Link to='/games'>games</Link>
-				<Link to='/about'>about</Link>
-				<Link to='/contact'>contact</Link>
+				<Link to='/'>about</Link>
+				<Link to='/'>contact</Link>
 			</NavLinksWrapper>
 		</NavWrapper>
 	);

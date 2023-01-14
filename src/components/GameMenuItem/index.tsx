@@ -7,12 +7,13 @@ interface MenuItemProps {
     isClickable: boolean;
     items: string[];
     resetGame(): void;
+    toggleMenuShow(el: string): void
 }
 const GameMenuItem: React.FC<MenuItemProps> = (props) => {
     function addEventListenerToButton(el: Element): void {
         el.addEventListener("click", () => {
             props.resetGame();
-            toggleMenuShow();
+            props.toggleMenuShow(`${props.menuText}-drop-content`);
         })
     }
     function populateItems(): void {
@@ -38,13 +39,9 @@ const GameMenuItem: React.FC<MenuItemProps> = (props) => {
         populateItems();
     },[])
 
-    function toggleMenuShow(): void {
-        const el = document.getElementById(`${props.menuText}-drop-content`)!;
-        el.classList.toggle('show');
-    }
     return (
         <GameMenuItemWrapper id={`${props.menuText}-dropdown`}>
-            <MenuButton onClick={() => toggleMenuShow()}>{props.menuText}</MenuButton>
+            <MenuButton onClick={() => props.toggleMenuShow(`${props.menuText}-drop-content`)}>{props.menuText}</MenuButton>
             <DropContentWrapper className={"content-dropdown"} id={`${props.menuText}-drop-content`}>
                 <ItemWrapper id={`${props.menuText}-items`}></ItemWrapper>
             </DropContentWrapper>
