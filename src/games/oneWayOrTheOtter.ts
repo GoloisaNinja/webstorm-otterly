@@ -25,7 +25,7 @@ const oneWayOrTheOtter: IGame = {
                     Command: `epep`,
                     Mood: 'relief',
                     Requires: {Mood: null, Inventory: []},
-                    Inventory: "tube",
+                    Inventory: "test slot",
                     NextNode: 3,
                 },
             ],
