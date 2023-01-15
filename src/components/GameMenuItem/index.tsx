@@ -6,17 +6,23 @@ interface MenuItemProps {
     menuText: string;
     isClickable: boolean;
     items: string[];
-    resetGame(): void;
     toggleMenuShow(el: string): void
+    functions: Map<string, Function>;
 }
 const GameMenuItem: React.FC<MenuItemProps> = (props) => {
-    function addEventListenerToButton(el: Element): void {
-        el.addEventListener("click", () => {
-            props.resetGame();
-            props.toggleMenuShow(`${props.menuText}-drop-content`);
-        })
+
+    function listenerFactory(el: Element, neededFunction: string) {
+        let f = props.functions.get(neededFunction);
+            el.addEventListener("click", () => {
+                if (f !== undefined) {
+                    f();
+                }
+                props.toggleMenuShow(`${props.menuText}-drop-content`)
+            })
     }
+
     function populateItems(): void {
+        let itemsAlreadyPopulated: string[] = [];
         let itemElementsToBeCreated: string = "p";
         let itemId: string = "menuItem";
         if (props.isClickable) {
@@ -24,20 +30,33 @@ const GameMenuItem: React.FC<MenuItemProps> = (props) => {
             itemId = "btnItem";
         }
         const itemsParentElement = document.getElementById(`${props.menuText}-items`)!;
-        for (let item of props.items) {
+        let lastChildChecked = itemsParentElement.children.length - 1;
+        while (lastChildChecked !== -1) {
+            let child = itemsParentElement.children[lastChildChecked]
+            if (!props.items.includes(child.innerHTML)) {
+                itemsParentElement.removeChild(child);
+            } else {
+                itemsAlreadyPopulated.push(child.innerHTML);
+            }
+            lastChildChecked--
+        }
+
+        const cleanItemsToAdd: string[] = props.items.filter((item) => !itemsAlreadyPopulated.includes(item))
+
+        for (let item of cleanItemsToAdd) {
             let newItem = document.createElement(itemElementsToBeCreated);
             newItem.setAttribute("id", `${itemId}`);
             newItem.setAttribute("key", `${nanoid(5)}`)
             newItem.innerHTML = item;
             if (props.isClickable) {
-                addEventListenerToButton(newItem);
+                listenerFactory(newItem, item)
             }
             itemsParentElement.appendChild(newItem);
         }
     }
     useEffect(() => {
         populateItems();
-    },[])
+    },[props.items])
 
     return (
         <GameMenuItemWrapper id={`${props.menuText}-dropdown`}>

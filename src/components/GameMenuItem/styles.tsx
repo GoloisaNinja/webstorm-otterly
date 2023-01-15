@@ -30,7 +30,6 @@ export const MenuButton = styled.button`
   font-family: 'VT323', monospace;
   font-size: 1.65rem;
   margin-left: 2rem;
-  //color: ${props => props.color};
   color: black;
 `;
 export const ItemWrapper = styled.div`

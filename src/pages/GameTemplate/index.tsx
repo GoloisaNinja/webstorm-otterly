@@ -1,4 +1,4 @@
-import React, {useState, useEffect, ReactElement, useContext, useCallback} from 'react';
+import React, {useState, useEffect, ReactElement, useContext} from 'react';
 import { ThemeContext} from "styled-components";
 import { useParams } from 'react-router-dom';
 import GameLibrary from '../../gameLibrary';
@@ -14,7 +14,6 @@ import { TypewriterStylePTag} from "../../components/TypewriterStyledPTag";
 import {
 	ScrollMarker,
 	NodeTextWrapper,
-	Title,
 	ErrorTerminal,
 	GameScreenWrapper,
 } from './styles';
@@ -25,19 +24,22 @@ const GameTemplate: React.FC = () => {
 	const params = useParams();
 	const gameId = parseInt(params.id!);
 	const [gameLoading, setGameLoading] = useState(true);
-	const [game, setGame] = useState<IGame>(GameLibrary.getGameById(-99));
+	const [game, setGame] = useState<IGame>();
 	const [currentNode, setCurrentNode] = useState<INode>();
 	const [userInput, setUserInput] = useState('');
 	const [mood, setMood] = useState('unknown');
+	const [inventory, setInventory] = useState(["empty"]);
 	const [nodeText, setNodeText] = useState("");
 	const [points, setPoints] = useState(0);
 	const [errorMessage, setErrorMessage] = useState(defaultErrorMessage);
 
 	function resetGame(): void {
-		if (game.ID !== -99) {
-			const startingNode: INode = game.getNodeById(1);
+		if (game!.ID !== -99) {
+			const startingNode: INode = game!.getNodeById(1);
 			setCurrentNode(startingNode);
+			updatePoints(1);
 			updateMood(1, 0);
+			updateInventory(1,0)
 		}
 	}
 	function handleGameLoading(): void {
@@ -49,13 +51,6 @@ const GameTemplate: React.FC = () => {
 	function setGameText(text: string): void {
 		setNodeText(text);
 	}
-	const setGamePoints = useCallback((pointsToAdd: number, id: number) => {
-		if (id === 1) {
-			setPoints(0);
-			return;
-		}
-		setPoints((curr) => curr + pointsToAdd);
-	},[])
 
 	useEffect(() => {
 		const game = GameLibrary.getGameById(gameId);
@@ -73,12 +68,23 @@ const GameTemplate: React.FC = () => {
 	useEffect(() => {
 		if (currentNode !== undefined) {
 			setGameText(currentNode.Text);
-			setGamePoints(currentNode.EarnedPoints, currentNode.ID)
 		}
-	}, [currentNode, setGamePoints]);
+	}, [currentNode]);
 
 	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
 		setUserInput(e.target.value);
+	}
+
+	function updatePoints(nodeIndex: number): void {
+		if (nodeIndex === 1) {
+			setPoints(0)
+			return;
+		}
+		let pointsToAdd = game?.getNodeById(nodeIndex).EarnedPoints;
+		if (pointsToAdd !== undefined) {
+			let newScore = points + pointsToAdd;
+			setPoints(newScore);
+		}
 	}
 
 	function updateMood(nodeIndex: number, optionIndex: number): void {
@@ -87,6 +93,21 @@ const GameTemplate: React.FC = () => {
 		if (mood !== undefined) {
 			const newMood = mood === null || nodeIndex === 1 ? "unknown" : mood;
 			setMood(newMood);
+		}
+	}
+
+	function updateInventory(nodeIndex: number, optionIndex: number): void {
+		if (nodeIndex === 1) {
+			setInventory(() => ["empty"]);
+			return;
+		}
+		let newInventory: string = currentNode?.NodeOptions[optionIndex].Inventory!;
+		if (newInventory.length > 0) {
+			if (inventory.includes("empty")) {
+				setInventory(() => [newInventory])
+			} else {
+				setInventory((inventory) => [...inventory, newInventory]);
+			}
 		}
 	}
 
@@ -142,7 +163,9 @@ const GameTemplate: React.FC = () => {
 		try {
 			const { node, optionIndex, nextNode }: NodeReturnObject = getNextNode();
 			if (optionIndex !== undefined && nextNode !== undefined) {
+				updatePoints(nextNode);
 				updateMood(nextNode, optionIndex);
+				updateInventory(nextNode, optionIndex);
 			}
 			if (node !== undefined) {
 				setCurrentNode(node);
@@ -179,24 +202,25 @@ const GameTemplate: React.FC = () => {
 			}
 		}
 	}
+	const menuFunctionMap: Map<string, Function> = new Map([
+		["reset", resetGame],
+	])
 	return currentNode === undefined ?
 		(<PageWrapper padding={"1rem"}>
 			<Spinner show={true} color={theme.console_green}/>
-		</PageWrapper>) : currentNode.ID === -99 || game.ID === -99 ?
+		</PageWrapper>) : currentNode.ID === -99 || game!.ID === -99 ?
 			(<PageWrapper padding={"1rem"}>
 				<GameNotFound />
 			</PageWrapper>) : gameLoading ?
 			(<PageWrapper padding={'1rem'}>
-				{/*<Title>{game.Title}</Title>*/}
 				<NodeTextWrapper>
-					<GameLoadScreen gameLoading={gameLoading} gameTitle={game.Title} handleGameLoading={handleGameLoading} />
+					<GameLoadScreen gameLoading={gameLoading} gameTitle={game!.Title} handleGameLoading={handleGameLoading} />
 				</NodeTextWrapper>
 			</PageWrapper>) :
 			(<PageWrapper padding={'1rem'}>
-				{/*<Title>{game.Title}</Title>*/}
 				<ScrollMarker id="scrollMarker"></ScrollMarker>
 				<GameScreenWrapper>
-					<GameMenuBar id="menu-bar" title={game.Title} points={points} resetGame={resetGame}/>
+					<GameMenuBar id="menu-bar" title={game!.Title} points={points} inventoryItems={inventory} functions={menuFunctionMap}/>
 					<NodeTextWrapper onClick={() => checkMenuDropDowns()}>
 						<GameNodeText nodeText={nodeText} status={mood}/>
 						<div id='optionWrapper'>

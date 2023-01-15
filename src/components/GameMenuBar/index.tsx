@@ -1,5 +1,4 @@
-import React, {useContext} from 'react';
-import { ThemeContext} from "styled-components";
+import React, {useState} from 'react';
 import GameMenuItem from "../GameMenuItem";
 import {MdOutlineVideogameAsset} from "react-icons/md";
 import {MenuWrapper, Points} from "./styles";
@@ -7,12 +6,14 @@ import {MenuWrapper, Points} from "./styles";
 interface MenuProps {
     id: string;
     title: string;
-    points: number,
-    resetGame(): void
+    points: number;
+    inventoryItems: string[];
+    functions: Map<string, Function>;
 }
 
 const GameMenuBar:React.FC<MenuProps> = (props) => {
-    const theme = useContext(ThemeContext);
+    const [gameTitle] = useState<string[]>([props.title]);
+    const [fileReset] = useState<string[]>(["reset"]);
     let menuItemMap = new Map<string, string[]>([
         ["Game-drop-content", ["File-drop-content", "Inventory-drop-content"]],
         ["File-drop-content",["Game-drop-content", "Inventory-drop-content"]],
@@ -30,12 +31,12 @@ const GameMenuBar:React.FC<MenuProps> = (props) => {
         clickedElement.classList.toggle("show");
     }
     return (
-        <MenuWrapper id={props.id} color={theme.main_purple}>
+        <MenuWrapper id={props.id} >
             <MdOutlineVideogameAsset />
-            <GameMenuItem menuText={"Game"} isClickable={false} items={[`${props.title}`]} resetGame={props.resetGame} toggleMenuShow={toggleMenuShow}/>
-            <GameMenuItem menuText={"File"} isClickable={true} items={["reset"]} resetGame={props.resetGame} toggleMenuShow={toggleMenuShow}/>
-            <GameMenuItem menuText={"Inventory"} isClickable={false} items={["test"]} resetGame={props.resetGame} toggleMenuShow={toggleMenuShow}/>
-            <Points color={theme.console_green}>{`Points: ${props.points}`}</Points>
+            <GameMenuItem menuText={"Game"} isClickable={false} items={gameTitle} functions={props.functions} toggleMenuShow={toggleMenuShow}/>
+            <GameMenuItem menuText={"File"} isClickable={true} items={fileReset} functions={props.functions} toggleMenuShow={toggleMenuShow}/>
+            <GameMenuItem menuText={"Inventory"} isClickable={false} items={props.inventoryItems} functions={props.functions} toggleMenuShow={toggleMenuShow}/>
+            <Points>{`Points: ${props.points}`}</Points>
         </MenuWrapper>
     );
 }

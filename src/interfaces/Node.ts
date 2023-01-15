@@ -8,6 +8,7 @@ export interface IOptions {
 	Command: string;
 	Mood: string | null;
 	Requires: ILevelRequirements;
+	Inventory: string;
 	NextNode: number;
 }
 export interface INode {
