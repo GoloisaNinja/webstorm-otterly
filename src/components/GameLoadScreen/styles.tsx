@@ -18,7 +18,7 @@ export const GameLoadScreenWrapper = styled.div`
     overflow: hidden;
     white-space: nowrap;
     font-size: 1.8rem;
-    color: #46be0f;
+    color: ${props => props.theme.colors.loading_screen_text};
     font-family: 'VT323', monospace;
     font-weight: 800;
     animation: ${typing} 2s steps(75, end);

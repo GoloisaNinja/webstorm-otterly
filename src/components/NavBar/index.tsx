@@ -1,8 +1,8 @@
-import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React, {useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled, {ThemeContext} from 'styled-components';
 import orhLogo from '../../assets/navIcon.webp';
-import { NavWrapper, NavLinksWrapper } from './styles';
+import { NavWrapper, NavLinksWrapper, MyNavLink } from './styles';
 
 const Logo = styled.img`
 	width: 7.5rem;
@@ -10,6 +10,7 @@ const Logo = styled.img`
 `;
 
 const NavBar: React.FC = () => {
+	const theme = useContext(ThemeContext)
 	const navigate = useNavigate();
 	return (
 		<NavWrapper>
@@ -19,9 +20,9 @@ const NavBar: React.FC = () => {
 				onClick={() => navigate('/')}
 			/>
 			<NavLinksWrapper>
-				<Link to='/games'>games</Link>
-				<Link to='/'>about</Link>
-				<Link to='/'>contact</Link>
+				<MyNavLink color={theme.light_purple} to='/games'>games</MyNavLink>
+				<MyNavLink color={theme.light_purple} to='/'>about</MyNavLink>
+				<MyNavLink color={theme.light_purple} to='/'>contact</MyNavLink>
 			</NavLinksWrapper>
 		</NavWrapper>
 	);

@@ -1,8 +1,9 @@
-import React, {useState, useEffect, ReactElement, useContext} from 'react';
-import { ThemeContext} from "styled-components";
+import React, {useState, useEffect, useContext} from 'react';
+import { ThemeContext, ThemeProvider } from "styled-components";
+import {gameDark, gameLight} from "../../styles/theme";
 import { useParams } from 'react-router-dom';
 import GameLibrary from '../../gameLibrary';
-import {IGame, INode, IOptions} from '../../interfaces/Node';
+import {IGame, INode} from '../../interfaces/Node';
 import GameNotFound from "../../components/GameNotFound";
 import GameLoadScreen from "../../components/GameLoadScreen";
 import GameNodeText from '../../components/GameNodeText';
@@ -10,13 +11,14 @@ import GameNodeInput from "../../components/GameNodeInput";
 import GameMenuBar from "../../components/GameMenuBar";
 import Spinner from "../../components/Spinner";
 import { PageWrapper } from '../../components/PageWrapper';
-import { TypewriterStylePTag} from "../../components/TypewriterStyledPTag";
 import {
 	ScrollMarker,
+	LoadingTextWrapper,
 	NodeTextWrapper,
 	ErrorTerminal,
 	GameScreenWrapper,
 } from './styles';
+import GameOptions from "../../components/GameOptions";
 
 const GameTemplate: React.FC = () => {
 	const defaultErrorMessage: string = '<null>';
@@ -25,18 +27,42 @@ const GameTemplate: React.FC = () => {
 	const gameId = parseInt(params.id!);
 	const [gameLoading, setGameLoading] = useState(true);
 	const [game, setGame] = useState<IGame>();
+	const [currentGameTheme, setCurrentGameTheme] = useState<any>();
 	const [currentNode, setCurrentNode] = useState<INode>();
 	const [userInput, setUserInput] = useState('');
 	const [mood, setMood] = useState('unknown');
 	const [inventory, setInventory] = useState(["empty"]);
 	const [nodeText, setNodeText] = useState("");
 	const [points, setPoints] = useState(0);
+	const [options, setOptions] = useState<string[]>([]);
 	const [errorMessage, setErrorMessage] = useState(defaultErrorMessage);
+
+	function toggleTheme(): void {
+		let currentTheme = localStorage.getItem("game-theme")!;
+		if (currentTheme === "game-light") {
+			setCurrentGameTheme(gameDark);
+			localStorage.setItem("game-theme", "game-dark")
+		} else {
+			setCurrentGameTheme(gameLight)
+			localStorage.setItem("game-theme", "game-light")
+		}
+	}
+
+	function assessValidOptions(node: INode) {
+		if (node.ID === 1) {
+			let newNodeOptions: string[] = node.NodeOptions.map((option) => option.Text);
+			setOptions(newNodeOptions);
+		} else {
+			let newNodeOptions: string[] = node.NodeOptions.map((option) => option.Text);
+			setOptions(newNodeOptions);
+		}
+	}
 
 	function resetGame(): void {
 		if (game!.ID !== -99) {
 			const startingNode: INode = game!.getNodeById(1);
 			setCurrentNode(startingNode);
+			assessValidOptions(startingNode);
 			updatePoints(1);
 			updateMood(1, 0);
 			updateInventory(1,0)
@@ -59,7 +85,19 @@ const GameTemplate: React.FC = () => {
 		}
 		function startGame(): void {
 			if (game !== undefined) {
-				setCurrentNode(game.getNodeById(1));
+				let firstNode: INode = game.getNodeById(1);
+				setCurrentNode(firstNode);
+				assessValidOptions(firstNode);
+				let themeToUse = gameDark;
+				if (localStorage.getItem("game-theme") !== null) {
+					let gameTheme = localStorage.getItem("game-theme");
+					if (gameTheme === "game-light") {
+						themeToUse = gameLight;
+					}
+				} else {
+					localStorage.setItem("game-theme", "game-dark");
+				}
+				setCurrentGameTheme(() => themeToUse);
 			}
 		}
 		startGame();
@@ -111,7 +149,7 @@ const GameTemplate: React.FC = () => {
 		}
 	}
 
-	// Interface for getNodeReturn
+	// type for getNextNode function
 	type NodeReturnObject = {
 		node: INode | undefined,
 		optionIndex: number | undefined,
@@ -168,6 +206,7 @@ const GameTemplate: React.FC = () => {
 				updateInventory(nextNode, optionIndex);
 			}
 			if (node !== undefined) {
+				assessValidOptions(node);
 				setCurrentNode(node);
 				setUserInput("");
 				resetErrorMsgToDefault();
@@ -180,20 +219,6 @@ const GameTemplate: React.FC = () => {
 		}
 	}
 
-	function verifyMoodAndInventory(option: IOptions): ReactElement | null {
-		// Mood Check
-		let moodCheck = false;
-		if (
-			(option.Requires.Mood !== null && option.Requires.Mood === mood) ||
-			option.Requires.Mood === null
-		) {
-			moodCheck = true;
-		}
-		if (moodCheck) {
-			return <TypewriterStylePTag color={theme.console_green} key={option.ID}>{option.Text}</TypewriterStylePTag>;
-		}
-		return null;
-	}
 	function checkMenuDropDowns(): void {
 		const dropdowns = document.querySelectorAll(".content-dropdown")!
 		for (let i = 0; i < dropdowns.length; i++) {
@@ -202,8 +227,30 @@ const GameTemplate: React.FC = () => {
 			}
 		}
 	}
+
+	// menuItemMap for toggleMenuShow function to determine what other menus
+	// should be check for show props
+	let menuItemMap = new Map<string, string[]>([
+		["Game-drop-content", ["File-drop-content", "Inventory-drop-content"]],
+		["File-drop-content",["Game-drop-content", "Inventory-drop-content"]],
+		["Inventory-drop-content",["Game-drop-content", "File-drop-content"]]
+	]);
+
+	function toggleMenuShow(id: string): void {
+		const clickedElement = document.getElementById(id)!;
+		const menuItemElements = menuItemMap.get(id)!;
+		for (let elId of menuItemElements) {
+			let el = document.getElementById(elId)!;
+			if (el.classList.contains("show")) {
+				el.classList.toggle("show");
+			}
+		}
+		clickedElement.classList.toggle("show");
+	}
 	const menuFunctionMap: Map<string, Function> = new Map([
+		["theme", toggleTheme],
 		["reset", resetGame],
+		["toggle", toggleMenuShow]
 	])
 	return currentNode === undefined ?
 		(<PageWrapper padding={"1rem"}>
@@ -213,25 +260,36 @@ const GameTemplate: React.FC = () => {
 				<GameNotFound />
 			</PageWrapper>) : gameLoading ?
 			(<PageWrapper padding={'1rem'}>
-				<NodeTextWrapper>
-					<GameLoadScreen gameLoading={gameLoading} gameTitle={game!.Title} handleGameLoading={handleGameLoading} />
-				</NodeTextWrapper>
+				<ThemeProvider theme={currentGameTheme}>
+				<LoadingTextWrapper>
+					<GameLoadScreen gameLoading={gameLoading}
+									gameTitle={game!.Title}
+									handleGameLoading={handleGameLoading}
+					/>
+				</LoadingTextWrapper>
+				</ThemeProvider>
 			</PageWrapper>) :
 			(<PageWrapper padding={'1rem'}>
+				<ThemeProvider theme={currentGameTheme}>
 				<ScrollMarker id="scrollMarker"></ScrollMarker>
 				<GameScreenWrapper>
-					<GameMenuBar id="menu-bar" title={game!.Title} points={points} inventoryItems={inventory} functions={menuFunctionMap}/>
+					<GameMenuBar id="menu-bar"
+								 title={game!.Title}
+								 points={points}
+								 inventoryItems={inventory}
+								 functions={menuFunctionMap}
+					/>
 					<NodeTextWrapper onClick={() => checkMenuDropDowns()}>
 						<GameNodeText nodeText={nodeText} status={mood}/>
-						<div id='optionWrapper'>
-							{currentNode.NodeOptions.map((option) => {
-								return verifyMoodAndInventory(option);
-							})}
-						</div>
-						<GameNodeInput handleInputChange={handleInputChange} handleUserInput={handleUserInput} userInput={userInput} />
-						<ErrorTerminal color={theme.console_error}>Error@Console ~ % {errorMessage}</ErrorTerminal>
+						<GameOptions options={options} />
+						<GameNodeInput handleInputChange={handleInputChange}
+									   handleUserInput={handleUserInput}
+									   userInput={userInput}
+						/>
+						<ErrorTerminal>Error@Console ~ % {errorMessage}</ErrorTerminal>
 					</NodeTextWrapper>
 				</GameScreenWrapper>
+				</ThemeProvider>
 			</PageWrapper>);
 };
 

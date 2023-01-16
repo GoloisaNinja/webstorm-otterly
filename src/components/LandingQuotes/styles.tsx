@@ -37,6 +37,8 @@ export const Quote = styled.p`
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	transition: all 0.4s ease-in-out;
 	&:hover {
+        background-color: ${props => props.color};
+        color: #fff;
 		transform: scale(1.03);
 	}
 	@media (min-width: 1000px) {

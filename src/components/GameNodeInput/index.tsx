@@ -1,21 +1,21 @@
-import React, {useContext} from 'react';
-import {ThemeContext} from "styled-components";
+import React from 'react';
+import {withTheme} from "styled-components";
 import {InputWrapper, StyledInput, TerminalSpan} from "./styles";
+interface Theme {}
 interface InputProps {
     handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void;
     handleUserInput(): void;
     userInput: string;
+    theme: Theme;
 }
 const GameNodeInput:React.FC<InputProps> = (props) => {
-    const theme = useContext(ThemeContext)
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         props.handleInputChange(e);
     }
     return (
         <InputWrapper>
-            <TerminalSpan color={theme.console_green}>{`command `}</TerminalSpan>
+            <TerminalSpan>{`command `}</TerminalSpan>
             <StyledInput
-                color={theme.console_green}
                 autoFocus
                 value={props.userInput}
                 onChange={(e) => handleChange(e)}
@@ -26,4 +26,4 @@ const GameNodeInput:React.FC<InputProps> = (props) => {
 
     );
 }
-export default GameNodeInput;
+export default withTheme(GameNodeInput);

@@ -12,7 +12,7 @@ const blink = keyframes`
 `;
 
 export const Text = styled.p`
-  color: #fff;
+  color: ${props => props.theme.colors.text_color};
   font-size: 1.85rem;
   letter-spacing: .12rem;
   line-height: 1.3;
@@ -22,6 +22,7 @@ export const Text = styled.p`
 export const Status = styled(TypewriterStylePTag)`
   font-size: 1.85rem;
   margin-bottom: .3rem;
+  color: ${props => props.theme.colors.status_color};
   animation: ${typing} 5s steps(95, end);
   &::after {
     content: " _";

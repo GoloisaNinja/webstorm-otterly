@@ -1,29 +1,32 @@
 import React, {useEffect} from 'react';
+import {withTheme} from "styled-components";
 import { nanoid } from 'nanoid';
 import {GameLoadScreenWrapper} from "./styles";
 
+interface Theme {}
 interface GameLoadingScreenProps {
     gameLoading: boolean;
     gameTitle: string;
     handleGameLoading():void
+    theme: Theme;
 }
 
 const GameLoadScreen: React.FC<GameLoadingScreenProps> = (props) => {
     const loadingTextArray: string[] = [
         "BOOT SEQUENCE INITIATED...",
         "CHECKING RAM...",
-        "64KB RAM FOUND 58KB USABLE",
+        "64K RAM SYSTEM 38911 BASIC BYTES FREE",
         "CHECKING HARD DISK...",
         "HARD DISK FOUND...",
         "LOADING SYSTEM BIOS...",
         "BIOS LOADED SUCCESSFULLY",
         "OTTER OS VERSION 1.4 FOUND",
+        "JOYSTICK PORT NOT DETECTED...",
         "ENGAGING RIDICULOUSNESS ENGINE...",
         "MAX RIDICULOUSNESS ACHIEVED",
         `${props.gameTitle} REQUESTED...`,
-        "GAME FOUND...",
-        "JOYSTICK PORT NOT DETECTED...",
         "RESOLVING OTTERS...",
+        "READY...",
     ]
     function populateLoadScreenLoadingText(): void {
         const loadElement = document.getElementById("loadWrapper")!;
@@ -50,4 +53,4 @@ const GameLoadScreen: React.FC<GameLoadingScreenProps> = (props) => {
         <GameLoadScreenWrapper id="loadWrapper"></GameLoadScreenWrapper>
     )
 }
-export default GameLoadScreen;
+export default withTheme(GameLoadScreen);

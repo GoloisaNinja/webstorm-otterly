@@ -14,8 +14,8 @@ export const TerminalSpan = styled.span`
 	font-family: 'VT323', monospace;
 	font-size: 1.8rem;
 	font-weight: 800;
-	color: black;
-    background-color: ${props => props.color};
+	color: ${props => props.theme.colors.input_text_color};
+    background-color: ${props => props.theme.colors.input_highlight};
     padding-left: .15rem;
     padding-right: 1rem;
     &::after {
@@ -28,10 +28,10 @@ export const TerminalSpan = styled.span`
 export const StyledInput = styled.input`
     display: flex;
 	border: none;
-	background: ${props => props.color};
+	background: ${props => props.theme.colors.input_highlight};
 	font-family: 'VT323', monospace;
 	font-size: 2.1rem;
-	color: black;
+	color: ${props => props.theme.colors.input_text_color};
     margin-left: -.3rem;
     min-height: 28.8px;
     padding-bottom: .2rem;
