@@ -38,6 +38,7 @@ export const ItemWrapper = styled.div`
   justify-content: left;
   > p {
     ${commonMenuItem};
+    color: ${props => props.theme.colors.drop_down_text};
   }
   > button {
     ${commonMenuItem};

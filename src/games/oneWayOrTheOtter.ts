@@ -21,7 +21,7 @@ const oneWayOrTheOtter: IGame = {
                 },
                 {
                     ID: '1b',
-                    Text: `Type “epep” Engage EPEP switch`,
+                    Text: `Type “epep” to Engage EPEP switch`,
                     Command: `epep`,
                     Mood: 'relief',
                     Requires: {Mood: null, Inventory: []},

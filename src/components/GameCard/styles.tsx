@@ -8,7 +8,7 @@ export const GameCardWrapper = styled.div`
   width: 100%;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  animation: ${fadeIn} .8s ease-in-out;
+  animation: ${fadeIn} 1.8s ease-in-out;
   transition: all .4s ease-in-out;
   &:hover {
     transform: scale(1.03);
