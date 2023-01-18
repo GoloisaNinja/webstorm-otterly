@@ -82,6 +82,7 @@ export const HeroContentWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+    margin-top: 4rem;
 `;
 export const InnerWrapper = styled.div`
 	display: flex;
@@ -92,14 +93,11 @@ export const InnerWrapper = styled.div`
 	}
 `;
 export const InfoBoxWrapper = styled.div`
-	display: grid;
-	grid-gap: 3rem;
-	grid-template-areas: 'a b';
-	@media (max-width: 35rem) {
-		grid-template-areas:
-			'a'
-			'b';
-	}
+	display: flex;
+    align-items: center;
+    @media (max-width: 849px) {
+      margin-top: 4rem;
+    }
 	@media (min-width: 1000px) {
 		margin-left: 4rem;
 	}
@@ -109,11 +107,8 @@ export const InfoBoxWrapper = styled.div`
 `;
 export const InfoBox = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
-	border: 1px solid #fff;
-	background-color: black;
-	border-radius: 5px;
-	padding: 2rem;
     min-height: 250px;
   @media (max-width: 350px) {
     min-height: 250px;
@@ -125,14 +120,20 @@ export const InfoBox = styled.div`
     min-height: 185px;
   }
 `;
+export const HeroInfoHeader = styled.h3`
+  font-size: 4rem;
+  line-height: 1.2;
+  color: #eee; 
+  margin-bottom: 2rem;
+  @media (min-width: 1000px) {
+    font-size: 6rem;
+  }
+`;
 export const HeroInfo = styled.p`
-	font-size: 1.3rem;
-    font-family: 'Source Code Pro', monospace;
-	color: #eee;
-	white-space: pre-wrap;
-	@media (min-width: 1000px) {
-		font-size: 1.4rem;
-	}
+	font-size: 2.6rem;
+    font-weight: 500;
+    color: #ccc;
+    line-height: 1.2;
 `;
 
 export const ButtonWrapper = styled.div`

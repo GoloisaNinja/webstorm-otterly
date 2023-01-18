@@ -4,7 +4,9 @@ import Quotes from '../../quotes/quotes';
 import { PurpleSpan } from '../PurpleSpan';
 import {
 	QuotesSectionWrapper,
-	QuoteSectionIntro,
+	QuoteIntro,
+	QuoteHeader,
+	QuoteInfo,
 	QuoteGrid,
 	Quote,
 } from './styles';
@@ -31,14 +33,17 @@ const LandingQuotes: React.FC = () => {
 		fillRandomQuotes();
 	}, []);
 	return quotes.length === 3 ? (
-		<QuotesSectionWrapper>
-			<QuoteSectionIntro color={theme.main_purple}>
-				what are people saying about <PurpleSpan>otterly?</PurpleSpan>
-			</QuoteSectionIntro>
+		<QuotesSectionWrapper theme={theme}>
+			<QuoteIntro>
+				<QuoteHeader>
+					what are people saying about <PurpleSpan>otterly?</PurpleSpan>
+				</QuoteHeader>
+				<QuoteInfo>what can we say? our games have an effect on people! have a look at what real players are really saying about otterly text adventures, for reals</QuoteInfo>
+			</QuoteIntro>
 			<QuoteGrid>
-				<Quote color={theme.main_purple}>{quotes[0]}</Quote>
-				<Quote color={theme.main_purple}>{quotes[1]}</Quote>
-				<Quote color={theme.main_purple}>{quotes[2]}</Quote>
+				<Quote>{quotes[0]}</Quote>
+				<Quote>{quotes[1]}</Quote>
+				<Quote>{quotes[2]}</Quote>
 			</QuoteGrid>
 		</QuotesSectionWrapper>
 	) : (

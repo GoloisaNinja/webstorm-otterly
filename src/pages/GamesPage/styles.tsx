@@ -23,10 +23,10 @@ export const GamesPageHeroText = styled.h1`
       font-size: 8rem;
     }
 `;
-export const GamesPageHeroSubText = styled.h2`
-  font-size: 2.4rem;
-  font-weight: 400;
-  line-height: 1.0;
-  color: #eee;
+export const GamesPageHeroSubText = styled.p`
+  font-size: 2.6rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #ccc;
   margin-top: 2rem;
 `;

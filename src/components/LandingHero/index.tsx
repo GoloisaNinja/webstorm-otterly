@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import styled, { ThemeContext } from 'styled-components';
 import OtterSrc from '../../assets/waving.webp';
 import { Button } from '../Button';
+import {PurpleSpan} from "../PurpleSpan";
 import {
 	HeroWrapper,
 	HeroText,
@@ -13,6 +14,7 @@ import {
 	InnerWrapper,
 	InfoBoxWrapper,
 	InfoBox,
+	HeroInfoHeader,
 	HeroInfo,
 	ButtonWrapper,
 } from './styles';
@@ -55,7 +57,7 @@ content
 		handleHeroText();
 	}, [heroText]);
 	return (
-		<HeroWrapper>
+		<HeroWrapper theme={theme}>
 			<OuterWrapper>
 				<HeroText id='heroText'></HeroText>
 				<HeroSubText>history</HeroSubText>
@@ -68,10 +70,8 @@ content
 					</OtterWrapper>
 					<InfoBoxWrapper>
 						<InfoBox>
-							<HeroInfo>{iBox1Txt}</HeroInfo>
-						</InfoBox>
-						<InfoBox>
-							<HeroInfo>{iBox2Txt}</HeroInfo>
+							<HeroInfoHeader>what is <PurpleSpan>otterly?</PurpleSpan></HeroInfoHeader>
+							<HeroInfo>fun and funny text adventure games featuring otters, in beautiful retro styles, choose your theme, build your inventory, be an otter!</HeroInfo>
 						</InfoBox>
 					</InfoBoxWrapper>
 				</InnerWrapper>

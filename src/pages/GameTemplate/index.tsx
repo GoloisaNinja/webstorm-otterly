@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import { ThemeContext, ThemeProvider } from "styled-components";
 import {gameDark, gameLight} from "../../styles/theme";
 import { useParams } from 'react-router-dom';
@@ -48,15 +48,31 @@ const GameTemplate: React.FC = () => {
 		}
 	}
 
-	function assessValidOptions(node: INode) {
+	const assessValidOptions = useCallback((node: INode): void => {
 		if (node.ID === 1) {
 			let newNodeOptions: string[] = node.NodeOptions.map((option) => option.Text);
 			setOptions(newNodeOptions);
 		} else {
-			let newNodeOptions: string[] = node.NodeOptions.map((option) => option.Text);
+			let newNodeOptions: string[] = [];
+			node.NodeOptions.forEach((o) => {
+				let shouldAdd: boolean = true;
+				let { Mood, Inventory } = o.Requires
+				if (Inventory.length > 0) {
+					if (!inventory.includes(Inventory[0])) {
+						shouldAdd = false;
+					}
+				}
+				if (Mood !== null && mood !== Mood) {
+					shouldAdd = false;
+				}
+				if (shouldAdd) {
+					newNodeOptions.push(o.Text);
+				}
+
+			})
 			setOptions(newNodeOptions);
 		}
-	}
+	},[inventory, mood]);
 
 	function resetGame(): void {
 		if (game!.ID !== -99) {
@@ -87,7 +103,6 @@ const GameTemplate: React.FC = () => {
 			if (game !== undefined) {
 				let firstNode: INode = game.getNodeById(1);
 				setCurrentNode(firstNode);
-				assessValidOptions(firstNode);
 				let themeToUse = gameDark;
 				if (localStorage.getItem("game-theme") !== null) {
 					let gameTheme = localStorage.getItem("game-theme");
@@ -106,8 +121,9 @@ const GameTemplate: React.FC = () => {
 	useEffect(() => {
 		if (currentNode !== undefined) {
 			setGameText(currentNode.Text);
+			assessValidOptions(currentNode);
 		}
-	}, [currentNode]);
+	}, [currentNode, assessValidOptions]);
 
 	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
 		setUserInput(e.target.value);
@@ -128,9 +144,9 @@ const GameTemplate: React.FC = () => {
 	function updateMood(nodeIndex: number, optionIndex: number): void {
 		let mood: string | undefined | null;
 		mood = currentNode?.NodeOptions[optionIndex].Mood;
-		if (mood !== undefined) {
+		if (mood !== undefined && mood !== "") {
 			const newMood = mood === null || nodeIndex === 1 ? "unknown" : mood;
-			setMood(newMood);
+			setMood(() => newMood);
 		}
 	}
 
@@ -206,7 +222,6 @@ const GameTemplate: React.FC = () => {
 				updateInventory(nextNode, optionIndex);
 			}
 			if (node !== undefined) {
-				assessValidOptions(node);
 				setCurrentNode(node);
 				setUserInput("");
 				resetErrorMsgToDefault();
