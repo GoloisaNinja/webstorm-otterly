@@ -269,7 +269,7 @@ const oneWayOrTheOtter: IGame = {
                     Mood: `ain't nobody got time for that`,
                     Requires: {Mood: null, Inventory: []},
                     Inventory: "",
-                    NextNode: 0
+                    NextNode: 16
                 },
                 {
                     ID: "14b",
@@ -278,7 +278,7 @@ const oneWayOrTheOtter: IGame = {
                     Mood: "",
                     Requires: {Mood: null, Inventory: []},
                     Inventory: "",
-                    NextNode: 0
+                    NextNode: 17
                 },
             ],
             EarnedPoints: 10
@@ -322,7 +322,7 @@ const oneWayOrTheOtter: IGame = {
                 {
                     ID: "17a",
                     Text: `Text “continue” to continue to comms`,
-                    Command: "",
+                    Command: "continue",
                     Mood: "",
                     Requires: {Mood: null, Inventory: []},
                     Inventory: "",
@@ -415,28 +415,151 @@ const oneWayOrTheOtter: IGame = {
         },
         {
             ID: 22,
-            Text: `“Hey! Not sure who is in the comms area, but comms are still pretty finicky. They are SUPER unreliable at the moment from ship to anything outside. So I kinda didn’t catch a word of that.” is the initial reply from the space walking otter. A tear forms in your right tear duct and slowly falls down your adorable cheek. You just gave the best speech ever and this space monkey didn’t even hear it. “Hey, I’m glad you’re in there though” the space otter continues. “I’m gonna need you to do a few things for me if we are going to get this emergency beacon back up and running. It’s a real mess out here - but I reckon there’s some fixes that need done to the comms console as well. Don’t worry - even if you’ve never used a comm unit before, I can talk you through what I want you to do, okay?” the otter says. “Now I want you to remove the main comm panel housing and DON’T TOUCH ANYTHING until I tell you too. Okay?” space otter rambles on.`,
+            Text: `“Hey! Not sure who is in the comms area, but comms are still pretty finicky. They are SUPER unreliable at the moment from ship to anything outside. So I kinda didn’t catch a word of that, transmission came through all garbled I'm afraid….” is the initial reply from the space walking otter. A tear forms and slowly falls down your adorable cheek. You just gave the best speech ever and this space monkey didn’t even hear it. “Hey, I’m glad you’re in there though” the space otter continues. “I've spliced the busted backup into the auxiliary power unit for the dish array and I've rerouted the frequency buffers up to the bridge relay. But the bridge transmitter is showing a fault out here - and the bad news is, the comms panel transmitter you’re sitting at is also showing fault. It’s a real mess out here - and I need to work on boosting our signal while you get that comm panel fault sorted. We are running out of time! Last report I got, we were hurtling at a high rate of speed out of the sector - if we don’t restore comms immediately, we’ll travel beyond the range of our array and any messages we send will be received too late!” the otter says. “I’ll be working on the signal booster out here - whoever you are - I need you to fix the fault on the comms panel in there. As soon as the fault is fixed, the wideband EMC, emergency message channel button, will light up. When it does, just hit that button and our emergency distress signal will be sent in repeating intervals automatically! The fate of the One Way or the Otter is in your hands!” space otter rambles on.`,
             NodeOptions: [
                 {
                     ID: "22a",
-                    Text: `Type "listen" to take direction from the EEV otter`,
-                    Command: "listen",
+                    Text: `Type "hero time" to save the freaking world`,
+                    Command: "hero time",
                     Mood: "",
-                    Requires: {Mood: "calm", Inventory: []},
-                    Inventory: "",
-                    NextNode: 23
-                },
-                {
-                    ID: "22b",
-                    Text: `Type "rogue" to take offence and go totally rogue on this sob`,
-                    Command: "rogue",
-                    Mood: "",
-                    Requires: {Mood: "autocrat", Inventory: []},
+                    Requires: {Mood: null, Inventory: []},
                     Inventory: "",
                     NextNode: 23
                 },
             ],
             EarnedPoints: 5
+        },
+        {
+            ID: 23,
+            Text: `It's really too bad EEV otter didn't hear your speech. I mean you really put a lot into that. You're about to re-deliver the entire speech, but another powerful explosion rocks the ship. It's probably best just to let it go, and focus on saving the world. You’ve got your work cut out for you given you really have no idea where to start on this comms panel. The EMC button is, indeed, not lit. You jam it a few times anyway - I mean, maybe the LED is just broken right? Fat chance, given your luck today. There’s a removable door labeled “Comm panel board access” which seems as good a place as any to start your saving the world business. You remove the door and an almost comical little puff of smoke escapes and vanishes into a haze near the ceiling. That’s probably not great. There’s definitely power reaching the board, in general, but there seems to be an issue with power reaching the left side of the board. Not only is the EMC button dark, but almost every button on that side of the panel is as well. What do you want to do?`,
+            NodeOptions: [
+                {
+                    ID: "23a",
+                    Text: `Type “inspect” to try and trace the wiring`,
+                    Command: "inspect",
+                    Mood: "",
+                    Requires: {Mood: "calm", Inventory: []},
+                    Inventory: "",
+                    NextNode: 24
+                },
+                {
+                    ID: "23b",
+                    Text: `Type “bridge” to abandon comms and solve from bridge like a captain`,
+                    Command: "bridge",
+                    Mood: "hello time bomb",
+                    Requires: {Mood: "autocrat", Inventory: []},
+                    Inventory: "",
+                    NextNode: 25
+                },
+                {
+                    ID: "23c",
+                    Text: `Type “help” to ask EEV otter for help`,
+                    Command: "help",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 22
+                },
+            ],
+            EarnedPoints: 15
+        },
+        {
+            ID: 24,
+            Text: `Time is a real issue here, but losing your cool isn’t going to do anyone any good. You’ve got to trace down this wiring issue. There’s a mess of harnesses and wires that run from each of the panel buttons, the problem is going to be trying to isolate the problem wires that are connected to the EMC. After what seems like an eternity, you are pretty sure you’ve got the correct EMC wire harness located. It’s in pretty bad shape. It looks like there was a power surge at some point and you can see obvious melting of some of the harness couplers and wire insulation. You are seriously running out of time. What are you going to do now?`,
+            NodeOptions: [
+                {
+                    ID: "24a",
+                    Text: `Type "wires" to use the wires from your inventory!`,
+                    Command: "wires",
+                    Mood: "Wired",
+                    Requires: {Mood: null, Inventory: ["wires"]},
+                    Inventory: "",
+                    NextNode: 26
+                },
+                {
+                    ID: "24b",
+                    Text: `Type "wiggle" to wiggle and jiggle the wire harness`,
+                    Command: "wiggle",
+                    Mood: "Desperation",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 27
+                },
+            ],
+            EarnedPoints: 15
+        },
+        {
+            ID: 25,
+            Text: `This is stupid. You are the freaking captain. You thought there’d be otters down here in comms that knew what they were doing! Not just some random EEV otter messing around with wrenches in space in an admittedly adorable otter space suit. You know next to nothing about fixing communications panels and even if you did, you’d delegate that knowledge because that is what awesome captains do! You can’t even properly communicate with the EEV otter! Your best bet is to double-time it back to the main corridor and make your way to the bridge. EEV otter said their EMC had a fault as well, but there will be otters on the bridge that will know how to sort that nonsense. Besides, when the rescue does arrive, where do you want to be found? In some dirty comms closet or on the bridge in a super comfy chair with a steaming cup of Earl Grey, hot. This decision is not hard. You abandon the comms room and begin making your way back down the corridor retracing your steps. You are skittering past medical and muttering about how good that tea is going to taste when a massive piece of debris crashes through the hull into the medical bay causing a massive fireball that ignites the hundreds of oxygen canisters weirdly piled up in the corner. Your last thoughts are how many times you told those stupid otter doctors not to pile up the oxygen canisters like some kind of ridiculous video game for precisely this reason. The One Way or the Otter breaks up entirely in a terrific explosion, scattering far and wide into the blackness of space. Your tiny little frozen otter body is never found. Game Over.`,
+            NodeOptions: [
+                {
+                    ID: "25a",
+                    Text: `Type "s" to Start Over`,
+                    Command: "s",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1
+                },
+            ],
+            EarnedPoints: -500
+        },
+        {
+            ID: 26,
+            Text: `You suddenly remember the mess of wires you picked up after you tried to get the comms hatch open by hot-wiring the hydraulics! You excitedly pull them from your uniform and examine the gauge. Astonishingly, the gauge seems to be about right! With a little luck you could replace the fried wires in the harness with these beauties! It’s the first bit of good luck you’ve had all day and you keep expected to get flat out electrocuted to death as you are swapping out the wires for the undamaged ones - but you don’t die, so that’s super cool. With each of wires replaced, you excitedly hop up to look at the EMC button on the panel’s top. To your utter dismay - the button is STILL not lit. ARRGGGGGHHHHHH! You did everything right! You just give and give and give to this stupid flying junk pile and all it ever does it take, take, take! This is the absolute worst day ever! I mean, you didn’t even get any Cocoa Puffs for breakfast! Nothing! You woke up in some stupid pod, full of gooey gel, and it’s been an utter hellscape ever since!`,
+            NodeOptions: [
+                {
+                    ID: "26a",
+                    Text: `Type “kick” to start kicking the comms panel for being dumb`,
+                    Command: "kick",
+                    Mood: "Otterly Disappointed",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 27
+                },
+                {
+                    ID: "26b",
+                    Text: `Type “bash” to use the MHRL to bash the comms panel`,
+                    Command: "bash",
+                    Mood: "Bashy Otter",
+                    Requires: {Mood: null, Inventory: ["MHRL"]},
+                    Inventory: "",
+                    NextNode: 28
+                },
+            ],
+            EarnedPoints: 20
+        },
+        {
+            ID: 27,
+            Text: `You otterly lose your sh*& and start repeatedly kicking the stupid comms panel. This stupid piece of junk is going to get you all killed and it’s not fair! It’s NOT FAIR! You are too beautiful to die in space! All this stupid panel had to do was light up the EMC button! That’s all! You rewired the stupid thing like some kind of Weasel MacGyver and what? NOTHING! You land a particularly vicious kick which, in turn, cracks your little toe bones sending arcs of shooting pain up through your leg. You howl in pain and frustration and start hopping around on your one good leg. A particularly large explosion rocks the ship, yet again, and sends you hopping out of the comms room, off balance, down the corridor into the medical bay. You are so off balance and just trying to keep from falling and hurting yourself more as you fly into a corner filled with oxygen tanks in the medical bay. There are loud clunks and bangs all around you as the oxygen tanks clatter all over the floor. In what could possibly be the most ridiculous Rube Goldberg mechanism you’ve ever seen, an oxygen tank rolls along the med-bay, slams into a med-card, which in turn, causes the med-cart drawers to fly open. Another jolt from the ship causes all the scalpels in med-cart drawer to come flying out like something out of a Spruce Lee (the amazing kung-fu otter from Canada) movie. The scalpels puncture a bunch of IV bags causing their liquid to squirt out everywhere and in all directions. Some of the IV fluid sprays over one of the portable defibrillator units nearby and causes a shower of sparks. It would be almost beautiful if you weren’t collapsed amongst a scattered array of leaking oxygen tanks. The ensuing explosion is massive enough to be catastrophic for the One Way or the Otter. As both you and the Medical Bay are first, engulfed in flames, then shot out into space in the resulting decompression, you can’t help but think. Worth it. That stupid comms panel is now also dead. It’s a hollow victory. But it’s still a victory. Game Over.`,
+            NodeOptions: [
+                {
+                    ID: "27a",
+                    Text: `Type "s" to Start Over`,
+                    Command: "s",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1
+                },
+            ],
+            EarnedPoints: -500
+        },
+        {
+            ID: 28,
+            Text: `You can’t believe it. This. Stupid. Panel. You have literally woken up in a tube of goo, been tossed around the ship like a freaking rag doll, crawled through grease and grime, overcome numerous life threatening situations, and this panel, this panel, had the freaking AUDACITY, to deny your Weasel MacGyver rewire as a suitable fix for the EMC! No. NO! THAT’S IT! You have absolutely had it. You feel the weight of the MHRL bouncing in your uniform as you begin floating like a butterfly around the comms panel. “So that’s how you wanna do me Comms Panel?” you scream like a crazy otter. “THAT’S HOW YOU WANNA DO ME?? YOU WANNA DO ME DIRTY!” you howl. You take the MHRL from your uniform and begin bashing the comms panel like it took your money. You are utterly relentless. The violence and frustration of the whole day pours out of you like an energy drink being shotgunned by an awkward teenager on TikTok. And then suddenly, through your red haze of anger, you perceive a light. It almost doesn’t register at first. But there it is. The EMC button is lit! THE EMC BUTTON IS LIT! You drop the MHRL and rapidly begin pushing the EMC button, over, and over, and over again! Suddenly the EEV otter comes screaming across the channel. “YOU DID IT, OH MY GOD YOU ACTUALLY DID IT!”. The EEV otter is hooting and hollering and doing (rather appropriately) a moonwalk celebration dance. The comms channels suddenly crackle to life with a repeating transmission from Titan alerting the One Way or the Otter that a rescue ship has been dispatched. As you collapse into one of the chairs in front of the comm panel, you can’t help but think what a great captain you are. What skill and prowess you possess to be able to solve such complex problems in a life and  death situation. Much later in your debrief, you’ll be asked how you managed to repair a comms panel that had, so clearly, been viciously damaged. One interviewer will comment how the comms panel “...appeared to have been severely dented and nearly catastrophically bashed.”. You only respond that there was a lot of debris flying around the ship. You wonder how the damage occurred as well, but it must’ve happened amongst all the chaos of the ship pitching and spinning. You’ll smile to yourself as you say this and you’ll go back to your quarters and kiss the MHRL that you’ve framed behind glass. Only a true captain could bash the crap out of something and get it to work like that. You smile again as settle into your little otter bed, content in knowing that you saved the day. But just before you doze off to sleep, you realize. Wait. No one in that debrief ever called you Captain. Your eyes burst open. You are the Captain right? *COMMS ENDING ACHIEVED - CONGRATULATIONS - GAME OVER*`,
+            NodeOptions: [
+                {
+                    ID: "28a",
+                    Text: `Congratulations - type "winner" to Start Over`,
+                    Command: "winner",
+                    Mood: "COMMS CHAMPION",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1
+                },
+            ],
+            EarnedPoints: 500
         },
     ],
     getNodeById(n: number) {
