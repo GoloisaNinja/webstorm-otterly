@@ -1,311 +1,207 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
-import { ThemeContext, ThemeProvider } from "styled-components";
+import {ThemeContext, ThemeProvider} from "styled-components";
 import {gameDark, gameLight} from "../../styles/theme";
-import { useParams } from 'react-router-dom';
-import GameLibrary from '../../gameLibrary';
-import {IGame, INode} from '../../interfaces/Node';
+import {useSelector, useDispatch} from "react-redux";
+import {
+    gamesSelector,
+    setGame,
+    setNode,
+    setMood,
+    setPoints,
+    setErrorMessage,
+    setGameLoading,
+    resetGame,
+    gameCleanUp
+} from "../../features/games/gamesSlice";
+import {useParams} from 'react-router-dom';
+import {IOptions} from "../../interfaces/Node";
 import GameNotFound from "../../components/GameNotFound";
 import GameLoadScreen from "../../components/GameLoadScreen";
 import GameNodeText from '../../components/GameNodeText';
+import GameOptions from "../../components/GameOptions";
 import GameNodeInput from "../../components/GameNodeInput";
 import GameMenuBar from "../../components/GameMenuBar";
 import Spinner from "../../components/Spinner";
-import { PageWrapper } from '../../components/PageWrapper';
+import {PageWrapper} from '../../components/PageWrapper';
 import {
-	ScrollMarker,
-	LoadingTextWrapper,
-	NodeTextWrapper,
-	ErrorTerminal,
-	GameScreenWrapper,
+    ScrollMarker,
+    LoadingTextWrapper,
+    NodeTextWrapper,
+    ErrorTerminal,
+    GameScreenWrapper,
 } from './styles';
-import GameOptions from "../../components/GameOptions";
 
 const GameTemplate: React.FC = () => {
-	const defaultErrorMessage: string = '<null>';
-	const theme = useContext(ThemeContext);
-	const params = useParams();
-	const gameId = parseInt(params.id!);
-	const [gameLoading, setGameLoading] = useState(true);
-	const [game, setGame] = useState<IGame>();
-	const [currentGameTheme, setCurrentGameTheme] = useState<any>();
-	const [currentNode, setCurrentNode] = useState<INode>();
-	const [userInput, setUserInput] = useState('');
-	const [mood, setMood] = useState('unknown');
-	const [inventory, setInventory] = useState(["empty"]);
-	const [nodeText, setNodeText] = useState("");
-	const [points, setPoints] = useState(0);
-	const [options, setOptions] = useState<string[]>([]);
-	const [errorMessage, setErrorMessage] = useState(defaultErrorMessage);
+    const theme = useContext(ThemeContext);
+    const params = useParams();
+    const gameId = parseInt(params.id!);
+    const dispatch = useDispatch();
+    const {game, node, mood, validCO, errorMessage, gameLoading, points} = useSelector(gamesSelector)
+    const [currentGameTheme, setCurrentGameTheme] = useState<any>(gameDark);
+    const [userInput, setUserInput] = useState("");
 
-	function toggleTheme(): void {
-		let currentTheme = localStorage.getItem("game-theme")!;
-		if (currentTheme === "game-light") {
-			setCurrentGameTheme(gameDark);
-			localStorage.setItem("game-theme", "game-dark")
-		} else {
-			setCurrentGameTheme(gameLight)
-			localStorage.setItem("game-theme", "game-light")
-		}
-	}
+    const startGame = useCallback(() => {
+        dispatch(setGame(gameId));
+        if (game !== null && game !== undefined) {
+            dispatch(setNode(1))
+        }
+    }, [dispatch, gameId])
 
-	const assessValidOptions = useCallback((node: INode): void => {
-		if (node.ID === 1) {
-			let newNodeOptions: string[] = node.NodeOptions.map((option) => option.Text);
-			setOptions(newNodeOptions);
-		} else {
-			let newNodeOptions: string[] = [];
-			node.NodeOptions.forEach((o) => {
-				let shouldAdd: boolean = true;
-				let { Mood, Inventory } = o.Requires
-				if (Inventory.length > 0) {
-					if (!inventory.includes(Inventory[0])) {
-						shouldAdd = false;
-					}
-				}
-				if (Mood !== null && mood !== Mood) {
-					shouldAdd = false;
-				}
-				if (shouldAdd) {
-					newNodeOptions.push(o.Text);
-				}
+    useEffect(() => {
+        startGame()
+        let themeToUse = gameDark;
+        if (localStorage.getItem("game-theme") !== null) {
+            let gameTheme = localStorage.getItem("game-theme");
+            if (gameTheme === "game-light") {
+                themeToUse = gameLight;
+            }
+        } else {
+            localStorage.setItem("game-theme", "game-dark");
+        }
+        setCurrentGameTheme(() => themeToUse);
 
-			})
-			setOptions(newNodeOptions);
-		}
-	},[inventory, mood]);
+        return () => {
+            dispatch(gameCleanUp())
+        }
+    }, [gameId, startGame])
 
-	function resetGame(): void {
-		if (game!.ID !== -99) {
-			const startingNode: INode = game!.getNodeById(1);
-			setCurrentNode(startingNode);
-			assessValidOptions(startingNode);
-			updatePoints(1);
-			updateMood(1, 0);
-			updateInventory(1,0)
-		}
-	}
-	function handleGameLoading(): void {
-		setGameLoading(false);
-		setTimeout(() => {
-			window.scrollTo({top: 0, left: 0, behavior: "smooth"});
-		}, 500)
-	}
-	function setGameText(text: string): void {
-		setNodeText(text);
-	}
+    function scrollToNodeTextStart(): void {
+        const yPos = document.getElementById("scrollMarker")!.getBoundingClientRect().top;
+        const yPosOffset = yPos + window.scrollY - 95;
+        setTimeout(() => {
+            window.scroll({left: 0, top: yPosOffset, behavior: "smooth"});
+        }, 325)
 
-	useEffect(() => {
-		const game = GameLibrary.getGameById(gameId);
-		if (game.ID !== -99) {
-			setGame(game);
-		}
-		function startGame(): void {
-			if (game !== undefined) {
-				let firstNode: INode = game.getNodeById(1);
-				setCurrentNode(firstNode);
-				let themeToUse = gameDark;
-				if (localStorage.getItem("game-theme") !== null) {
-					let gameTheme = localStorage.getItem("game-theme");
-					if (gameTheme === "game-light") {
-						themeToUse = gameLight;
-					}
-				} else {
-					localStorage.setItem("game-theme", "game-dark");
-				}
-				setCurrentGameTheme(() => themeToUse);
-			}
-		}
-		startGame();
-	}, [gameId]);
+    }
+    function handleGameReset(): void {
+        dispatch(resetGame())
+        dispatch(setNode(1))
+        setUserInput("")
+        scrollToNodeTextStart()
+    }
+    function goodUserInput(): boolean {
+        let goodInput = false;
+        for (let obj of validCO) {
+            if (obj.command === userInput) {
+                return true
+            }
+        }
+        return goodInput
+    }
+    function handleInput(): void {
+        if (!goodUserInput()) {
+            dispatch(setErrorMessage("command not recognized..."))
+            return;
+        }
+        let optionIndex = node.NodeOptions.findIndex((option: IOptions) => option.Command === userInput);
+        if (optionIndex !== -1) {
+            let selectedOption = node.NodeOptions[optionIndex]
+            if (selectedOption.NextNode === 1) {
+                handleGameReset()
+                return
+            }
+            // set mood and inventory off the option first as well as points off the current node
+            dispatch(setMood(selectedOption.Mood));
+            dispatch(setNode(selectedOption.NextNode));
+            dispatch(setPoints())
+            dispatch(setErrorMessage("<null>"))
+            setUserInput("")
+            scrollToNodeTextStart()
+        } else {
+            dispatch(setErrorMessage("command not recognized..."))
+        }
+    }
 
-	useEffect(() => {
-		if (currentNode !== undefined) {
-			setGameText(currentNode.Text);
-			assessValidOptions(currentNode);
-		}
-	}, [currentNode, assessValidOptions]);
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
+        setUserInput(e.target.value);
+    }
 
-	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
-		setUserInput(e.target.value);
-	}
+    function handleGameLoading(): void {
+        dispatch(setGameLoading(false))
+        setTimeout(() => {
+            window.scrollTo({top: 0, left: 0, behavior: "smooth"});
+        }, 500)
+    }
 
-	function updatePoints(nodeIndex: number): void {
-		if (nodeIndex === 1) {
-			setPoints(0)
-			return;
-		}
-		let pointsToAdd = game?.getNodeById(nodeIndex).EarnedPoints;
-		if (pointsToAdd !== undefined) {
-			let newScore = points + pointsToAdd;
-			setPoints(newScore);
-		}
-	}
+    function toggleTheme(): void {
+        let currentTheme = localStorage.getItem("game-theme")!;
+        if (currentTheme === "game-light") {
+            setCurrentGameTheme(gameDark);
+            localStorage.setItem("game-theme", "game-dark")
+        } else {
+            setCurrentGameTheme(gameLight)
+            localStorage.setItem("game-theme", "game-light")
+        }
+    }
 
-	function updateMood(nodeIndex: number, optionIndex: number): void {
-		let mood: string | undefined | null;
-		mood = currentNode?.NodeOptions[optionIndex].Mood;
-		if (mood !== undefined && mood !== "") {
-			const newMood = mood === null || nodeIndex === 1 ? "unknown" : mood;
-			setMood(() => newMood);
-		}
-	}
+    function checkMenuDropDowns(): void {
+        const dropdowns = document.querySelectorAll(".content-dropdown")!
+        for (let i = 0; i < dropdowns.length; i++) {
+            if (dropdowns[i].classList.contains("show")) {
+                dropdowns[i].classList.toggle("show");
+            }
+        }
+    }
 
-	function updateInventory(nodeIndex: number, optionIndex: number): void {
-		if (nodeIndex === 1) {
-			setInventory(() => ["empty"]);
-			return;
-		}
-		let newInventory: string = currentNode?.NodeOptions[optionIndex].Inventory!;
-		if (newInventory.length > 0) {
-			if (inventory.includes("empty")) {
-				setInventory(() => [newInventory])
-			} else {
-				setInventory((inventory) => [...inventory, newInventory]);
-			}
-		}
-	}
+    let menuItemMap = new Map<string, string[]>([
+        ["Game-drop-content", ["File-drop-content", "Inventory-drop-content"]],
+        ["File-drop-content", ["Game-drop-content", "Inventory-drop-content"]],
+        ["Inventory-drop-content", ["Game-drop-content", "File-drop-content"]]
+    ]);
 
-	// type for getNextNode function
-	type NodeReturnObject = {
-		node: INode | undefined,
-		optionIndex: number | undefined,
-		nextNode: number | undefined,
-	}
+    function toggleMenuShow(id: string): void {
+        const clickedElement = document.getElementById(id)!;
+        const menuItemElements = menuItemMap.get(id)!;
+        for (let elId of menuItemElements) {
+            let el = document.getElementById(elId)!;
+            if (el.classList.contains("show")) {
+                el.classList.toggle("show");
+            }
+        }
+        clickedElement.classList.toggle("show");
+    }
 
-	function getNextNode(): NodeReturnObject {
-		let nextNode: number | undefined;
-		let node: INode;
+    const menuFunctionMap: Map<string, Function> = new Map([
+        ["theme", toggleTheme],
+        ["reset", handleGameReset],
+        ["toggle", toggleMenuShow]
+    ])
 
-		const optionIndex: number | undefined = currentNode?.NodeOptions.findIndex((option) => option.Command === userInput.toLowerCase().trim());
-		if (optionIndex !== -1 && optionIndex !== undefined) {
-			nextNode = currentNode?.NodeOptions[optionIndex].NextNode;
-
-		}
-		if (nextNode !== undefined && game !== undefined) {
-			// then we can get the node and return it
-			node = game.getNodeById(nextNode);
-			return {
-				node,
-				optionIndex,
-				nextNode,
-			};
-		}
-		return {
-			node: undefined,
-			optionIndex: undefined,
-			nextNode: undefined,
-		};
-	}
-
-
-	function resetErrorMsgToDefault(): void {
-		if (errorMessage !== "") {
-			setErrorMessage(defaultErrorMessage);
-		}
-	}
-
-	function scrollToNodeTextStart(): void {
-		const yPos = document.getElementById("scrollMarker")!.getBoundingClientRect().top;
-		const yPosOffset = yPos + window.scrollY - 95;
-		setTimeout(() => {
-			window.scroll({left: 0, top: yPosOffset, behavior: "smooth"});
-		}, 325)
-
-	}
-
-	function handleUserInput(): void {
-		try {
-			const { node, optionIndex, nextNode }: NodeReturnObject = getNextNode();
-			if (optionIndex !== undefined && nextNode !== undefined) {
-				updatePoints(nextNode);
-				updateMood(nextNode, optionIndex);
-				updateInventory(nextNode, optionIndex);
-			}
-			if (node !== undefined) {
-				setCurrentNode(node);
-				setUserInput("");
-				resetErrorMsgToDefault();
-				scrollToNodeTextStart();
-			} else {
-				setErrorMessage('Sorry but that is an invalid command...');
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	function checkMenuDropDowns(): void {
-		const dropdowns = document.querySelectorAll(".content-dropdown")!
-		for (let i = 0; i < dropdowns.length; i++) {
-			if (dropdowns[i].classList.contains("show")) {
-				dropdowns[i].classList.toggle("show");
-			}
-		}
-	}
-
-	// menuItemMap for toggleMenuShow function to determine what other menus
-	// should be check for show props
-	let menuItemMap = new Map<string, string[]>([
-		["Game-drop-content", ["File-drop-content", "Inventory-drop-content"]],
-		["File-drop-content",["Game-drop-content", "Inventory-drop-content"]],
-		["Inventory-drop-content",["Game-drop-content", "File-drop-content"]]
-	]);
-
-	function toggleMenuShow(id: string): void {
-		const clickedElement = document.getElementById(id)!;
-		const menuItemElements = menuItemMap.get(id)!;
-		for (let elId of menuItemElements) {
-			let el = document.getElementById(elId)!;
-			if (el.classList.contains("show")) {
-				el.classList.toggle("show");
-			}
-		}
-		clickedElement.classList.toggle("show");
-	}
-	const menuFunctionMap: Map<string, Function> = new Map([
-		["theme", toggleTheme],
-		["reset", resetGame],
-		["toggle", toggleMenuShow]
-	])
-	return currentNode === undefined ?
-		(<PageWrapper padding={"1rem"}>
-			<Spinner show={true} color={theme.console_green}/>
-		</PageWrapper>) : currentNode.ID === -99 || game!.ID === -99 ?
-			(<PageWrapper padding={"1rem"}>
-				<GameNotFound />
-			</PageWrapper>) : gameLoading ?
-			(<PageWrapper padding={'1rem'}>
-				<ThemeProvider theme={currentGameTheme}>
-				<LoadingTextWrapper>
-					<GameLoadScreen gameLoading={gameLoading}
-									gameTitle={game!.Title}
-									handleGameLoading={handleGameLoading}
-					/>
-				</LoadingTextWrapper>
-				</ThemeProvider>
-			</PageWrapper>) :
-			(<PageWrapper padding={'1rem'}>
-				<ThemeProvider theme={currentGameTheme}>
-				<ScrollMarker id="scrollMarker"></ScrollMarker>
-				<GameScreenWrapper>
-					<GameMenuBar id="menu-bar"
-								 title={game!.Title}
-								 points={points}
-								 inventoryItems={inventory}
-								 functions={menuFunctionMap}
-					/>
-					<NodeTextWrapper onClick={() => checkMenuDropDowns()}>
-						<GameNodeText nodeText={nodeText} status={mood}/>
-						<GameOptions options={options} />
-						<GameNodeInput handleInputChange={handleInputChange}
-									   handleUserInput={handleUserInput}
-									   userInput={userInput}
-						/>
-						<ErrorTerminal>Error@Console ~ % {errorMessage}</ErrorTerminal>
-					</NodeTextWrapper>
-				</GameScreenWrapper>
-				</ThemeProvider>
-			</PageWrapper>);
+    return game === null ?
+        (<PageWrapper padding={"1rem"}>
+            <Spinner show={true} color={theme.console_green}/>
+        </PageWrapper>) : game === undefined ?
+            (<PageWrapper padding={"1rem"}>
+                <GameNotFound/>
+            </PageWrapper>) : gameLoading ? (<PageWrapper padding={'1rem'}>
+                <ThemeProvider theme={currentGameTheme}>
+                    <LoadingTextWrapper>
+                        <GameLoadScreen gameLoading={gameLoading}
+                                        gameTitle={game!.Title}
+                                        handleGameLoading={handleGameLoading}
+                        />
+                    </LoadingTextWrapper>
+                </ThemeProvider>
+            </PageWrapper>) : (<PageWrapper padding={'1rem'}>
+                <ThemeProvider theme={currentGameTheme}>
+                    <ScrollMarker id="scrollMarker"></ScrollMarker>
+                    <GameScreenWrapper>
+                        <GameMenuBar id="menu-bar"
+                                     title={game!.Title}
+                                     points={points}
+                                     functions={menuFunctionMap}
+                        />
+                        <NodeTextWrapper onClick={() => checkMenuDropDowns()}>
+                            <GameNodeText nodeText={node.Text} status={mood}/>
+                            <GameOptions options={node.NodeOptions}/>
+                            <GameNodeInput handleInputChange={handleInputChange}
+                                           handleUserInput={handleInput}
+                                           userInput={userInput}
+                            />
+                            <ErrorTerminal>Error@Console ~ % {errorMessage}</ErrorTerminal>
+                        </NodeTextWrapper>
+                    </GameScreenWrapper>
+                </ThemeProvider>
+            </PageWrapper>);
 };
-
 export default GameTemplate;

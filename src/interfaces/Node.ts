@@ -23,9 +23,5 @@ export interface IGame {
 	Image: string;
 	Description: string;
 	Nodes: INode[];
-	getNodeById(n: number): INode;
 }
-export interface IGameLibrary {
-	Games: IGame[];
-	getGameById(n: number): IGame;
-}
+

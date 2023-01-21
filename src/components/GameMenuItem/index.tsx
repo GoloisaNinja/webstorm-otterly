@@ -16,7 +16,7 @@ const GameMenuItem: React.FC<MenuItemProps> = (props) => {
     const reset = props.functions.get("reset")!;
     const toggleTheme = props.functions.get("theme")!;
 
-    function handleToggleShow() {
+    function handleToggleShow(): void  {
         const instanceDropId = `${props.menuText}-drop-content`;
         toggleShow(instanceDropId);
     }
@@ -24,11 +24,11 @@ const GameMenuItem: React.FC<MenuItemProps> = (props) => {
         reset();
         handleToggleShow()
     }
-    function themeChangeAndCloseMenu(): void {
+    function themeChangeAndCloseMenu(): void  {
         toggleTheme();
         handleToggleShow();
     }
-    function setDynamicListener(eType: string, el: Element): void {
+    function setDynamicListener(eType: string, el: Element): void  {
         el.addEventListener("click", function(e) {
             switch((e.target! as HTMLButtonElement).innerHTML) {
                 case "theme":

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
@@ -9,8 +9,19 @@ import Footer from '../components/Footer';
 import LandingPage from '../pages/LandingPage';
 import GamesPage from '../pages/GamesPage';
 import GameTemplate from '../pages/GameTemplate';
+// Redux ToolKit
+import { useSelector, useDispatch } from "react-redux";
+import { addGame, gamesSelector } from "../features/games/gamesSlice";
+
+import oneWayOrTheOtter from '../games/oneWayOrTheOtter';
+
 
 const AppRouter: React.FC = () => {
+	const dispatch = useDispatch();
+	const { games } = useSelector(gamesSelector);
+	useEffect(() => {
+		dispatch(addGame(oneWayOrTheOtter))
+	},[])
 	return (
 		<Router>
 			<GlobalStyle />

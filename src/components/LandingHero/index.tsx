@@ -32,19 +32,6 @@ const LandingHero: React.FC = () => {
 	const navigate = useNavigate();
 	const [heroText, setHeroText] = useState("");
 	const theme = useContext(ThemeContext);
-	const iBox1Txt: string = `> We know several things...
-1: Otters are amazeballs
-2: History can be kinda dry
-3: Old school text adventure games
-never get old
-4: The way queue is spelled is dumb`;
-
-	const iBox2Txt: string = `> So what is Otterly all about?
-1: Retro-style text adventure games
-2: Completely irreverent
-3: Otter-injected historical
-content
-4: Otterly ridiculous fun`;
 
 	function handleHeroText():void {
 		setHeroText('Otterly Ridiculous')

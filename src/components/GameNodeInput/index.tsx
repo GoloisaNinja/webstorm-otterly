@@ -23,7 +23,6 @@ const GameNodeInput:React.FC<InputProps> = (props) => {
                     e.key === 'Enter' && props.handleUserInput()
                 }></StyledInput>
         </InputWrapper>
-
     );
 }
 export default withTheme(GameNodeInput);
