@@ -10,7 +10,6 @@ interface ContactPageProps {
     theme: {};
 }
 type FormData = {
-    "form-name": string;
     name: string;
     email: string;
     message: string;
@@ -19,7 +18,6 @@ type FormData = {
 const ContactPage: React.FC<ContactPageProps> = (props) => {
     const navigate = useNavigate();
     const initialForm: FormData = {
-        "form-name": "contact",
         name: "",
         email: "",
         message: "",
@@ -27,10 +25,10 @@ const ContactPage: React.FC<ContactPageProps> = (props) => {
     const [formData, setFormData] = useState<FormData>(initialForm);
     const { name, email, message } = formData;
 
-    function encode(data: FormData) {
+    function encode(data: Record<string, string>) {
         return Object.keys(data)
             .map(
-                (key) => (data: Record<string, string>) =>
+                (key) =>
                     encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
             )
             .join("&");
@@ -41,7 +39,7 @@ const ContactPage: React.FC<ContactPageProps> = (props) => {
         fetch("/", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: encode(formData),
+            body: encode({"form-name": "contact", ...formData}),
         })
             .then(() => {
                 navigate("/thank-you/")
