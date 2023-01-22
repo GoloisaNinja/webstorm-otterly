@@ -8,6 +8,7 @@ import {
     setNode,
     setMood,
     setPoints,
+    addToInventory,
     setErrorMessage,
     setGameLoading,
     resetGame,
@@ -45,7 +46,7 @@ const GameTemplate: React.FC = () => {
         if (game !== null && game !== undefined) {
             dispatch(setNode(1))
         }
-    }, [dispatch, gameId])
+    }, [dispatch, gameId, game])
 
     useEffect(() => {
         startGame()
@@ -100,11 +101,17 @@ const GameTemplate: React.FC = () => {
                 handleGameReset()
                 return
             }
-            // set mood and inventory off the option first as well as points off the current node
-            dispatch(setMood(selectedOption.Mood));
+            if (selectedOption.Inventory.length) {
+                dispatch(addToInventory(selectedOption.Inventory))
+            }
+            if (selectedOption.Mood.length) {
+                dispatch(setMood(selectedOption.Mood));
+            }
+            if (errorMessage !== "<null>") {
+                dispatch(setErrorMessage("<null>"))
+            }
             dispatch(setNode(selectedOption.NextNode));
             dispatch(setPoints())
-            dispatch(setErrorMessage("<null>"))
             setUserInput("")
             scrollToNodeTextStart()
         } else {

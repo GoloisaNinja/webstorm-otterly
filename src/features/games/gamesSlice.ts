@@ -68,6 +68,15 @@ export const gamesSlice = createSlice({
         setValidCO: (state, {payload}: PayloadAction<CommandOption[]>) => {
             state.validCO = payload
         },
+        addToInventory: (state, {payload}: PayloadAction<string>) => {
+            let updatedInventory: string[] = []
+            if (state.inventory.includes("empty")) {
+                updatedInventory = [payload]
+            } else {
+                updatedInventory = [...state.inventory, payload]
+            }
+            state.inventory = updatedInventory
+        },
         setErrorMessage: (state, {payload}: PayloadAction<string>) => {
             state.errorMessage = payload
         },
@@ -80,6 +89,7 @@ export const gamesSlice = createSlice({
         },
         gameCleanUp: (state) => {
             state.game = null
+            state.node = null
             state.mood = "unknown"
             state.gameLoading = true
             state.validCO = null
@@ -90,5 +100,5 @@ export const gamesSlice = createSlice({
     }
 })
 
-export const { addGame, setGame, setNode, setMood, setGameLoading, setPoints, setValidCO, setErrorMessage, resetGame, gameCleanUp } = gamesSlice.actions;
+export const { addGame, setGame, setNode, setMood, setGameLoading, setPoints, setValidCO, addToInventory, setErrorMessage, resetGame, gameCleanUp } = gamesSlice.actions;
 export const gamesSelector = (state: RootState) => state.games

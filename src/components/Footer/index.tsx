@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
 					<FooterLink to='/'>home</FooterLink>
 					<FooterLink to='/games'>games</FooterLink>
 					<FooterLink to='/'>about</FooterLink>
-					<FooterLink to='/'>contact</FooterLink>
+					<FooterLink to='/contact'>contact</FooterLink>
 					<Copyright>
 						copyright <PurpleSpan>{currentYear}</PurpleSpan>
 					</Copyright>

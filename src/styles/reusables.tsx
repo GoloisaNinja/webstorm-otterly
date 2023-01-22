@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {PageWrapper} from "../../components/PageWrapper";
+import {PageWrapper} from "../components/PageWrapper";
 
 export const OverridePageWrapper = styled(PageWrapper)`
   @media (max-width: 450px) {
@@ -13,7 +13,7 @@ export const HeroWrapper = styled.div`
   line-height: 1;
   width: 100%;
 `;
-export const GamesPageHeroText = styled.h1`
+export const HeroText = styled.h1`
     font-size: 6rem;
     padding-top: 3rem;
     color: #fff;
@@ -23,7 +23,7 @@ export const GamesPageHeroText = styled.h1`
       font-size: 8rem;
     }
 `;
-export const GamesPageHeroSubText = styled.p`
+export const HeroSubText = styled.p`
   font-size: 2.6rem;
   font-weight: 500;
   line-height: 1.2;

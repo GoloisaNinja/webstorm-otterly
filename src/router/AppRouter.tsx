@@ -9,6 +9,9 @@ import Footer from '../components/Footer';
 import LandingPage from '../pages/LandingPage';
 import GamesPage from '../pages/GamesPage';
 import GameTemplate from '../pages/GameTemplate';
+import ContactPage from "../pages/ContactPage/ContactPage";
+import ThankYouPage from "../pages/ThankYouPage/ThankYouPage";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 // Redux ToolKit
 import { useSelector, useDispatch } from "react-redux";
 import { addGame, gamesSelector } from "../features/games/gamesSlice";
@@ -32,6 +35,9 @@ const AppRouter: React.FC = () => {
 					<Route path='/' element={<LandingPage />} />
 					<Route path='/games' element={<GamesPage />} />
 					<Route path='/games/:id' element={<GameTemplate />} />
+					<Route path='/contact' element={<ContactPage />} />
+					<Route path="/thank-you" element={<ThankYouPage />} />
+					<Route path="/error-page" element={<ErrorPage />} />
 				</Routes>
 				<Footer />
 			</ThemeProvider>
