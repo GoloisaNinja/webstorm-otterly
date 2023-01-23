@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { fadeIn } from "../../styles/animations";
 import {useNavigate} from "react-router-dom";
 import { withTheme } from "styled-components";
 import {
@@ -15,7 +16,7 @@ import {
 } from "../../styles/reusables";
 import {PurpleSpan} from "../../components/PurpleSpan";
 import PixelSrc from '../../assets/gameWOtter.webp';
-import {ImageWrapper, OverrideButton} from "./styles";
+import {OverrideButton} from "./styles";
 
 interface AboutPageProps {
     theme: {
@@ -26,6 +27,7 @@ interface AboutPageProps {
 const PixelImage = styled.img`
   width: 100%;
   margin-bottom: 6rem;
+  animation: ${fadeIn} 1.8s ease-in-out;
 `;
 const AboutPage: React.FC<AboutPageProps> = (props) => {
     const navigate = useNavigate();

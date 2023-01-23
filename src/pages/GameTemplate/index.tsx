@@ -16,6 +16,7 @@ import {
 } from "../../features/games/gamesSlice";
 import {useParams} from 'react-router-dom';
 import {IOptions} from "../../interfaces/Node";
+import {CommandOption} from "../../features/games/gamesSlice";
 import GameNotFound from "../../components/GameNotFound";
 import GameLoadScreen from "../../components/GameLoadScreen";
 import GameNodeText from '../../components/GameNodeText';
@@ -70,9 +71,10 @@ const GameTemplate: React.FC = () => {
 
     function showInventoryAdded(): void {
         setShow(true);
-        setTimeout(() => {
-            setShow(false)
-        },4000);
+    }
+
+    function handleShow(): void {
+        setShow(false)
     }
 
     function scrollToNodeTextStart(): void {
@@ -83,27 +85,30 @@ const GameTemplate: React.FC = () => {
         }, 325)
 
     }
+
     function handleGameReset(): void {
         dispatch(resetGame())
         dispatch(setNode(1))
         setUserInput("")
         scrollToNodeTextStart()
     }
+
     function goodUserInput(): boolean {
         let goodInput = false;
-        for (let obj of validCO) {
-            if (obj.command === userInput) {
+        for (let obj of validCO as CommandOption[]) {
+            if (obj.command === userInput.toLowerCase().trim()) {
                 return true
             }
         }
         return goodInput
     }
+
     function handleInput(): void {
         if (!goodUserInput()) {
             dispatch(setErrorMessage("command not recognized..."))
             return;
         }
-        let optionIndex = node.NodeOptions.findIndex((option: IOptions) => option.Command === userInput);
+        let optionIndex = node.NodeOptions.findIndex((option: IOptions) => option.Command === userInput.toLowerCase().trim());
         if (optionIndex !== -1) {
             let selectedOption = node.NodeOptions[optionIndex]
             if (selectedOption.NextNode === 1) {
@@ -184,7 +189,7 @@ const GameTemplate: React.FC = () => {
         ["toggle", toggleMenuShow]
     ])
 
-    return game === null ?
+    return game === null || node === null ?
         (<PageWrapper padding={"1rem"}>
             <Spinner show={true} color={theme.console_green}/>
         </PageWrapper>) : game === undefined ?
@@ -219,7 +224,9 @@ const GameTemplate: React.FC = () => {
                         </NodeTextWrapper>
                     </GameScreenWrapper>
                 </ThemeProvider>
-                {show && <Modal childComponent={<InventoryAdded details={inventory[inventory.length - 1]} />}/>}
+                {show && <Modal childComponent={<InventoryAdded details={inventory[inventory.length - 1]}
+                                                                dismissBtnColor={theme.button_purple}
+                                                                handleShow={handleShow}/>}/>}
             </PageWrapper>);
 };
 export default GameTemplate;

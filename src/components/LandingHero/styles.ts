@@ -22,26 +22,35 @@ export const OuterWrapper = styled.div`
 export const OtterWrapper = styled.div`
 	display: flex;
 	> p {
+        flex: 1;
+        max-width: 160px;
 		background: #fff;
 		border-radius: 3rem;
 		align-self: flex-start;
-		padding: 2.5rem;
-		font-size: 2.2rem;
+		padding: 2.4rem;
+        font-family: 'VT323', monospace;
+		font-size: 3rem;
 		font-weight: 600;
 		color: #000000;
 		margin-left: -4rem;
 		min-width: 135px;
 		display: none;
-		@media (max-width: 850px) {
-			display: block;
-		}
-		@media (min-width: 1050px) {
-			display: block;
-		}
-	}
-	@media (max-width: 850px) {
-		justify-content: center;
-	}
+        text-align: center;
+      @media (max-width: 445px) {
+        font-size: 2.8rem;
+      }
+      @media (max-width: 460px) {
+        padding: 2.4rem 1.6rem;
+      }
+      @media (max-width: 850px) {
+        display: block;
+        justify-content: center;
+      }
+      @media (min-width: 1050px) {
+        display: block;
+        padding: 2.4rem 1rem;
+      }
+    }
 `;
 
 export const HeroText = styled.h1`
@@ -57,6 +66,9 @@ export const HeroText = styled.h1`
 		animation-duration: 1s;
 		animation-timing-function: linear;
 	}
+  @media (max-width: 385px) {
+    font-size: 5rem;
+  }
 	@media (max-width: 592px) {
 		height: 14.4rem;
 	}

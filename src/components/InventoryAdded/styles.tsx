@@ -2,6 +2,9 @@ import styled from 'styled-components'
 import {fadeIn} from "../../styles/animations";
 import {TypewriterStylePTag} from "../TypewriterStyledPTag";
 
+interface ButtonProps {
+    btnColor: string;
+}
 export const Image = styled.img`
   grid-area: pic;
   width: 120px;
@@ -23,12 +26,14 @@ export const InventoryWrapper = styled.div`
   justify-content: space-around;
   min-height: 150px;
   grid-template-areas: "title pic"
-        "added pic";
+        "added pic"
+        "btn btn";
 `;
 export const Title = styled(TypewriterStylePTag)`
   grid-area: title;
   font-family: 'VT323', monospace;
   font-size: 3rem;
+  color: #454545;
   margin-bottom: 0;
   align-self: flex-end;
   animation-duration: 1s;
@@ -44,9 +49,8 @@ export const Added = styled.p`
   grid-area: added;
   font-family: 'VT323', monospace;
   font-size: 2.8rem;
-  color: #454545;
   text-align: center;
-  align-self: flex-start;
+  align-self: center;
   animation: ${fadeIn} .5s ease;
   animation-delay: 1s;
   animation-fill-mode: backwards;
@@ -54,3 +58,13 @@ export const Added = styled.p`
     font-size: 2.6rem;
   }
 `;
+export const InventoryAddedDismiss = styled.button<ButtonProps>`
+  grid-area: btn;
+  background-color: ${(props) => props.btnColor};
+  font-family: 'VT323', monospace;
+  font-size: 2.4rem;
+  border: none;
+  padding: 1.2rem;
+  margin-top: 2.4rem;
+  margin-bottom: 1rem;
+`

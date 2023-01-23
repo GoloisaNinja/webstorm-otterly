@@ -18,7 +18,6 @@ type FormData = {
 }
 
 const ContactPage: React.FC<ContactPageProps> = (props) => {
-    const [show, setShow] = useState<boolean>(true)
     const navigate = useNavigate();
     const initialForm: FormData = {
         name: "",
