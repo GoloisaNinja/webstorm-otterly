@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import {useNavigate} from "react-router-dom";
 import styled, { ThemeContext } from 'styled-components';
 import { HeroInfoHeader, HeroInfo } from '../../styles/reusables';
-import OtterSrc from '../../assets/waving.webp';
+import OtterSrc from '../../assets/pixelWaveOtter.webp';
 import { Button } from '../Button';
 import {PurpleSpan} from "../PurpleSpan";
 import {
