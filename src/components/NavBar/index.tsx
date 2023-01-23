@@ -21,7 +21,7 @@ const NavBar: React.FC = () => {
 			/>
 			<NavLinksWrapper>
 				<MyNavLink color={theme.light_purple} to='/games'>games</MyNavLink>
-				<MyNavLink color={theme.light_purple} to='/'>about</MyNavLink>
+				<MyNavLink color={theme.light_purple} to='/about'>about</MyNavLink>
 				<MyNavLink color={theme.light_purple} to='/contact'>contact</MyNavLink>
 			</NavLinksWrapper>
 		</NavWrapper>

@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import {useNavigate} from "react-router-dom";
 import styled, { ThemeContext } from 'styled-components';
+import { HeroInfoHeader, HeroInfo } from '../../styles/reusables';
 import OtterSrc from '../../assets/waving.webp';
 import { Button } from '../Button';
 import {PurpleSpan} from "../PurpleSpan";
@@ -14,8 +15,6 @@ import {
 	InnerWrapper,
 	InfoBoxWrapper,
 	InfoBox,
-	HeroInfoHeader,
-	HeroInfo,
 	ButtonWrapper,
 } from './styles';
 import TypeWriter from '../../helpers/TypeWriter';
@@ -64,7 +63,7 @@ const LandingHero: React.FC = () => {
 				</InnerWrapper>
 				<ButtonWrapper>
 					<Button onClick={() => navigate("/games")} color={theme.button_purple}>browse games</Button>
-					<Button color='#fff'>about us</Button>
+					<Button onClick={() => navigate("/about")} color='#fff'>about us</Button>
 				</ButtonWrapper>
 			</HeroContentWrapper>
 		</HeroWrapper>

@@ -8,7 +8,7 @@ const GamesPage: React.FC = () => {
 		<OverridePageWrapper padding={'1rem'}>
 			<HeroWrapper>
 				<HeroText><PurpleSpan>Otterly</PurpleSpan> Games Web Archive</HeroText>
-				<HeroSubText>Browse our collection of retro text adventure games. Sit back. Chill. It's about to get otterly amazing in up in here.</HeroSubText>
+				<HeroSubText>browse our collection of retro text adventure games. sit back. chill. it's about to get otterly amazing in up in here.</HeroSubText>
 			</HeroWrapper>
 			<GamesGrid />
 		</OverridePageWrapper>

@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
 				<LinksWrapper>
 					<FooterLink to='/'>home</FooterLink>
 					<FooterLink to='/games'>games</FooterLink>
-					<FooterLink to='/'>about</FooterLink>
+					<FooterLink to='/about'>about</FooterLink>
 					<FooterLink to='/contact'>contact</FooterLink>
 					<Copyright>
 						copyright <PurpleSpan>{currentYear}</PurpleSpan>

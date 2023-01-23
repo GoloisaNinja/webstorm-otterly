@@ -23,6 +23,8 @@ import GameOptions from "../../components/GameOptions";
 import GameNodeInput from "../../components/GameNodeInput";
 import GameMenuBar from "../../components/GameMenuBar";
 import Spinner from "../../components/Spinner";
+import Modal from "../../components/Modal";
+import InventoryAdded from "../../components/InventoryAdded";
 import {PageWrapper} from '../../components/PageWrapper';
 import {
     ScrollMarker,
@@ -37,10 +39,10 @@ const GameTemplate: React.FC = () => {
     const params = useParams();
     const gameId = parseInt(params.id!);
     const dispatch = useDispatch();
-    const {game, node, mood, validCO, errorMessage, gameLoading, points} = useSelector(gamesSelector)
+    const {game, node, mood, validCO, errorMessage, gameLoading, points, inventory} = useSelector(gamesSelector)
     const [currentGameTheme, setCurrentGameTheme] = useState<any>(gameDark);
     const [userInput, setUserInput] = useState("");
-
+    const [show, setShow] = useState<boolean>(false);
     const startGame = useCallback(() => {
         dispatch(setGame(gameId));
         if (game !== null && game !== undefined) {
@@ -65,6 +67,13 @@ const GameTemplate: React.FC = () => {
             dispatch(gameCleanUp())
         }
     }, [gameId, startGame])
+
+    function showInventoryAdded(): void {
+        setShow(true);
+        setTimeout(() => {
+            setShow(false)
+        },4000);
+    }
 
     function scrollToNodeTextStart(): void {
         const yPos = document.getElementById("scrollMarker")!.getBoundingClientRect().top;
@@ -103,6 +112,7 @@ const GameTemplate: React.FC = () => {
             }
             if (selectedOption.Inventory.length) {
                 dispatch(addToInventory(selectedOption.Inventory))
+                showInventoryAdded();
             }
             if (selectedOption.Mood.length) {
                 dispatch(setMood(selectedOption.Mood));
@@ -209,6 +219,7 @@ const GameTemplate: React.FC = () => {
                         </NodeTextWrapper>
                     </GameScreenWrapper>
                 </ThemeProvider>
+                {show && <Modal childComponent={<InventoryAdded details={inventory[inventory.length - 1]} />}/>}
             </PageWrapper>);
 };
 export default GameTemplate;

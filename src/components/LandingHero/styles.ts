@@ -120,21 +120,6 @@ export const InfoBox = styled.div`
     min-height: 185px;
   }
 `;
-export const HeroInfoHeader = styled.h3`
-  font-size: 4rem;
-  line-height: 1.2;
-  color: #eee; 
-  margin-bottom: 2rem;
-  @media (min-width: 1000px) {
-    font-size: 6rem;
-  }
-`;
-export const HeroInfo = styled.p`
-	font-size: 2.6rem;
-    font-weight: 500;
-    color: #ccc;
-    line-height: 1.2;
-`;
 
 export const ButtonWrapper = styled.div`
 	display: flex;

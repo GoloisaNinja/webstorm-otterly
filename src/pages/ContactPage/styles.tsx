@@ -4,6 +4,11 @@ export const ContactFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 750px;
+  > p {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
 `;
 
 export const ContactForm = styled.form`
@@ -31,5 +36,15 @@ export const ContactForm = styled.form`
     font-size: 1.8rem;
     color: ${props => props.theme.light_purple};
     margin-bottom: 3rem;
+  }
+  > button {
+    opacity: .5;
+    cursor: not-allowed;
+    pointer-events: none;
+    &.isActive {
+      opacity: 1;
+      cursor: pointer;
+      pointer-events: all;
+    }
   }
 `;

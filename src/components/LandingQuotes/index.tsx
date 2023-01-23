@@ -2,13 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import Quotes from '../../quotes/quotes';
 import { PurpleSpan } from '../PurpleSpan';
+import { QuoteInfo, QuoteGrid, Quote } from "../../styles/reusables";
 import {
 	QuotesSectionWrapper,
 	QuoteIntro,
 	QuoteHeader,
-	QuoteInfo,
-	QuoteGrid,
-	Quote,
 } from './styles';
 
 const LandingQuotes: React.FC = () => {
