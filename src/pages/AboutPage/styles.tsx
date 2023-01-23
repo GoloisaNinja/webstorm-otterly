@@ -3,7 +3,7 @@ import { Button} from "../../components/Button";
 
 export const OtterWrapper = styled.div`
   display: grid;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 1rem;
   margin-bottom: 6rem;
   grid-template-areas: 
@@ -12,7 +12,7 @@ export const OtterWrapper = styled.div`
   > img {
     grid-area: otter;
     
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
       justify-self: center;
     }
   }
@@ -22,11 +22,11 @@ export const OtterWrapper = styled.div`
   > p {
     grid-area: info;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 650px) {
     grid-template-areas: 
-            "otter otter"
-            "header header"
-            "info info";
+            "otter"
+            "header"
+            "info";
   }
 `;
 export const OverrideButton = styled(Button)`

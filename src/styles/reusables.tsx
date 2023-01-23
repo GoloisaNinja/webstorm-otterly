@@ -14,7 +14,7 @@ export const OverridePageWrapper = styled(PageWrapper)`
   }
 `;
 export const HeroWrapper = styled.div`
-  padding-bottom: 5rem;
+  margin-bottom: 5rem;
   line-height: 1;
   width: 100%;
 `;
