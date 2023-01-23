@@ -27,7 +27,7 @@ const AboutPage: React.FC<AboutPageProps> = (props) => {
     return (
         <OverridePageWrapper padding={'1rem'}>
             <HeroWrapper>
-                <HeroText><PurpleSpan>Otter</PurpleSpan> Nonsense</HeroText>
+                <HeroText>Complete and <PurpleSpan>Otter</PurpleSpan> Nonsense</HeroText>
                 <HeroSubText>
                     as the lore and conjecture around the origins and creation of otterly spun out of control, we
                     decided it was necessary to set a few of things straight. for the record. and for the good of all
@@ -36,22 +36,22 @@ const AboutPage: React.FC<AboutPageProps> = (props) => {
             </HeroWrapper>
             <OtterWrapper>
                 <OtterImg src={OtterSrc} />
-                <HeroInfoHeader>what is <PurpleSpan>otterly</PurpleSpan> really?</HeroInfoHeader>
-                <HeroInfo>otterly ridiculous history is a web application built to provide fun and sometimes demoralizing text adventure games
+                <HeroInfoHeader>is <PurpleSpan>otterly</PurpleSpan> a crypto meta-verse?</HeroInfoHeader>
+                <HeroInfo>no. otterly ridiculous history is a web application built to provide fun and sometimes demoralizing text adventure games
                         that feature otters as the characters and protagonists.
                 </HeroInfo>
             </OtterWrapper>
-            <BasicFlexCWrapper marginTop={'3rem'} marginBottom={'6rem'}>
+            <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
                 <HeroInfoHeader>
                     okay, but why otterly ridiculous <PurpleSpan>history?</PurpleSpan>
                 </HeroInfoHeader>
                 <HeroInfo>
-                    our original idea centered around photoshopping otters into historical situations. and we still think that's
+                    you ask a lot of questions. our original idea centered around photoshopping otters into historical situations. and we still think that's
                     an extremely marketable idea - so don't steal it. however we decided to go the text adventure route for
                     absolutely no good reason whatsoever.
                 </HeroInfo>
             </BasicFlexCWrapper>
-            <BasicFlexCWrapper marginTop={'3rem'} marginBottom={'6rem'}>
+            <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
                 <HeroInfoHeader>
                     <PurpleSpan>otterly</PurpleSpan> plausible fast facts
                 </HeroInfoHeader>
@@ -76,7 +76,7 @@ const AboutPage: React.FC<AboutPageProps> = (props) => {
                     </Quote>
                 </QuoteGrid>
             </BasicFlexCWrapper>
-            <BasicFlexCWrapper marginTop={'3rem'} marginBottom={'6rem'}>
+            <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
                 <HeroInfoHeader>
                     get in <PurpleSpan>touch</PurpleSpan>
                 </HeroInfoHeader>
