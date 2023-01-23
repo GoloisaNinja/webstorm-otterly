@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import {useNavigate} from "react-router-dom";
 import { withTheme } from "styled-components";
 import {
@@ -6,7 +7,6 @@ import {
     HeroSubText,
     HeroWrapper,
     OverridePageWrapper,
-    OtterImg,
     HeroInfoHeader,
     HeroInfo,
     BasicFlexCWrapper,
@@ -14,14 +14,19 @@ import {
     QuoteGrid,
 } from "../../styles/reusables";
 import {PurpleSpan} from "../../components/PurpleSpan";
-import OtterSrc from '../../assets/waving.webp';
-import {OtterWrapper, OverrideButton} from "./styles";
+import PixelSrc from '../../assets/gameWOtter.webp';
+import {ImageWrapper, OverrideButton} from "./styles";
 
 interface AboutPageProps {
     theme: {
         button_purple: string;
     };
 }
+
+const PixelImage = styled.img`
+  width: 100%;
+  margin-bottom: 6rem;
+`;
 const AboutPage: React.FC<AboutPageProps> = (props) => {
     const navigate = useNavigate();
     return (
@@ -34,13 +39,13 @@ const AboutPage: React.FC<AboutPageProps> = (props) => {
                     human-kind.
                 </HeroSubText>
             </HeroWrapper>
-            <OtterWrapper>
-                <OtterImg src={OtterSrc} />
-                <HeroInfoHeader>is <PurpleSpan>otterly</PurpleSpan> a crypto meta-verse?</HeroInfoHeader>
-                <HeroInfo>no. otterly ridiculous history is a web application built to provide fun and sometimes demoralizing text adventure games
+            <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
+                <PixelImage src={PixelSrc} />
+                <HeroInfoHeader>is <PurpleSpan>otterly</PurpleSpan> a crypto meta-verse token keto?</HeroInfoHeader>
+                <HeroInfo>no. otterly is neither a coin, leg-less avatar, nor a weigh to lose weight (see what I did there?). otterly ridiculous history is a web application built to provide fun and sometimes demoralizing text adventure games
                         that feature otters as the characters and protagonists.
                 </HeroInfo>
-            </OtterWrapper>
+            </BasicFlexCWrapper>
             <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
                 <HeroInfoHeader>
                     okay, but why otterly ridiculous <PurpleSpan>history?</PurpleSpan>

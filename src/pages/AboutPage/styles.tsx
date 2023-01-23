@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Button} from "../../components/Button";
 
-export const OtterWrapper = styled.div`
+export const ImageWrapper = styled.div`
   display: grid;
   align-items: flex-start;
   margin-top: 1rem;
