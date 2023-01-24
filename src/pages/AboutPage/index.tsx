@@ -79,7 +79,7 @@ const AboutPage: React.FC<AboutPageProps> = (props) => {
                         the myth that otterly was almost bought out by a certain wildlife channel is absolutely not false
                     </Quote>
                     <Quote>
-                        a typical otterly ridiculous history adventure takes almost a full week, write, design, and test
+                        a typical otterly ridiculous history adventure takes almost a full week to write, design, and test
                     </Quote>
                 </QuoteGrid>
             </BasicFlexCWrapper>

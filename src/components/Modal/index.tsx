@@ -1,16 +1,12 @@
-import React, {ReactElement, ReactNode} from 'react'
+import React, {ReactElement} from 'react'
 import {withTheme} from "styled-components";
 import { ModalContainer, Overlay } from "./styles";
 
 interface ModalProps {
-    childComponent: React.ReactNode
-    theme: {
-        button_purple: string;
-        main_purple: string;
-    }
+    childComponent: React.ReactNode;
+    theme: {};
 }
-const Modal = ({ childComponent, theme }: ModalProps): ReactElement => {
-
+const Modal = ({ childComponent }: ModalProps): ReactElement => {
     return (
         <>
             <ModalContainer>

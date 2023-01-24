@@ -189,10 +189,10 @@ const GameTemplate: React.FC = () => {
         ["toggle", toggleMenuShow]
     ])
 
-    return game === null || node === null ?
+    return game === null && node === null ?
         (<PageWrapper padding={"1rem"}>
             <Spinner show={true} color={theme.console_green}/>
-        </PageWrapper>) : game === undefined ?
+        </PageWrapper>) : game === undefined || node === null ?
             (<PageWrapper padding={"1rem"}>
                 <GameNotFound/>
             </PageWrapper>) : gameLoading ? (<PageWrapper padding={'1rem'}>
@@ -223,10 +223,10 @@ const GameTemplate: React.FC = () => {
                             <ErrorTerminal>Error@Console ~ % {errorMessage}</ErrorTerminal>
                         </NodeTextWrapper>
                     </GameScreenWrapper>
-                </ThemeProvider>
+
                 {show && <Modal childComponent={<InventoryAdded details={inventory[inventory.length - 1]}
-                                                                dismissBtnColor={theme.button_purple}
                                                                 handleShow={handleShow}/>}/>}
+                </ThemeProvider>
             </PageWrapper>);
 };
 export default GameTemplate;

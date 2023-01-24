@@ -8,20 +8,11 @@ export const ModalContainer = styled.div`
   width: 95%;
   max-height: 95%;
   z-index: 4;
-  background-color: #ccc;
+  background-color: ${(props) => props.theme.colors.modal_bg_color};
   padding: 1rem;
   border-radius: 3px;
   overflow: auto;
   max-width: 425px;
-  //> svg {
-  //  display: flex;
-  //  margin-left: auto;
-  //  font-size: 40px;
-  //  font-weight: bold;
-  //  color: ;
-  //  cursor: pointer;
-  //}
-  
 `;
 
 export const Overlay = styled.div`

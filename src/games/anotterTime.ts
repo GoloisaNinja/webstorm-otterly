@@ -2,7 +2,7 @@ import {IGame} from '../interfaces/Node';
 import { theme } from "../styles/theme";
 
 const anotterTime: IGame = {
-    ID: 2,
+    ID: 999,
     Title: 'Maybe Anotter Time',
     TitleColor: theme.console_orange,
     Image: "/images/anotterTime.webp",

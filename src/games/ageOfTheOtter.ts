@@ -2,7 +2,7 @@ import {IGame} from '../interfaces/Node';
 import { theme } from "../styles/theme";
 
 const ageOfTheOtter: IGame = {
-    ID: 2,
+    ID: 998,
     Title: 'Age of the Otter',
     TitleColor: theme.light_teal,
     Image: "/images/ageoftheotter.webp",
