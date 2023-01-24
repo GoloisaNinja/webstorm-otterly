@@ -5,6 +5,9 @@ interface Props {
     marginTop: string;
     marginBottom: string;
 }
+interface HeroProps {
+    color: string;
+}
 
 export const OverridePageWrapper = styled(PageWrapper)`
   @media (max-width: 450px) {
@@ -35,19 +38,19 @@ export const HeroSubText = styled.p`
   color: #ccc;
   margin-top: 2rem;
 `;
-export const HeroInfoHeader = styled.h3`
+export const HeroInfoHeader = styled.h3<HeroProps>`
   font-size: 4rem;
   line-height: 1.2;
-  color: #eee; 
+  color: ${(props) => props.color}; 
   margin-bottom: 2rem;
   @media (min-width: 1000px) {
     font-size: 6rem;
   }
 `;
-export const HeroInfo = styled.p`
+export const HeroInfo = styled.p<HeroProps>`
 	font-size: 2.6rem;
     font-weight: 500;
-    color: #ccc;
+    color: ${(props) => props.color};
     line-height: 1.2;
 `;
 export const OtterImg = styled.img`

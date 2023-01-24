@@ -10,20 +10,23 @@ import {
 	HeroText,
 	HeroSubText,
 	HeroContentWrapper,
-	OtterWrapper,
+	PixelGameImageWrapper,
 	OuterWrapper,
-	InnerWrapper,
-	InfoBoxWrapper,
 	InfoBox,
 	ButtonWrapper,
+	HeroBGOtterWrapper,
+	HeroInfoBoxWrapper
 } from './styles';
 import TypeWriter from '../../helpers/TypeWriter';
 
 const OtterImg = styled.img`
-	width: 25rem;
+	width: 20rem;
 	margin-right: 1.2rem;
-	@media (max-width: 400px) {
-		width: 20rem;
+	@media (min-width: 400px) {
+		width: 25rem;
+	}
+	@media (min-width: 850px) {
+		width: 30rem;
 	}
 `;
 
@@ -49,18 +52,18 @@ const LandingHero: React.FC = () => {
 				<HeroSubText>history</HeroSubText>
 			</OuterWrapper>
 			<HeroContentWrapper>
-				<InnerWrapper>
-					<OtterWrapper>
+				<HeroBGOtterWrapper>
+					<PixelGameImageWrapper>
 						<OtterImg src={OtterSrc} />
 						<p>oh hai...</p>
-					</OtterWrapper>
-					<InfoBoxWrapper>
+					</PixelGameImageWrapper>
+					<HeroInfoBoxWrapper>
 						<InfoBox>
-							<HeroInfoHeader>what is <PurpleSpan>otterly?</PurpleSpan></HeroInfoHeader>
-							<HeroInfo>fun and funny text adventure games featuring otters, in beautiful retro styles, choose your theme, build your inventory, be an otter!</HeroInfo>
+							<HeroInfoHeader color={'#fff'}>what is <PurpleSpan>otterly?</PurpleSpan></HeroInfoHeader>
+							<HeroInfo color={"#fff"}>fun and funny text adventure games featuring otters, in beautiful retro styles, choose your theme, build your inventory, be an otter!</HeroInfo>
 						</InfoBox>
-					</InfoBoxWrapper>
-				</InnerWrapper>
+					</HeroInfoBoxWrapper>
+				</HeroBGOtterWrapper>
 				<ButtonWrapper>
 					<Button onClick={() => navigate("/games")} color={theme.button_purple}>browse games</Button>
 					<Button onClick={() => navigate("/about")} color='#fff'>about us</Button>

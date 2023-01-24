@@ -43,23 +43,23 @@ const AboutPage: React.FC<AboutPageProps> = (props) => {
             </HeroWrapper>
             <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
                 <PixelImage src={PixelSrc} />
-                <HeroInfoHeader>is <PurpleSpan>otterly</PurpleSpan> a crypto meta-verse token keto?</HeroInfoHeader>
-                <HeroInfo>no. otterly is neither a coin, leg-less avatar, nor a weigh to lose weight (see what I did there?). otterly ridiculous history is a web application built to provide fun and sometimes demoralizing text adventure games
+                <HeroInfoHeader color={"#ccc"}>is <PurpleSpan>otterly</PurpleSpan> a crypto meta-verse token keto?</HeroInfoHeader>
+                <HeroInfo color={"#ccc"}>no. otterly is neither a coin, leg-less avatar, nor a weigh to lose weight (see what I did there?). otterly ridiculous history is a web application built to provide fun and sometimes demoralizing text adventure games
                         that feature otters as the characters and protagonists.
                 </HeroInfo>
             </BasicFlexCWrapper>
             <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
-                <HeroInfoHeader>
+                <HeroInfoHeader color={"#ccc"}>
                     okay, but why otterly ridiculous <PurpleSpan>history?</PurpleSpan>
                 </HeroInfoHeader>
-                <HeroInfo>
+                <HeroInfo color={"#ccc"}>
                     you ask a lot of questions. our original idea centered around photoshopping otters into historical situations. and we still think that's
                     an extremely marketable idea - so don't steal it. however we decided to go the text adventure route for
                     absolutely no good reason whatsoever.
                 </HeroInfo>
             </BasicFlexCWrapper>
             <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
-                <HeroInfoHeader>
+                <HeroInfoHeader color={"#ccc"}>
                     <PurpleSpan>otterly</PurpleSpan> plausible fast facts
                 </HeroInfoHeader>
                 <QuoteGrid>
@@ -84,10 +84,10 @@ const AboutPage: React.FC<AboutPageProps> = (props) => {
                 </QuoteGrid>
             </BasicFlexCWrapper>
             <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
-                <HeroInfoHeader>
+                <HeroInfoHeader color={"#ccc"}>
                     get in <PurpleSpan>touch</PurpleSpan>
                 </HeroInfoHeader>
-                <HeroInfo>
+                <HeroInfo color={"#ccc"}>
                     drop us a message via our contact page. tell us how we're doing (only nice comments please - our
                     egos are so fragile). sell us your story idea! *all sales not to exceed $0
                 </HeroInfo>

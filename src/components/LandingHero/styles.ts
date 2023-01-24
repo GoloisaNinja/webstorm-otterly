@@ -19,40 +19,30 @@ export const OuterWrapper = styled.div`
 	width: 100%;
 `;
 
-export const OtterWrapper = styled.div`
-	display: flex;
-	> p {
-        flex: 1;
-        max-width: 160px;
-		background: #fff;
-		border-radius: 3rem;
-		align-self: flex-start;
-		padding: 2.4rem;
-        font-family: 'VT323', monospace;
-		font-size: 3rem;
-		font-weight: 600;
-		color: #000000;
-		margin-left: -4rem;
-		min-width: 135px;
-		display: none;
-        text-align: center;
+export const PixelGameImageWrapper = styled.div`
+  position: relative;
+    display: flex;
+    align-items: center;
+    //margin-top: 3rem;
+    > p {
+      background: #fff;
+      border-radius: 3rem;
+      align-self: flex-start;
+      margin-top: 2.5rem;
+      padding: 2rem;
+      font-family: 'VT323', monospace;
+      font-size: 3rem;
+      font-weight: 600;
+      color: #000000;
+      margin-left: -6rem;
+      min-width: 135px;
+      text-align: center;
       @media (max-width: 445px) {
-        font-size: 2.8rem;
-      }
-      @media (max-width: 460px) {
-        padding: 2.4rem 1.6rem;
-      }
-      @media (max-width: 850px) {
-        display: block;
-        justify-content: center;
-      }
-      @media (min-width: 1050px) {
-        display: block;
-        padding: 2.4rem 1rem;
+        font-size: 2.6rem;
       }
     }
+  
 `;
-
 export const HeroText = styled.h1`
 	font-size: 6rem;
 	color: #fff;
@@ -96,26 +86,33 @@ export const HeroContentWrapper = styled.div`
 	width: 100%;
     margin-top: 4rem;
 `;
-export const InnerWrapper = styled.div`
-	display: flex;
-	align-items: stretch;
-	width: 100%;
-	@media (max-width: 850px) {
-		flex-direction: column;
-	}
-`;
-export const InfoBoxWrapper = styled.div`
-	display: flex;
-    align-items: center;
-    @media (max-width: 849px) {
-      margin-top: 4rem;
-    }
-	@media (min-width: 1000px) {
-		margin-left: 4rem;
-	}
+export const HeroBGOtterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 400px;
   animation: ${fadeIn} 3s;
   animation-delay: .4s;
   animation-fill-mode: backwards;
+  &:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .07;
+    background-image: url('/images/pixelGameBG.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+`;
+export const HeroInfoBoxWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 export const InfoBox = styled.div`
     display: flex;
