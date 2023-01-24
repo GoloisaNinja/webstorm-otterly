@@ -14,17 +14,20 @@ import ContactPage from "../pages/ContactPage";
 import ThankYouPage from "../pages/ThankYouPage/ThankYouPage";
 import ErrorPage from "../pages/ErrorPage";
 // Redux ToolKit
-import { useSelector, useDispatch } from "react-redux";
-import { addGame, gamesSelector } from "../features/games/gamesSlice";
+import { useDispatch } from "react-redux";
+import { addGame } from "../features/games/gamesSlice";
 
 import oneWayOrTheOtter from '../games/oneWayOrTheOtter';
+import ageOfTheOtter from "../games/ageOfTheOtter";
+import anotterTime from "../games/anotterTime";
 
 
 const AppRouter: React.FC = () => {
 	const dispatch = useDispatch();
-	const { games } = useSelector(gamesSelector);
 	useEffect(() => {
 		dispatch(addGame(oneWayOrTheOtter))
+		dispatch(addGame(ageOfTheOtter))
+		dispatch(addGame(anotterTime))
 	},[])
 	return (
 		<Router>

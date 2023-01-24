@@ -67,4 +67,5 @@ export const InventoryAddedDismiss = styled.button<ButtonProps>`
   padding: 1.2rem;
   margin-top: 2.4rem;
   margin-bottom: 1rem;
+  color: black;
 `

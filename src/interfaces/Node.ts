@@ -20,8 +20,10 @@ export interface INode {
 export interface IGame {
 	ID: number;
 	Title: string;
+	TitleColor: string;
 	Image: string;
 	Description: string;
+	IsAvailable: boolean;
 	Nodes: INode[];
 }
 

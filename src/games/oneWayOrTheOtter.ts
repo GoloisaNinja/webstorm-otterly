@@ -1,10 +1,13 @@
 import {IGame} from '../interfaces/Node';
+import {theme} from "../styles/theme";
 
 const oneWayOrTheOtter: IGame = {
     ID: 1,
     Title: 'One Way or the Otter',
+    TitleColor: theme.main_purple,
     Image: "/images/owoto.webp",
     Description: "You wake up from cryo-sleep to find alarms blaring and the ship you're on in shambles! Are you the captain or a prisoner? Why does the ship sound like it's coming apart? You'll need to work quickly to solve the mysteries and live to cuddle more space rocks, in this otterly futuristic sci-fi adventure!",
+    IsAvailable: true,
     Nodes: [
         {
             ID: 1,

@@ -6,17 +6,19 @@ import {GameCardWrapper, GameImage, GameTextWrapper, GameTitle, GameDescription}
 interface GameCardProps {
     id: number;
     title: string;
+    titleColor: string;
     description: string;
-    imageSrc: string
+    imageSrc: string;
+    isAvailable: boolean;
 }
 const GameCard: React.FC<GameCardProps> = (props) => {
     const theme = useContext(ThemeContext)
     const navigate = useNavigate();
     return (
-        <GameCardWrapper onClick={() => navigate(`/games/${props.id}`)}>
+        <GameCardWrapper opacity={props.isAvailable ? 1 : .3} onClick={() => props.isAvailable && navigate(`/games/${props.id}`)}>
             <GameImage src={props.imageSrc} />
             <GameTextWrapper>
-                <GameTitle color={theme.main_purple}>{props.title}</GameTitle>
+                <GameTitle color={props.titleColor}>{props.title}</GameTitle>
                 <GameDescription>{props.description}</GameDescription>
             </GameTextWrapper>
         </GameCardWrapper>

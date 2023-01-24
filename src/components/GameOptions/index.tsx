@@ -1,11 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {gamesSelector, setValidCO, CommandOption} from "../../features/games/gamesSlice";
-import { withTheme } from "styled-components";
+import {withTheme} from "styled-components";
 import {OptionsWrapper, Option} from "./styles";
 import {IOptions} from "../../interfaces/Node";
+import TypeWriter from "../../helpers/TypeWriter";
+interface Theme {
+}
 
-interface Theme {}
 interface OptionsProps {
     options: IOptions[];
     theme: Theme;
@@ -13,7 +15,7 @@ interface OptionsProps {
 
 const GameOptions: React.FC<OptionsProps> = (props) => {
     const dispatch = useDispatch();
-    const { mood, inventory, validCO } = useSelector(gamesSelector)
+    const {mood, inventory, validCO} = useSelector(gamesSelector)
     const assessValidOptions = useCallback((): void => {
         const validArray: CommandOption[] = [];
         props.options.forEach((option) => {
@@ -32,16 +34,28 @@ const GameOptions: React.FC<OptionsProps> = (props) => {
             }
         })
         dispatch(setValidCO(validArray));
-    },[props.options])
+    }, [props.options])
 
     useEffect(() => {
         assessValidOptions()
     }, [assessValidOptions])
 
-    return  validCO !== null ? (
+    useEffect(() => {
+        if (document !== undefined) {
+            let optionEls: NodeList = document.querySelectorAll(".option")!
+            optionEls.forEach((el) => {
+                let castHtml = el as HTMLElement
+               let str = el.childNodes[0].nodeValue!
+                TypeWriter(str, castHtml)
+            })
+        }
+    },[validCO])
+
+    return validCO !== null ? (
         <OptionsWrapper>
-            {validCO.map((obj: CommandOption, index: number) => <Option key={`${obj.command}-{index}`}>{obj.optionString}</Option>)}
+            {validCO.map((obj: CommandOption, index: number) => <Option
+                className={"option"} key={`${obj.command}-{index}`}>{obj.optionString}</Option>)}
         </OptionsWrapper>
-    ): (<OptionsWrapper>loading...</OptionsWrapper>);
+    ) : (<OptionsWrapper>loading...</OptionsWrapper>);
 }
 export default withTheme(GameOptions);

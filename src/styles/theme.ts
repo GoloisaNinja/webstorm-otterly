@@ -6,6 +6,7 @@ export const theme = {
 	console_green: '#46be0f',
 	console_orange: '#be870f',
 	console_error: '#ff3037',
+	light_teal: '#4fd3d3'
 };
 
 export const gameLight = {
