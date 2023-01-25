@@ -160,10 +160,10 @@ const oneWayOrTheOtter: IGame = {
                     ID: "6a",
                     Text: `Type "quarters" to find your room and key card`,
                     Command: "quarters",
-                    Mood: "sock drawer",
+                    Mood: "search mode",
                     Requires: {Mood: null, Inventory: []},
                     Inventory: "",
-                    NextNode: 11
+                    NextNode: 29
                 },
                 {
                     ID: "6b",
@@ -563,6 +563,129 @@ const oneWayOrTheOtter: IGame = {
                 },
             ],
             EarnedPoints: 500
+        },
+        {
+            ID: 29,
+            Text: `The more you think about it, there’s probably a wicked cool elevator that talks and has sweet doors that “whoosh” and stuff. And anything that is THAT awesome is going to require some kind of key card access. That, and whatever jerk-face McJerkingson took your creds from your locker is probably impersonating you right this very moment. And there will be no better way to prove you are, in fact, the captain, than showing up with your spare deets in hand and your high cheekbones held, well, high. Then you can have that badge lifting creton thrown out an airlock. So you decide to make for your quarters. There is, however, the slightly annoying problem of not remembering where your quarters are. You approach one of the terminals in the cryo-bay and start tapping on keys. The terminal comes to life and you quickly bring up a crew quarter schematic. Captain’s quarters, your quarters, are one deck up. There’s an access shaft just down the corridor if you take two lefts out of the cryo-bay. `,
+            NodeOptions: [
+                {
+                    ID: "29a",
+                    Text: `Type "continue" to head towards crew deck`,
+                    Command: "continue",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 30
+                },
+            ],
+            EarnedPoints: 5
+        },
+        {
+            ID: 30,
+            Text: `Without too much drama, you make it to your quarters, but the entire deck seems to have suffered a power failure. The panel next to your door is dark and no amount of pushing with your adorable little otter arms is making the door budge. The entire corridor seems to be without power and is dark. However, there’s just enough light coming from an emergency panel at the end of the corridor that you can see there is room to the left, and a room to the right, of your quarters and both have their doors ajar. Maybe searching those rooms could be useful? What do you want to do?`,
+            NodeOptions: [
+                {
+                    ID: "30a",
+                    Text: `Type "left" to inspect room on the left`,
+                    Command: "left",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 31
+                },
+                {
+                    ID: "30b",
+                    Text: `Type "right" to inspect room on the right`,
+                    Command: "right",
+                    Mood: "",
+                    Requires: {Mood: "search mode", Inventory: []},
+                    Inventory: "",
+                    NextNode: 32
+                },
+            ],
+            EarnedPoints: 5
+        },
+        {
+            ID: 31,
+            Text: `You scoot left and shuffle down the corridor a bit until you reach the slightly ajar door of the room on the left. You slip inside the room and find yourself in almost total blackness. The emergency light from the corridor barely spreads beyond the, only slightly cracked, door. You can make out vague shapes. A long rectangle, possibly a bed is pressed up against, what is likely, the back wall. There is a more boxy square shape closer to the entrance, maybe a desk? You start fumbling around with items on the desk, but you just end up knocking a bunch of stuff to the floor. Ugh. This isn’t working and you aren’t finding anything in this room in the dark. What do you want to do? `,
+            NodeOptions: [
+                {
+                    ID: "31a",
+                    Text: `Type "back" to go back to the hallway`,
+                    Command: "back",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 30
+                },
+                {
+                    ID: "32a",
+                    Text: `Type "flashlight" to turn on the flashlight`,
+                    Command: "flashlight",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: ["flashlight"]},
+                    Inventory: "",
+                    NextNode: 33
+                },
+            ],
+            EarnedPoints: 5
+        },
+        {
+            ID: 32,
+            Text: `You shimmy right and feel your way carefully until you reach the slightly ajar door to the right of your quarters. You are able to pretty easily slip inside, but are met with complete darkness. You start taking small steps around the room with your arms outstretched. A thought enters your mind, what if you aren’t alone in this room? What if there’s something that’s just been waiting in this room. Waiting with the door slightly open. Waiting for some hapless, attractive otter like yourself, to come along so it can feast on your entrails and gain your considerable soul power or something? You’ve barely started going down this thought rabbit hole when you slip on something and fall to the floor with massive thud! You lay there, stunned, for a moment. Then you start feeling your face to make sure that nothing bad happened to your adorable nose. Oh, thank the stars. It seems nothing damaged your flawless bone structure. Ugh, what did you slip on? It felt almost cylindrical as it slid beneath your foot. You start groping around on the floor by where your feet are and finally your hand brushes something. You quickly seize it up and discover it’s a flashlight! You quickly turn it on and it works! Bright, pale, light illuminates the room and casts deep shadows across the tight walls. There’s a bed pushed up against the far wall and a small desk by the entry. A quick toss of the desk doesn’t turn anything useful up. Without anything else really useful in this room, you should probably go back to the hallway.`,
+            NodeOptions: [
+                {
+                    ID: "32a",
+                    Text: `Type "back" to go back to the hallway`,
+                    Command: "back",
+                    Mood: "illuminati",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "flashlight",
+                    NextNode: 30
+                },
+            ],
+            EarnedPoints: 10
+        },
+        {
+            ID: 33,
+            Text: `You switch on the flashlight and the room is immediately flooded with pale, harsh, light. Creepy shadows form on all the walls of the small room. The large rectangle shape you spotted before was, in fact, the bed. It is pushed up against the wall, but isn’t sitting quite flush. You can now clearly see the desk and the items you knocked to the floor earlier. It doesn’t look like you knocked over anything of consequence. Just some data pads and more than a few rocks. Otters love rocks. There’s a side table with another data pad and a light that is obviously not working, and there’s a larger ship panel that’s wall mounted, but it too, is dark and isn’t working. What do you want to do?`,
+            NodeOptions: [
+                {
+                    ID: "33a",
+                    Text: `Type "desk" to search the desk with the flashlight`,
+                    Command: "desk",
+                    Mood: "rummager",
+                    Requires: {Mood: "illuminati", Inventory: []},
+                    Inventory: "",
+                    NextNode: 34
+                },
+                {
+                    ID: "33b",
+                    Text: `Type "bed" to search the under the askew bed`,
+                    Command: "bed",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 35
+                },
+            ],
+            EarnedPoints: 10
+        },
+        {
+            ID: 34,
+            Text: `Searching the desk with a flashlight should yield a lot better results than your first, nearly blind attempt. There are several drawers, but one in particular grabs your attention. There’s been a locking mechanism installed. By default, all desk drawers in an otter’s quarters are “locked” to their specific biometric signature. But this otter felt the need to install a 3rd party, analog lock. Interesting. You grab one of the nearby rocks on the ground and bash the heavy lock until your head is ringing and your cute little otter hand is throbbing. You are about to call it quits, when the lock finally fails and makes a muted crunching sound as the internal tumblers disengage from your unceremonious bashing. You slip the lock and open the drawer. It’s completely empty. Wait? It’s completely empty? Your adorable little otter paw is almost bleeding, and this freaking drawer is empty! You kick the stupid drawer for being so stupid and in the process stub your little otter foot quite badly. As you are hopping around in pain, you accidentally hop on a rock that’s still on the ground and howl in pain, falling backwards into the drawer. You hit the drawer with such force that the drawer completely comes off the track. As the drawer shatters you spot a secret compartment! You smile to yourself. “Just as I suspected” you exclaim with a little otter fist pump. You’re like the smartest otter ever. You remove the false panel and remove the slim contents of the false bottom. It’s an old, analog, photograph. Most companies stopped producing actual film decades ago. It’s mainly produced now, in small batches, for artists and whatnot. The photograph is of a small, lizard-like creature. Your mind almost seizes on what you’re looking at, but then falls short. This cryo-fog is pure hell. You feel like you know what this creature is. But you can’t place it. It’s very small in the picture and looks to be fairly young. The lizard has arms and is standing upright wearing what looks to be a home-made space suit. It’s weird, but you almost killed yourself getting this thing, so you decide to shove it in your pocket. Better focus and keep searching the room.`,
+            NodeOptions: [
+                {
+                    ID: "34a",
+                    Text: `Type "continue" to go back to searching the room`,
+                    Command: "continue",
+                    Mood: "Fuji Film",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "photograph",
+                    NextNode: 33
+                },
+            ],
+            EarnedPoints: 10
         },
     ],
 };
