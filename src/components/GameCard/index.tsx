@@ -15,7 +15,11 @@ const GameCard: React.FC<GameCardProps> = (props) => {
     const theme = useContext(ThemeContext)
     const navigate = useNavigate();
     return (
-        <GameCardWrapper opacity={props.isAvailable ? 1 : .3} onClick={() => props.isAvailable && navigate(`/games/${props.id}`)}>
+        <GameCardWrapper tabIndex={0}
+                         opacity={props.isAvailable ? 1 : .3}
+                         onClick={() => props.isAvailable && navigate(`/games/${props.id}`)}
+                         onKeyDown={(e) => (props.isAvailable && e.key === "Enter") && navigate(`/games/${props.id}`)}
+        >
             <GameImage src={props.imageSrc} />
             <GameTextWrapper>
                 <GameTitle color={props.titleColor}>{props.title}</GameTitle>

@@ -36,6 +36,7 @@ export const FooterLink = styled(Link)`
 	color: #fff;
 	font-size: 1.4rem;
 	font-weight: 700;
+    max-width: 300px;
 `;
 export const Copyright = styled.h4`
 	font-size: 1.5rem;

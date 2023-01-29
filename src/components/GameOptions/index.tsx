@@ -18,7 +18,7 @@ const GameOptions: React.FC<OptionsProps> = (props) => {
     const {mood, inventory, validCO} = useSelector(gamesSelector)
     const assessValidOptions = useCallback((): void => {
         const validArray: CommandOption[] = [];
-        props.options.forEach((option) => {
+        props.options.forEach((option, index) => {
             const {Mood, Inventory} = option.Requires;
             if (Mood !== null && Mood !== mood) {
                 return;
@@ -30,7 +30,7 @@ const GameOptions: React.FC<OptionsProps> = (props) => {
                 }
             })
             if (valid) {
-                validArray.push({command: option.Command, optionString: option.Text})
+                validArray.push({command: option.Command, optionString: option.Text, pos: index})
             }
         })
         dispatch(setValidCO(validArray));
@@ -45,7 +45,7 @@ const GameOptions: React.FC<OptionsProps> = (props) => {
             let optionEls: NodeList = document.querySelectorAll(".option")!
             optionEls.forEach((el) => {
                 let castHtml = el as HTMLElement
-               let str = el.childNodes[0].nodeValue!
+                let str = el.childNodes[0].nodeValue!
                 TypeWriter(str, castHtml)
             })
         }

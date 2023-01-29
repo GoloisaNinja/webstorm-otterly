@@ -18,6 +18,7 @@ export const Text = styled.p`
   line-height: 1.3;
   margin-bottom: 4rem;
   font-family: 'VT323', monospace;
+  white-space: pre-line;
 `;
 export const Status = styled(TypewriterStylePTag)`
   font-size: 1.85rem;

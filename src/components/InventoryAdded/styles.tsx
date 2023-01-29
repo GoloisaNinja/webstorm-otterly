@@ -59,11 +59,16 @@ export const Added = styled.p`
 export const InventoryAddedDismiss = styled.button`
   grid-area: btn;
   background-color: ${(props) => props.theme.colors.modal_dismiss_btn};
+  border: 2px ${(props) => props.theme.colors.modal_dismiss_btn} solid;
   font-family: 'VT323', monospace;
   font-size: 2.4rem;
-  border: none;
   padding: 1.2rem;
   margin-top: 2.4rem;
   margin-bottom: 1rem;
   color: ${(props) => props.theme.colors.modal_dismiss_text_color};
+  transition: all .4s ease-in-out;
+  &:focus {
+    border: 2px ${(props) => props.theme.colors.text_color} solid;
+    transform: scale(1.02);
+  }
 `

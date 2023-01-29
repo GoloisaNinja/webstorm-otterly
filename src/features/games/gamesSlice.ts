@@ -2,9 +2,36 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import type {RootState} from "../../rootReducer";
 import {IGame, INode} from "../../interfaces/Node";
 
+export interface PlayType {
+    reckless: number;
+    intelligent: number;
+    aggressive: number;
+    passive: number;
+
+}
+export interface AfterActionState {
+    nodesCompleted: number;
+    selectedStoryArc: string;
+    dominantPlayType: PlayType;
+    died: boolean;
+}
+
+const AfterActionInitialState = {
+    nodesCompleted: 0,
+    selectedStoryArc: "",
+    dominantPlayType: {
+        reckless: 0,
+        intelligent: 0,
+        aggressive: 0,
+        passive: 0,
+    },
+    died: false,
+}
+
 export type CommandOption = {
     command: string,
     optionString: string,
+    pos: number,
 }
 interface GamesState {
     games: IGame[];
@@ -16,6 +43,7 @@ interface GamesState {
     inventory: string[];
     points: number;
     errorMessage: string;
+    afterAction: AfterActionState
 }
 
 const initialState: GamesState = {
@@ -27,7 +55,8 @@ const initialState: GamesState = {
     validCO: null,
     inventory: ["empty"],
     points: 0,
-    errorMessage: "<null>",
+    errorMessage: "null",
+    afterAction: AfterActionInitialState,
 }
 
 export const gamesSlice = createSlice({
@@ -51,6 +80,10 @@ export const gamesSlice = createSlice({
                 node = null;
             }
             state.node = node;
+            state.afterAction.nodesCompleted++;
+        },
+        setNodeToAfterActionReport: (state, {payload}: PayloadAction<INode>) => {
+            state.node = payload
         },
         setGameLoading: (state, {payload}: PayloadAction<boolean>) => {
             state.gameLoading = payload
@@ -80,12 +113,23 @@ export const gamesSlice = createSlice({
         setErrorMessage: (state, {payload}: PayloadAction<string>) => {
             state.errorMessage = payload
         },
+        setStoryArc: (state, {payload}: PayloadAction<string>) => {
+            state.afterAction.selectedStoryArc = payload;
+        },
+        addPlayType: (state, {payload}: PayloadAction<keyof PlayType>) => {
+            let newCount = state.afterAction.dominantPlayType[payload] + 1;
+            state.afterAction.dominantPlayType = {...state.afterAction.dominantPlayType, [payload]: newCount}
+        },
+        setDied: (state) => {
+            state.afterAction.died = true;
+        },
         resetGame: (state) => {
             state.mood = "unknown"
             state.validCO = null
             state.inventory = ["empty"]
             state.points = 0
-            state.errorMessage = "<null>"
+            state.errorMessage = "null"
+            state.afterAction = AfterActionInitialState
         },
         gameCleanUp: (state) => {
             state.game = null
@@ -95,10 +139,11 @@ export const gamesSlice = createSlice({
             state.validCO = null
             state.inventory = ["empty"]
             state.points = 0
-            state.errorMessage = "<null>"
+            state.errorMessage = "null"
+            state.afterAction = AfterActionInitialState
         }
     }
 })
 
-export const { addGame, setGame, setNode, setMood, setGameLoading, setPoints, setValidCO, addToInventory, setErrorMessage, resetGame, gameCleanUp } = gamesSlice.actions;
+export const { addGame, setGame, setNode, setNodeToAfterActionReport, setMood, setGameLoading, setPoints, setValidCO, addToInventory, setErrorMessage, setStoryArc, addPlayType, setDied, resetGame, gameCleanUp } = gamesSlice.actions;
 export const gamesSelector = (state: RootState) => state.games

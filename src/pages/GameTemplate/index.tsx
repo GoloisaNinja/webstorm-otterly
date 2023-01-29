@@ -6,17 +6,22 @@ import {
     gamesSelector,
     setGame,
     setNode,
+    setNodeToAfterActionReport,
     setMood,
     setPoints,
     addToInventory,
     setErrorMessage,
     setGameLoading,
+    setStoryArc,
+    addPlayType,
+    setDied,
     resetGame,
-    gameCleanUp
+    gameCleanUp,
+    PlayType
 } from "../../features/games/gamesSlice";
 import {useParams} from 'react-router-dom';
+import { BuildAfterActionINode } from "../../helpers/AfterActionINode";
 import {IOptions} from "../../interfaces/Node";
-import {CommandOption} from "../../features/games/gamesSlice";
 import GameNotFound from "../../components/GameNotFound";
 import GameLoadScreen from "../../components/GameLoadScreen";
 import GameNodeText from '../../components/GameNodeText';
@@ -40,7 +45,7 @@ const GameTemplate: React.FC = () => {
     const params = useParams();
     const gameId = parseInt(params.id!);
     const dispatch = useDispatch();
-    const {game, node, mood, validCO, errorMessage, gameLoading, points, inventory} = useSelector(gamesSelector)
+    const {game, node, mood, validCO, errorMessage, gameLoading, points, inventory, afterAction} = useSelector(gamesSelector)
     const [currentGameTheme, setCurrentGameTheme] = useState<any>(gameDark);
     const [userInput, setUserInput] = useState("");
     const [show, setShow] = useState<boolean>(false);
@@ -93,27 +98,77 @@ const GameTemplate: React.FC = () => {
         scrollToNodeTextStart()
     }
 
-    function goodUserInput(): boolean {
-        let goodInput = false;
-        for (let obj of validCO as CommandOption[]) {
-            if (obj.command === userInput.toLowerCase().trim()) {
-                return true
-            }
-        }
-        return goodInput
+    type UserInputCheck = {
+        goodInput: boolean,
+        selectedOption: IOptions | null,
+        optionIsNullNextNode: number | null,
     }
 
+    function inputCheck(): UserInputCheck {
+        let command = userInput.toLowerCase().trim();
+        const defaultBadInput: UserInputCheck = {
+            goodInput: false,
+            selectedOption: null,
+            optionIsNullNextNode: null,
+        }
+        const goodInputDynamic: UserInputCheck = {
+            goodInput: true,
+            selectedOption: null,
+            optionIsNullNextNode: null,
+        }
+        if (node.CodeNode) {
+            if (command.length !== node.CodeLength) {
+                return defaultBadInput
+            } else {
+                if (command === validCO[0].command) {
+                    goodInputDynamic.selectedOption = node.NodeOptions[validCO[0].pos]
+                    return goodInputDynamic
+                } else {
+                    goodInputDynamic.optionIsNullNextNode = node.CodeFailedNextNode
+                    return goodInputDynamic
+                }
+            }
+        }
+        for (let i = 0; i < validCO.length; i++) {
+            if (validCO[i].command === command) {
+                goodInputDynamic.selectedOption = node.NodeOptions[validCO[i].pos]
+                return goodInputDynamic
+            }
+        }
+        return defaultBadInput
+    }
+    function handleAfterAction(): void {
+        const aaINode = BuildAfterActionINode({game, afterAction, points});
+        dispatch(setMood("GAME OVER..."))
+        dispatch(setNodeToAfterActionReport(aaINode))
+        setUserInput("")
+        scrollToNodeTextStart()
+
+    }
     function handleInput(): void {
-        if (!goodUserInput()) {
+        let inputOutcome = inputCheck();
+        if (!inputOutcome.goodInput) {
             dispatch(setErrorMessage("command not recognized..."))
             return;
         }
-        let optionIndex = node.NodeOptions.findIndex((option: IOptions) => option.Command === userInput.toLowerCase().trim());
-        if (optionIndex !== -1) {
-            let selectedOption = node.NodeOptions[optionIndex]
+        if (inputOutcome.selectedOption !== null) {
+            let selectedOption = inputOutcome.selectedOption
+            if (selectedOption.AfterAction !== undefined) {
+                handleAfterAction()
+                return
+            }
             if (selectedOption.NextNode === 1) {
                 handleGameReset()
                 return
+            }
+            if (selectedOption.StoryArc !== undefined) {
+                dispatch(setStoryArc(selectedOption.StoryArc))
+            }
+            if (selectedOption.PlayType !== undefined) {
+                dispatch(addPlayType(selectedOption.PlayType as keyof PlayType))
+            }
+            if (selectedOption.DeathNode !== undefined) {
+                dispatch(setDied())
             }
             if (selectedOption.Inventory.length) {
                 dispatch(addToInventory(selectedOption.Inventory))
@@ -122,16 +177,16 @@ const GameTemplate: React.FC = () => {
             if (selectedOption.Mood.length) {
                 dispatch(setMood(selectedOption.Mood));
             }
-            if (errorMessage !== "<null>") {
-                dispatch(setErrorMessage("<null>"))
-            }
             dispatch(setNode(selectedOption.NextNode));
-            dispatch(setPoints())
-            setUserInput("")
-            scrollToNodeTextStart()
         } else {
-            dispatch(setErrorMessage("command not recognized..."))
+            dispatch(setNode(inputOutcome.optionIsNullNextNode!))
         }
+        if (errorMessage !== `null`) {
+            dispatch(setErrorMessage(`null`))
+        }
+        dispatch(setPoints())
+        setUserInput("")
+        scrollToNodeTextStart()
     }
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {

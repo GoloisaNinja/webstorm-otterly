@@ -6,14 +6,21 @@ export interface IOptions {
 	ID: string;
 	Text: string;
 	Command: string;
-	Mood: string | null;
+	Mood: string;
 	Requires: ILevelRequirements;
 	Inventory: string;
 	NextNode: number;
+	StoryArc?: string;
+	PlayType?: string;
+	DeathNode?: boolean;
+	AfterAction?: boolean;
 }
 export interface INode {
 	ID: number;
 	Text: string;
+	CodeNode: boolean;
+	CodeLength: number;
+	CodeFailedNextNode: number;
 	NodeOptions: IOptions[];
 	EarnedPoints: number;
 }

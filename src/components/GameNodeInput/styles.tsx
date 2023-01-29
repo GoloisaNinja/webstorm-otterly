@@ -34,6 +34,7 @@ export const StyledInput = styled.input`
 	color: ${props => props.theme.colors.input_text_color};
     margin-left: -.3rem;
     min-height: 28.8px;
+    padding-left: .2rem;
     padding-bottom: .2rem;
     flex: 1;
 `;
