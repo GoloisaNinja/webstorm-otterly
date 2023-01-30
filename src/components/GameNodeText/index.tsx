@@ -1,18 +1,19 @@
 import React from 'react';
 import {withTheme} from "styled-components";
-import { Text, Status } from "./styles";
+import { Text, StatusWrapper, Status } from "./styles";
 
-interface Theme {}
 interface GameTextProps {
     nodeText: string;
     status: string;
-    theme: Theme;
+    theme: {};
 }
 
 const GameNodeText:React.FC<GameTextProps> = (props) => {
     return(
         <>
-            <Status>{`Status: ${props.status}`}</Status>
+            <StatusWrapper>
+                <Status>{`Status: ${props.status}`}</Status>
+            </StatusWrapper>
         <Text>
             {props.nodeText}
         </Text>

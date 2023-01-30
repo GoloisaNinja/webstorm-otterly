@@ -82,7 +82,7 @@ const ContactPage: React.FC<ContactPageProps> = (props) => {
             >
                 <input type={"hidden"} name={"form-name"} value={"contact"} />
                 <label>Name</label>
-                <input type={"text"} name={"name"} value={name} onChange={(e) => handleInput(e)} required/>
+                <input autoFocus type={"text"} name={"name"} value={name} onChange={(e) => handleInput(e)} required/>
                 <p hidden><label>subject</label><input name={"subject"}/></p>
                 <label>Email</label>
                 <input type={"email"} name={"email"} value={email} onChange={(e) => handleInput(e)} required/>

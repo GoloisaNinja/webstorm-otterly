@@ -1,19 +1,20 @@
 import React, {useEffect} from 'react';
 import {withTheme} from "styled-components";
+import { useDispatch } from "react-redux";
+import GameReset from "../../helpers/GameReset";
 import {nanoid} from "nanoid";
 import {DropContentWrapper, GameMenuItemWrapper, ItemWrapper, MenuButton} from "./styles";
-
-interface Theme {};
 interface MenuItemProps {
     menuText: string;
     isClickable: boolean;
     items: string[];
     functions: Map<string, Function>;
-    theme: Theme;
+    theme: {};
 }
 const GameMenuItem: React.FC<MenuItemProps> = (props) => {
+    const dispatch = useDispatch()
     const toggleShow = props.functions.get("toggle")!;
-    const reset = props.functions.get("reset")!;
+    const setUserInput = props.functions.get("reset")!;
     const toggleTheme = props.functions.get("theme")!;
 
     function handleToggleShow(): void  {
@@ -21,7 +22,8 @@ const GameMenuItem: React.FC<MenuItemProps> = (props) => {
         toggleShow(instanceDropId);
     }
     function resetAndCloseMenu(): void {
-        reset();
+        //reset();
+        GameReset({ dispatch, setUserInput })
         handleToggleShow()
     }
     function themeChangeAndCloseMenu(): void  {

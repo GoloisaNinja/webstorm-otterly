@@ -3,7 +3,6 @@ import {withTheme} from "styled-components";
 import InventorySrc from '../../assets/inventory.png';
 import { InventoryWrapper, Title, Image, Added, InventoryAddedDismiss } from "./styles";
 
-
 interface InventoryAddedProps {
     details: string;
     handleShow: Function;

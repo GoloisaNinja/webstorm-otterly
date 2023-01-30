@@ -5,12 +5,10 @@ import {withTheme} from "styled-components";
 import {OptionsWrapper, Option} from "./styles";
 import {IOptions} from "../../interfaces/Node";
 import TypeWriter from "../../helpers/TypeWriter";
-interface Theme {
-}
 
 interface OptionsProps {
     options: IOptions[];
-    theme: Theme;
+    theme: {};
 }
 
 const GameOptions: React.FC<OptionsProps> = (props) => {

@@ -1,12 +1,11 @@
 import React from 'react';
 import {withTheme} from "styled-components";
 import {InputWrapper, StyledInput, TerminalSpan} from "./styles";
-interface Theme {}
 interface InputProps {
     handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void;
     handleUserInput(): void;
     userInput: string;
-    theme: Theme;
+    theme: {};
 }
 const GameNodeInput:React.FC<InputProps> = (props) => {
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {

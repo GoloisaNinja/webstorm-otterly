@@ -43,7 +43,7 @@ const AboutPage: React.FC<AboutPageProps> = (props) => {
             </HeroWrapper>
             <BasicFlexCWrapper marginTop={'1.5rem'} marginBottom={'6rem'}>
                 <PixelImage src={PixelSrc} />
-                <HeroInfoHeader color={"#ccc"}>is <PurpleSpan>otterly</PurpleSpan> a crypto meta-verse token keto?</HeroInfoHeader>
+                <HeroInfoHeader color={"#ccc"}>is <PurpleSpan>otterly</PurpleSpan> a crypto meta-verse keto NFT coin?</HeroInfoHeader>
                 <HeroInfo color={"#ccc"}>no. otterly is neither a coin, leg-less avatar, nor a weigh to lose weight (see what I did there?). otterly ridiculous history is a web application built to provide fun and sometimes demoralizing text adventure games
                         that feature otters as the characters and protagonists.
                 </HeroInfo>

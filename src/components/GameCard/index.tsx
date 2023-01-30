@@ -1,6 +1,5 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { useNavigate } from "react-router-dom";
-import {ThemeContext} from "styled-components";
 import {GameCardWrapper, GameImage, GameTextWrapper, GameTitle, GameDescription} from "./styles";
 
 interface GameCardProps {
@@ -12,7 +11,6 @@ interface GameCardProps {
     isAvailable: boolean;
 }
 const GameCard: React.FC<GameCardProps> = (props) => {
-    const theme = useContext(ThemeContext)
     const navigate = useNavigate();
     return (
         <GameCardWrapper tabIndex={0}

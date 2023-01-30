@@ -6,22 +6,11 @@ import {
     gamesSelector,
     setGame,
     setNode,
-    setNodeToAfterActionReport,
-    setMood,
-    setPoints,
-    addToInventory,
-    setErrorMessage,
     setGameLoading,
-    setStoryArc,
-    addPlayType,
-    setDied,
-    resetGame,
     gameCleanUp,
-    PlayType
 } from "../../features/games/gamesSlice";
 import {useParams} from 'react-router-dom';
-import { BuildAfterActionINode } from "../../helpers/AfterActionINode";
-import {IOptions} from "../../interfaces/Node";
+import GameInputLogic from "../../helpers/GameInputLogic";
 import GameNotFound from "../../components/GameNotFound";
 import GameLoadScreen from "../../components/GameLoadScreen";
 import GameNodeText from '../../components/GameNodeText';
@@ -45,10 +34,21 @@ const GameTemplate: React.FC = () => {
     const params = useParams();
     const gameId = parseInt(params.id!);
     const dispatch = useDispatch();
-    const {game, node, mood, validCO, errorMessage, gameLoading, points, inventory, afterAction} = useSelector(gamesSelector)
+    const {
+        game,
+        node,
+        mood,
+        validCO,
+        errorMessage,
+        gameLoading,
+        points,
+        inventory,
+        afterAction
+    } = useSelector(gamesSelector)
     const [currentGameTheme, setCurrentGameTheme] = useState<any>(gameDark);
     const [userInput, setUserInput] = useState("");
     const [show, setShow] = useState<boolean>(false);
+
     const startGame = useCallback(() => {
         dispatch(setGame(gameId));
         if (game !== null && game !== undefined) {
@@ -74,119 +74,23 @@ const GameTemplate: React.FC = () => {
         }
     }, [gameId, startGame])
 
-    function showInventoryAdded(): void {
-        setShow(true);
-    }
-
     function handleShow(): void {
         setShow(false)
     }
 
-    function scrollToNodeTextStart(): void {
-        const yPos = document.getElementById("scrollMarker")!.getBoundingClientRect().top;
-        const yPosOffset = yPos + window.scrollY - 95;
-        setTimeout(() => {
-            window.scroll({left: 0, top: yPosOffset, behavior: "smooth"});
-        }, 325)
-
-    }
-
-    function handleGameReset(): void {
-        dispatch(resetGame())
-        dispatch(setNode(1))
-        setUserInput("")
-        scrollToNodeTextStart()
-    }
-
-    type UserInputCheck = {
-        goodInput: boolean,
-        selectedOption: IOptions | null,
-        optionIsNullNextNode: number | null,
-    }
-
-    function inputCheck(): UserInputCheck {
-        let command = userInput.toLowerCase().trim();
-        const defaultBadInput: UserInputCheck = {
-            goodInput: false,
-            selectedOption: null,
-            optionIsNullNextNode: null,
-        }
-        const goodInputDynamic: UserInputCheck = {
-            goodInput: true,
-            selectedOption: null,
-            optionIsNullNextNode: null,
-        }
-        if (node.CodeNode) {
-            if (command.length !== node.CodeLength) {
-                return defaultBadInput
-            } else {
-                if (command === validCO[0].command) {
-                    goodInputDynamic.selectedOption = node.NodeOptions[validCO[0].pos]
-                    return goodInputDynamic
-                } else {
-                    goodInputDynamic.optionIsNullNextNode = node.CodeFailedNextNode
-                    return goodInputDynamic
-                }
-            }
-        }
-        for (let i = 0; i < validCO.length; i++) {
-            if (validCO[i].command === command) {
-                goodInputDynamic.selectedOption = node.NodeOptions[validCO[i].pos]
-                return goodInputDynamic
-            }
-        }
-        return defaultBadInput
-    }
-    function handleAfterAction(): void {
-        const aaINode = BuildAfterActionINode({game, afterAction, points});
-        dispatch(setMood("GAME OVER..."))
-        dispatch(setNodeToAfterActionReport(aaINode))
-        setUserInput("")
-        scrollToNodeTextStart()
-
-    }
     function handleInput(): void {
-        let inputOutcome = inputCheck();
-        if (!inputOutcome.goodInput) {
-            dispatch(setErrorMessage("command not recognized..."))
-            return;
-        }
-        if (inputOutcome.selectedOption !== null) {
-            let selectedOption = inputOutcome.selectedOption
-            if (selectedOption.AfterAction !== undefined) {
-                handleAfterAction()
-                return
-            }
-            if (selectedOption.NextNode === 1) {
-                handleGameReset()
-                return
-            }
-            if (selectedOption.StoryArc !== undefined) {
-                dispatch(setStoryArc(selectedOption.StoryArc))
-            }
-            if (selectedOption.PlayType !== undefined) {
-                dispatch(addPlayType(selectedOption.PlayType as keyof PlayType))
-            }
-            if (selectedOption.DeathNode !== undefined) {
-                dispatch(setDied())
-            }
-            if (selectedOption.Inventory.length) {
-                dispatch(addToInventory(selectedOption.Inventory))
-                showInventoryAdded();
-            }
-            if (selectedOption.Mood.length) {
-                dispatch(setMood(selectedOption.Mood));
-            }
-            dispatch(setNode(selectedOption.NextNode));
-        } else {
-            dispatch(setNode(inputOutcome.optionIsNullNextNode!))
-        }
-        if (errorMessage !== `null`) {
-            dispatch(setErrorMessage(`null`))
-        }
-        dispatch(setPoints())
-        setUserInput("")
-        scrollToNodeTextStart()
+        GameInputLogic({
+            userInput,
+            setUserInput,
+            game,
+            node,
+            validCO,
+            dispatch,
+            setShow,
+            errorMessage,
+            afterAction,
+            points
+        })
     }
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -240,7 +144,7 @@ const GameTemplate: React.FC = () => {
 
     const menuFunctionMap: Map<string, Function> = new Map([
         ["theme", toggleTheme],
-        ["reset", handleGameReset],
+        ["reset", setUserInput],
         ["toggle", toggleMenuShow]
     ])
 
@@ -279,8 +183,8 @@ const GameTemplate: React.FC = () => {
                         </NodeTextWrapper>
                     </GameScreenWrapper>
 
-                {show && <Modal childComponent={<InventoryAdded details={inventory[inventory.length - 1]}
-                                                                handleShow={handleShow}/>}/>}
+                    {show && <Modal childComponent={<InventoryAdded details={inventory[inventory.length - 1]}
+                                                                    handleShow={handleShow}/>}/>}
                 </ThemeProvider>
             </PageWrapper>);
 };

@@ -20,9 +20,14 @@ export const Text = styled.p`
   font-family: 'VT323', monospace;
   white-space: pre-line;
 `;
+export const StatusWrapper = styled.div`
+  background-color: ${(props) => props.theme.colors.status_highlight};
+  margin-bottom: 1rem;
+`;
 export const Status = styled(TypewriterStylePTag)`
   font-size: 1.85rem;
-  margin-bottom: .3rem;
+  margin-bottom: 0;
+  padding-left: .3rem;
   color: ${props => props.theme.colors.status_color};
   animation: ${typing} 5s steps(95, end);
   &::after {

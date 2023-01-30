@@ -6,13 +6,12 @@ import GameMenuItem from "../GameMenuItem";
 import {MdOutlineVideogameAsset} from "react-icons/md";
 import {MenuWrapper, Points} from "./styles";
 
-interface Theme {};
 interface MenuProps {
     id: string;
     title: string;
     points: number;
     functions: Map<string, Function>;
-    theme: Theme;
+    theme: {};
 }
 
 const GameMenuBar:React.FC<MenuProps> = (props) => {

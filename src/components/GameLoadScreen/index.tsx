@@ -3,12 +3,11 @@ import {withTheme} from "styled-components";
 import { nanoid } from 'nanoid';
 import {GameLoadScreenWrapper} from "./styles";
 
-interface Theme {}
 interface GameLoadingScreenProps {
     gameLoading: boolean;
     gameTitle: string;
     handleGameLoading():void
-    theme: Theme;
+    theme: {};
 }
 
 const GameLoadScreen: React.FC<GameLoadingScreenProps> = (props) => {
