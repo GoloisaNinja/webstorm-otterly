@@ -33,7 +33,7 @@ const oneWayOrTheOtter: IGame = {
                     Command: `epep`,
                     Mood: 'relief',
                     Requires: {Mood: null, Inventory: []},
-                    Inventory: "test slot",
+                    Inventory: "",
                     NextNode: 3,
                     PlayType: "reckless",
                 },
@@ -716,7 +716,7 @@ const oneWayOrTheOtter: IGame = {
                 },
                 {
                     ID: "28b",
-                    Text: `Type "after action" to see your after action  report`,
+                    Text: `Type "after action" to see your after action report`,
                     Command: "after action",
                     Mood: "",
                     Requires: {Mood: null, Inventory: []},
@@ -913,7 +913,7 @@ const oneWayOrTheOtter: IGame = {
                     Mood: "",
                     Requires: {Mood: null, Inventory: []},
                     Inventory: "",
-                    NextNode: 45,
+                    NextNode: 38,
                     PlayType: "passive"
                 },
             ],
@@ -952,7 +952,7 @@ const oneWayOrTheOtter: IGame = {
                     Mood: "",
                     Requires: {Mood: null, Inventory: []},
                     Inventory: "ripped cloth",
-                    NextNode: 41
+                    NextNode: 42
                 },
             ],
             EarnedPoints: 10
@@ -1029,7 +1029,7 @@ const oneWayOrTheOtter: IGame = {
                     Mood: "i am the captain now",
                     Requires: {Mood: null, Inventory: ["bridge access"]},
                     Inventory: "",
-                    NextNode: 55,
+                    NextNode: 45,
                     PlayType: "intelligent"
                 },
                 {
@@ -1039,7 +1039,7 @@ const oneWayOrTheOtter: IGame = {
                     Mood: "opportunist",
                     Requires: {Mood: null, Inventory: []},
                     Inventory: "",
-                    NextNode: 56,
+                    NextNode: 46,
                     PlayType: "reckless"
                 },
             ],
@@ -1083,6 +1083,380 @@ const oneWayOrTheOtter: IGame = {
                 },
             ],
             EarnedPoints: -20
+        },
+        {
+            ID: 45,
+            Text: `There’s a credential reader/terminal near the bridge doors. You scan your access credentials, and immediately the blast doors begin to retreat into the ceiling. Once the blast doors have fully disappeared above, the red colored bridge doors open. And yes! They make a super awesome “whoosh” sound! You totally called that. As you saunter onto the bridge you do a little slow-motion exaggerated shoulder shrug to really drive home the point that you are the captain of this bucket, and it is GOOD to be the captain! As you change your moves up to make it look like you are pulling yourself along an invisible rope, a blaster shot just misses your head and absolutely fries a navigation panel behind you. You dive under a nearby workstation and can’t help but think, it SUCKS to be the captain! Maybe someone objected to the invisible rope move? No way - that’s a classic. More blaster shots sizzle past the workstation you are hiding under. You take a second to survey the scene as best you can from under the workstation. The bridge is in shambles. There’s gas (you really hope that’s just pressurized oxygen) venting everywhere, panels are sparking left and right, and every screen and data monitor you can see is blaring “ALERT”. There’s a smoky haze hanging in the air from all the busted electronics. I guess now you know why the ship has been crashing all over the place. A few more shots hit the wall behind you and a waterfall of sparks pour out of the now blackened, and crispy, screen that used to be an engineering readout. This is kind of the last thing you expected. You thought maybe you’d have to order some lowly crew members around, maybe chuck an imposter or two out an airlock, but not fight off a blaster wielding psycho otter!.`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "45a",
+                    Text: `Type "continue" to keep your head down!`,
+                    Command: "continue",
+                    Mood: "entrance ruined",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 47,
+                    PlayType: "intelligent"
+                },
+            ],
+            EarnedPoints: 25
+        },
+        {
+            ID: 46,
+            Text: `You start looking around for anything that might stand out, or anything you might be able to use to get into the bridge. You are about to give up hope when you spot it, there’s a sizable gap near the upper portion of the rightmost corner of where the blast door has extended down from the ceiling. Your guess would be that one of the impacts the ship took packed enough punch to literally dislodge the blast door from the recessed housing that guides it. This bent out the housing and made a gap before the blast door settled back into place. With a little frantic scurrying, you are able to climb up to the gap and slip inside! The blast door housing is pretty spacious given how thick they are. Once up inside the housing, you can see that you’re in something of a sub-ceiling, and it looks to run just far enough into the bridge that you can hopefully find a spot to drop down in! This is a massive security concern. You’ll need to throw your engineer out of an airlock and get a new one that can fix this travesty. But for now, you’re grateful that the gap is a thing. You discover some ducting that looks to be something of an air exchange system, likely a carbon dioxide scrubber. You can actually hear sounds coming from the bridge below! It’s muted, but there’s definitely sound transferring. This has to be your way in. Just as you are about to call out for some assistance, it’s like the entire sub-ceiling is filled with sizzling heat, sparks, and utter chaos. At first, you’re not even sure what’s happening, but then it becomes pretty clear that someone on the bridge is firing a blaster up at you! What? Seriously? You are trying to save this stupid ship and this is the thanks you get? Soooo typical. You barely have time to lament the shortcomings of your unappreciative crew before you are falling through the sub-ceiling. Obviously, the sub-ceiling sustained enough damage from the blaster shots such that it could no longer sustain the weight of your adorable little otter body. You fall, unceremoniously, into the bridge and land with a thud behind a navigation console/workstation. Whoever is shooting at you is now more determined than ever to vaporize you, or at least, that’s your assessment given the blaster fire only increases now that you’re on the bridge. This has really been one hell of a day.`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "46a",
+                    Text: `Type "continue" to keep your head down!`,
+                    Command: "continue",
+                    Mood: "greedo shot first",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 47,
+                    PlayType: "passive"
+                },
+            ],
+            EarnedPoints: 25
+        },
+        {
+            ID: 47,
+            Text: `No one likes having blaster fire sizzling and whizzing by their head. This is kind of the last thing you expected to encounter as you got to the bridge. Your mind is racing, and the adrenaline is really pumping. You knew the ship was in trouble, but what exactly is happening here? Even with hiding under/behind this workstation, you can, more or less, tell where the blaster fire is coming from. The workstation you are using for cover, like most workstations on the ship, has an access panel that can be removed for making general repairs and accessing various internal components. It should be thick enough to act as a pretty good shield against blaster fire, if you wanted to try bumrushing your attacker. It would be pretty freaking heroic to go over the top of this workstation, all captain america style, and bash the crap out of whoever is shooting at you. Of course, if the panel isn’t thick enough, you could also end up, like sort of dead. Which would be less than ideal. You could also try calling out, maybe find out what this is all about? Negotiating maybe? I mean, this could all just be one big misunderstanding right? You could also totally make a run for it. I mean, there’s gotta be an escape pod around here somewhere, right? You can always be captain of another ship. What do you want to do?`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "47a",
+                    Text: `Type "bumrush" to serve up a plate of smackdown`,
+                    Command: "bumrush",
+                    Mood: "let the bodies hit the floor",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 48,
+                    PlayType: "reckless"
+                },
+                {
+                    ID: "47b",
+                    Text: `Type "negotiate" to use your words`,
+                    Command: "negotiate",
+                    Mood: "lets be adults about this",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 49,
+                    PlayType: "intelligent"
+                },
+                {
+                    ID: "47c",
+                    Text: `Type "flee" to make a break for it`,
+                    Command: "flee",
+                    Mood: "mama says they was magic shoes",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 50,
+                    PlayType: "passive"
+                },
+            ],
+            EarnedPoints: 25
+        },
+        {
+            ID: 48,
+            Text: `So this scumbag basically ruins your pristine ship, takes your bridge by force and then, AND THEN, tries to what? TO KILL YOU? WITH A FREAKING BLASTER NO LESS? Like this punk can’t even look you in the eyes first? Well, that’s it. That really mashes your potatoes. I mean this day has suuuucked, and you were dealing with it, But now. Now it’s on. You rip the access panel from the workstation like an otter possessed. You beat the panel against your chest 300 style as you scream in your best Gerard Butler impression “GIVE THEM…NOTHING…TAKE…EVERYTHING!”. You vault over the workstation with a ferocity you never knew you had in you. You are moving so fast that you must just appear as an otter-shaped blur of death to your attacker. You are internally marveling at your greatness when a blaster shot hits your makeshift shield, burns through it, and singes your little otter paws causing you to yelp and fall backwards like a bag of rocks. That really could’ve gone better. And now you’re not sure if you’ll ever be able to learn to be a concert pianist like you wanted to, what with these singed fingies. Your attacker looms over you. And for the first time, you get a sense of what’s going on. Your attacker isn’t an otter at all. Your attacker isn’t a member of your crew. Your attacker is a large arachnid-type alien creature! Your ship has been boarded - BY SPACE PIRATES! “Oy - don’t even think about moving, you dirty lil tosser.” the creature says in a gruff voice. With one of its many arms, or legs, or, whatever, it lifts you up and suspends you in midair, upside down. The blaster is pointed directly at you. You can see a group of crew members behind the pirate - they are being restrained in some kind of electro-field generator. The arachnid pirate speaks again. “Now lil otter - I’d very much like to know what you think you’re doing up here?”.`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "48a",
+                    Text: `Type "credentials" to show him your creds`,
+                    Command: "credentials",
+                    Mood: "picard",
+                    Requires: {Mood: null, Inventory: ["bridge access"]},
+                    Inventory: "",
+                    NextNode: 51,
+                    PlayType: "aggressive"
+                },
+                {
+                    ID: "48b",
+                    Text: `Type "old photo" to show him the photo you found`,
+                    Command: "old photo",
+                    Mood: "fatal frame",
+                    Requires: {Mood: null, Inventory: ["old photo"]},
+                    Inventory: "",
+                    NextNode: 52,
+                    PlayType: "intelligent"
+                },
+                {
+                    ID: "48c",
+                    Text: `Type "ripped cloth" to show him the cloth you found`,
+                    Command: "ripped cloth",
+                    Mood: "fashionista",
+                    Requires: {Mood: null, Inventory: ["ripped cloth"]},
+                    Inventory: "",
+                    NextNode: 53,
+                    PlayType: "passive"
+                },
+                {
+                    ID: "48d",
+                    Text: `Type "lie" to absolutely wing it`,
+                    Command: "lie",
+                    Mood: "fast and loose",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 54,
+                    PlayType: "reckless"
+                },
+                {
+                    ID: "48e",
+                    Text: `Type "truth" to spill your guts`,
+                    Command: "truth",
+                    Mood: "life story",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 55,
+                    PlayType: "passive"
+                },
+            ],
+            EarnedPoints: 30
+        },
+        {
+            ID: 49,
+            Text: `Seeing all the various terminals behind you getting snap, crackle, popped by the blaster fire gives you, less than a great feeling, about using a workstation panel as a shield. Despite how freaking cool that might be. And running for it? Well, actually, that seems like kind of a good idea, but it’s too late now, you’ve settled on negotiating! After another barrage of blaster fire, you clear your little otter throat, and in your best captain voice, you belt out your opening move. “Listen up you backstabbing piece of garbage. I will literally DIE before I let you take my ship!”. Admittedly, it’s not a great opener for dialog exchange. But it definitely gets a response. A gruff voice calls back. “Oy - so you’re the captain eh? Well then, who is this mug I’ve got trapped over here then?”. Ugh. You knew it. You FREAKING knew it. “Look, that captain-wannabe-jerkface has been the absolute BANE of my day, ok? He gets out of cryo-sleep and steals my uniform and my stuff! That otter is NOT the captain. At best, that otter, is like, maybe, a canteen worker or something! Something lame!” you shout. Another barrage of blaster fire sizzles over your head. “I just don’t believe you little otter.” the gruff voice responds. Peeking beneath the workstation, you get a glimpse of your attacker. You wondered why he’d call you “little otter” if he, too, was also an otter. But he’s not an otter at all. No. He’s something otter than an otter. He’s spider-like, and he’s got multiple arms, or legs, or whatever. He’s holding the blaster in one of the arm-thingies, and he’s got some hostages behind him in some kind of “electro-field” generator. Oh wow. Your ship has literally been boarded by freaking space pirates. That would be so badass, if it also didn’t suck so much. “You’re going to have to prove to me who you are little otter, or I’m going to melt your face. And not in the cool way, with like a vicious heavy metal guitar solo. No. I’ll melt it with this blaster!” the space pirate says. This is a lot to process. What do you want to do?`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "49a",
+                    Text: `Type "credentials" to show him your creds`,
+                    Command: "credentials",
+                    Mood: "picard",
+                    Requires: {Mood: null, Inventory: ["bridge access"]},
+                    Inventory: "",
+                    NextNode: 51,
+                    PlayType: "aggressive"
+                },
+                {
+                    ID: "49b",
+                    Text: `Type "old photo" to show him the photo you found`,
+                    Command: "old photo",
+                    Mood: "fatal frame",
+                    Requires: {Mood: null, Inventory: ["old photo"]},
+                    Inventory: "",
+                    NextNode: 52,
+                    PlayType: "intelligent"
+                },
+                {
+                    ID: "49c",
+                    Text: `Type "ripped cloth" to show him the cloth you found`,
+                    Command: "ripped cloth",
+                    Mood: "fashionista",
+                    Requires: {Mood: null, Inventory: ["ripped cloth"]},
+                    Inventory: "",
+                    NextNode: 53,
+                    PlayType: "passive"
+                },
+                {
+                    ID: "49d",
+                    Text: `Type "lie" to absolutely wing it`,
+                    Command: "lie",
+                    Mood: "fast and loose",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 54,
+                    PlayType: "reckless"
+                },
+                {
+                    ID: "49e",
+                    Text: `Type "truth" to spill your guts`,
+                    Command: "truth",
+                    Mood: "life story",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 55,
+                    PlayType: "passive"
+                },
+            ],
+            EarnedPoints: 30
+        },
+        {
+            ID: 50,
+            Text: `Omg screw this. Since waking up, this ship has been nothing but an absolute nightmare. At this point, given the shape she’s in, you’ll be lucky to get the insurance money from this little disaster. You’ve seen this work in the movies, like a hundred times. You pick up a random piece of debris off the floor and chuck in the opposite direction of the bridge door. Sufficiently convinced that your brilliant distraction has befuddled your attacker, you spring up an otter made from, well springs. And you start making your mad dash towards the bridge doors. You just need to get into a sweet little escape pod and call Jake from State Farm. He’ll know what to do. But before you can get to the bridge doors you feel a blaster shot vaporize your insides. You fall to the floor clutching your tummers, or rather, the spot where your cute little tummers used to be. As you take your last breath you feel utterly betrayed by Hollywood and all the movies that made the whole distraction/escape thing seem so straightforward. Liars. Game Over.`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "50a",
+                    Text: `Type "s" to Start Over`,
+                    Command: "s",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1,
+                },
+                {
+                    ID: "50b",
+                    Text: `Type "after action" to see your after action report`,
+                    Command: "after action",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: -9999,
+                    AfterAction: true,
+                },
+            ],
+            EarnedPoints: -100
+        },
+        {
+            ID: 51,
+            Text: `You hand the space pirate your sweet set of extra creds you worked so hard to get. “Bear witness to my MAJESTY!” you yell awkwardly. It was supposed to come out more captain-y, but your voice kinda cracked and now it’s a little awkward. The pirate examines your creds and makes a “hmph” sound. The pirate glances back at an otter being restrained within the electro-field, the otter’s uniform is missing a fairly large patch of cloth that looks like it got ripped away. The pirate turns back to you. “So it’s you. Is it really you? Can it be?” the pirate says with astonishment. Ok. Ok. This is working. The space pirate IS in awe of your captain majesty! “Yes. It is I, my good space pirate. I. Am. The…” you start to say before the pirate cuts you off. “GREATEST THIEF OF ALL TIME!” the pirate exclaims. “I mean hold on. HOLD ON. Did you actually crack, like ACTUALLY CRACK, the Secur-a-Station model 099A to get these? Omg, you did. You actually did! You cracked a Secur-a-Station model 099A!” the pirate beams with absolute adoration. “I mean we tried to break into the Captain’s quarters when we first boarded the ship to get these! But the captain over there (the pirate motions to the otter with a patch of missing uniform) jammed the door and escaped some other way and sealed off the bridge with blast doors before we could get here! I mean, thankfully we had someone on the inside, but this is still INCREDIBLE! We heard that OTTERESSENCE had been captured, but we didn’t believe it!” the pirate blurts out. And there it is. Suddenly your memory comes flooding back. You aren’t the captain of the One Way or the Otter. You were captured by her. They chucked you in cryo-sleep until they could get you back to a federated station and turn you in for the bounty! You had snuck on board near Titan in hopes of siphoning off some of the liquid hydrocarbons they had on board, but you got caught! The pirate claps you on the back. “You are like my ultimate hero, seriously, you are the best!” the pirate gushes. You laugh awkwardly as you attempt to play this cool. But right now there are two things running through your mind. One. You need to get to an escape pod and get out of here. Two. You have the STUPIDEST thief name there ever was. Like seriously. OTTERESSENCE? You sign a few autographs for the pirates and make your way to an escape pod. A quick check of nav system and you’re pretty sure where you need to go. Your crew will be holed up on Phobos waiting for you to return. As your pod falls away from the One Way or the Otter, you plot a course for Mars. You’ve got stuff to steal, and a name change form to file. *COMMAND ARC - THIEF ENDING ACHIEVED - CONGRATULATIONS - GAME OVER*`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "51a",
+                    Text: `Type "s" to Start Over`,
+                    Command: "s",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1,
+                },
+                {
+                    ID: "51b",
+                    Text: `Type "after action" to see your after action report`,
+                    Command: "after action",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: -9999,
+                    AfterAction: true,
+                },
+            ],
+            EarnedPoints: 600
+        },
+        {
+            ID: 52,
+            Text: `You aren’t entirely sure why, but you hand the space pirate the photo you found in the desk back in the crew quarters. I mean, the thing in the picture kinda looks like this pirate, so who knows, maybe it’ll get you a little good will? The pirate takes the photo and stares at it for what seems like ages. Crap. This was a bad idea. You are about to grab a nearby piece of debris and book a one way ticket to otter bashy town, but the pirate finally speaks. “I can’t believe it. I can’t believe it. I’m actually in the presence of greatness. It’s an honour sir!” the pirate exclaims. You look to one side, and then the other. Surely, there’s someone standing beside you. But no. He is indeed addressing you. You are about to speak, but the pirate cuts you off. “Colonel Dregg didn’t think you were still alive! That’s why he sent us to take the ship! I mean, he told us all about your plan to infiltrate the crew of the One Way or the Otter and steal the ship AND the liquid hydrocarbon payload, but after you went dark, we assumed the worst! The Colonel said you’d have this picture of him as a kid, as proof of your identity, as a failsafe!” the pirate gushes. Suddenly, all the memories come flooding back, pushing away the cryo-induced brain fog. You aren’t the captain of the One Way or the Otter, you infiltrated the crew and became Number One. The whole time your intention was to hijack the ship and meet up with Colonel Dregg and the other pirates! The desk you found that photo in, was yours! Everything was going to plan, you were able to ingratiate yourself to the captain and crew. You had learned the ship operations and even spent one whole rotation learning the route and contact protocol at the hydrocarbon base on Titan. But then it had all gone sideways. The captain had caught you trying to get an encrypted message out and tossed you into the cryo-bay until they could figure out what to do with you. It all takes a second to sink in. “I AM. THE GREATEST PIRATE. ALIIIIIVEEEEEE!” you exclaim. You start something between a chicken dance and an electric slide, with the pirate next to you joining in. You finally get control of the ship and send the crew out in evac pods. The ship is pretty damaged from the whole pirate boarding party thing, but you’ll still get some seriously good coin for it. You mark a course for Trident, Neptune’s moon, where Colonel Dregg will be waiting for you. I guess you were right all along, sort of anyway. As of right now. You ARE the captain of the One Way or the Otter. *COMMAND ARC - UNDERCOVER PIRATE ENDING ACHIEVED - CONGRATULATIONS - GAME OVER*`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "52a",
+                    Text: `Type "s" to Start Over`,
+                    Command: "s",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1,
+                },
+                {
+                    ID: "52b",
+                    Text: `Type "after action" to see your after action report`,
+                    Command: "after action",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: -9999,
+                    AfterAction: true,
+                },
+            ],
+            EarnedPoints: 600
+        },
+        {
+            ID: 53,
+            Text: `You are, definitively, out of ideas. This day, omg, this day has just sucked. In your head, you’re going to use this ripped piece of uniform as a metaphor. Like, have a look at this ripped uniform, Mr. Space Pirate. This ripped uniform represents our two opposing sides. Pirates vs Captains. Bad vs Good. And look where it gets us huh? It RIPS us apart yeah? I mean, just look at it. LOOK AT IT! We are so much more than our jobs yeah? Like, I get it, you’re a pirate, you board ships, hurt people, steal stuff. And I’m a captain. I fly cool ships, I order people around. I drink Earl Grey ridiculously hot. I’m awesome. But that doesn’t mean that we’re that different. You are formulating all this out in your head when the pirate speaks up and breaks your train of thought. Which is a bloody shame, because you were really on to something there. “Ahhhh, now this is interesting!” the pirate expounds. “This patch of cloth is from an officer’s uniform. See this marking here?” the pirate points to a glyph on the uniform. You actually hadn’t seen this initially. You were too busy trying to get to the bridge in one piece and save the day. “Oh yeah, in fact, this isn’t from just any officer uniform, little otter, this marking indicates its from the captain’s uniform. Mhmm. Seems there’s a bit of a controversy over who the captain is on this ship.” the pirate explains. You’re about to tell him that you are, in fact, the captain, but the pirate rambles on. “See, I need the captain to give me the storage bay code so I don’t have to self-destruct this little betty of a ship instead of making off with my hydrocarbons. If I get the storage bay code, I can then I can just calmly, and, respectively, steal all the hydrocarbons. If I don’t get the code. I blows the whole ship. Now I figures this mug is the captain (the pirate points to the otter with a large patch of cloth missing from his uniform) but I cants prove it, ya know? But if this cloth matches that rip in his uniform exactly? Well then, then I’ve got my captain.” the pirate says insidiously. You really don’t like his tone. The pirate walks over to the electro-field and extracts the otter with a patch missing from his uniform. The pirate gruffly places the ripped cloth over the hole in the uniform. It’s a perfect match. “Well. Well. Well. I knew it.” the pirate drolls. The captain shoots you look of pure anger. You shrug and smile as your memory starts to come back to you. It’s true, you actually aren’t the captain of the One Way or the Otter. In fact, you remember you’re actually a pretty bad cook on this ship. After one of you experimental souffles ended up causing a hull breach, the captain decided to put you in cryo-sleep until they made port. The pirates clearly boarded the ship while you were in cryo, and chased the captain to his quarters. He was able to jam the door and escape, but not before he ripped his uniform. And now you’ve basically outed the captain, who was probably trying to stay quiet long enough until a distress signal could get out. You sheepishly shrug as the captain gives over the hydrocarbon bay code. The pirate tosses you all back into the electro-field and scampers off to claim his booty. The rest of the otters in the electro-field glare at you. No hydrocarbons means no bonuses for any of the members of the crew. “Look, I’ll make this up to you. When we get back to port, I’ll make souffles!” you exclaim. The volume of exasperated groans and curses that follow are almost enough to convince you that they don’t want your souffles. Almost. *COMMAND ARC - JUST A COOK ENDING ACHIEVED - CONGRATULATIONS - GAME OVER*`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "53a",
+                    Text: `Type "s" to Start Over`,
+                    Command: "s",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1,
+                },
+                {
+                    ID: "53b",
+                    Text: `Type "after action" to see your after action report`,
+                    Command: "after action",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: -9999,
+                    AfterAction: true,
+                },
+            ],
+            EarnedPoints: 600
+        },
+        {
+            ID: 54,
+            Text: `Your uncle always told you. The best way out of any sticky situation. Lies. Just so many lies. Hit them with lies so fast and so hard that they just can’t even process all the lies. Then when they are in the deepest state of otter befuddlement. BAM. You do something awesome! So you start with how you are a prisoner on this ship, captured by this evil crew over sheer jealousy because of how gorgeous you are. That’s right. You were minding your own business. Looking tasty. And BAM. These haters got out their hateraide and just started hatin. Next thing you know, you are a prisoner, but it’s okay, because you have precious intel. That’s right. You’ve been spying the whole time you’ve been on this bucket, and guess what space pirate, this ship isn’t carrying hydrocarbons, oh no. no sir. This ship is carrying alien pudding. I know, I know. It sounds crazy. But it’s the best damn pudding you’ve ever tasted. It’s better than snack-pak pudding. It’s better than grandma’s pudding. But wait, there’s more. You are just starting to tell the space pirate how there’s actually a contingent of space marines on board the One Way or the Otter that are being transported to a terraforming colony full of Xenomorphs when the space pirate bashes you over the head with the butt of his blaster. The world spins and sways and your vision starts to go black. You were just getting to the good part and then you were going to pull your awesome move. Ugh. Uncle Jack would be so disappointed. The last thing you see is a bunch of super confused crew members looking at you in disgust. GAME OVER.`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "54a",
+                    Text: `Type "s" to Start Over`,
+                    Command: "s",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1,
+                },
+                {
+                    ID: "54b",
+                    Text: `Type "after action" to see your after action report`,
+                    Command: "after action",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: -9999,
+                    AfterAction: true,
+                },
+            ],
+            EarnedPoints: -150
+        },
+        {
+            ID: 55,
+            Text: `Sister Maria at the orphanage always told you, tell the truth, the whole truth, or I’ll whack your knuckles back to the stone age. So you literally just UNLOAD on this space pirate. You start with how there were never any biscuits by the time you got up to the canteen counter at school when you were a kid otter. You talk about how this shaped your child-mind to be prepared for disappointments in life. You delve into the time you found THE PERFECT food bashing rock but then Otty FREAKING Spencer stole it and denied it and made you look like a fool. You are just starting to get into the “Great Sticky Bun Debacle of 3244” when the space pirate brings down the butt of his blaster on the top of you head. Hard. First you see stars, then a dense fog starts to creep around the periphery of your vision. You briefly see the other crew members before you pass out. They all seem to be shaking their heads in disbelief. That makes sense you think. There really should have been enough biscuits for everyone. I mean. That’s just poor planning right? Know your biscuit velocity is all your saying. Then everything goes dark. GAME OVER.`,
+            CodeNode: false,
+            CodeLength: 0,
+            CodeFailedNextNode: 0,
+            NodeOptions: [
+                {
+                    ID: "55a",
+                    Text: `Type "s" to Start Over`,
+                    Command: "s",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: 1,
+                },
+                {
+                    ID: "55b",
+                    Text: `Type "after action" to see your after action report`,
+                    Command: "after action",
+                    Mood: "",
+                    Requires: {Mood: null, Inventory: []},
+                    Inventory: "",
+                    NextNode: -9999,
+                    AfterAction: true,
+                },
+            ],
+            EarnedPoints: -150
         },
     ],
 };
